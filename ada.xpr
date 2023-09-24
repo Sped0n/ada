@@ -162,6 +162,7 @@
       <Filter Type="Srcs"/>
       <File Path="$PSRCDIR/testbench/tb_hs_ad_da.v">
         <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
