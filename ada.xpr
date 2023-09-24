@@ -135,6 +135,12 @@
     </FileSet>
     <FileSet Name="constraints" Type="Constrs" RelSrcDir="$PSRCDIR/constraints" RelGenDir="$PGENDIR/constraints">
       <Filter Type="Constrs"/>
+      <File Path="$PSRCDIR/constraints/ada.xdc">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+        </FileInfo>
+      </File>
       <Config>
         <Option Name="ConstrsType" Val="XDC"/>
       </Config>
