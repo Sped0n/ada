@@ -29,7 +29,8 @@ module hs_ad_da (
     // adc interface
     input  [7:0] ad_data,    // adc input data
     input        ad_otr,     // 0: adc data is valid, 1: adc data is invalid (over range)
-    output       ad_clk      // adc clock
+    output       ad_clk,     // adc clock
+    output       buzzer      // buzzer (beep when adc data is over range)
 );
   // wire define
   wire [7:0] rd_addr;  // address of data read from rom
@@ -44,6 +45,7 @@ module hs_ad_da (
 
   assign rst_n = sys_rst_n & locked; // generate a new reset signal from system reset and pll lock signal
   assign ad_clk = clk_25m;  // adc clock is 25MHz
+  assign buzzer = ad_otr;  // buzzer is on when adc data is over range
 
   // pll
   clk_wiz_0 pll_ad_da (
