@@ -71,4 +71,11 @@ module hs_ad_da (
       .douta(rd_data)   // output wire [7 : 0] douta
   );
 
+  // intergrated logic analyzer
+  ila_0 ila_0 (
+      .clk   (clk_25m_120d),  // input wire clk
+      .probe0(ad_otr),        // input wire probe0
+      .probe1(ad_data)        // input wire [7:0] probe1
+  );
+
 endmodule
