@@ -28,7 +28,7 @@ module da_wave_send (
     output reg [7:0] rd_addr,  // address of data read from rom
     // dac interface
     output           da_clk,   // dac clock
-    output     [7:0] da_data   // dac dataF
+    output     [7:0] da_data   // dac data
 );
   // parameter
   parameter FREQ_ADJ = 8'd5;  // the larger the value, the lower the frequency
