@@ -34,3 +34,9 @@ set_property -dict {IOSTANDARD LVCMOS33 PACKAGE_PIN L21} [get_ports ad_otr]
 
 ## buzzer
 set_property -dict {IOSTANDARD LVCMOS33 PACKAGE_PIN P16} [get_ports buzzer]
+
+## key
+set_property -dict {IOSTANDARD LVCMOS33 PACKAGE_PIN T1} [get_ports keys[0]]
+set_property -dict {IOSTANDARD LVCMOS33 PACKAGE_PIN U1} [get_ports keys[1]]
+set_property -dict {IOSTANDARD LVCMOS33 PACKAGE_PIN W2} [get_ports keys[2]]
+set_property -dict {IOSTANDARD LVCMOS33 PACKAGE_PIN T3} [get_ports keys[3]]
