@@ -1,0 +1,2 @@
+tri_rom_256x8b.v,verilog,xil_defaultlib,../../../../ada.srcs/ips/tri_rom_256x8b/sim/tri_rom_256x8b.v,
+glbl.v,Verilog,xil_defaultlib,glbl.v
