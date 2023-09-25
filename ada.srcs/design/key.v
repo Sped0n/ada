@@ -26,30 +26,40 @@ module key (
     input  [3:0] raw_keys,
     output [3:0] keys
 );
+  // parameter define
+  parameter DEBOUNCE_CNT_MAX = 20'd100_0000;  // debounce for 100_0000 * 20ns(1s/50MHz) = 20ms
 
   // main code
-  key_debounce key_debounce_0 (
+  key_debounce #(
+      .DEBOUNCE_CNT_MAX(DEBOUNCE_CNT_MAX)
+  ) key_debounce_0 (
       .sys_clk(sys_clk),
       .sys_rst_n(sys_rst_n),
       .key(raw_keys[0]),
       .filtered_key(keys[0])
   );
 
-  key_debounce key_debounce_1 (
+  key_debounce #(
+      .DEBOUNCE_CNT_MAX(DEBOUNCE_CNT_MAX)
+  ) key_debounce_1 (
       .sys_clk(sys_clk),
       .sys_rst_n(sys_rst_n),
       .key(raw_keys[1]),
       .filtered_key(keys[1])
   );
 
-  key_debounce key_debounce_2 (
+  key_debounce #(
+      .DEBOUNCE_CNT_MAX(DEBOUNCE_CNT_MAX)
+  ) key_debounce_2 (
       .sys_clk(sys_clk),
       .sys_rst_n(sys_rst_n),
       .key(raw_keys[2]),
       .filtered_key(keys[2])
   );
 
-  key_debounce key_debounce_3 (
+  key_debounce #(
+      .DEBOUNCE_CNT_MAX(DEBOUNCE_CNT_MAX)
+  ) key_debounce_3 (
       .sys_clk(sys_clk),
       .sys_rst_n(sys_rst_n),
       .key(raw_keys[3]),
