@@ -30,8 +30,14 @@ module hs_ad_da (
     input  [7:0] ad_data,    // adc input data
     input        ad_otr,     // 0: adc data is valid, 1: adc data is invalid (over range)
     output       ad_clk,     // adc clock
-    output       buzzer      // buzzer (beep when adc data is over range)
+    // buzzer
+    output       buzzer,     // buzzer (beep when adc data is over range)
+    // keys
+    input  [3:0] keys        // keys
 );
+  // parameter define
+  parameter DEBOUNCE_CNT_MAX = 20'd100_0000;  // debounce for 100_0000 * 20ns(1s/50MHz) = 20ms
+
   // wire define
   wire [7:0] rd_addr;  // address of data read from rom
   wire [7:0] rd_data;  // data read from rom
@@ -66,11 +72,15 @@ module hs_ad_da (
       .da_data(da_data)   // dac data
   );
 
-  // sine rom waveform
-  sin_rom_256x8b sine_wave (
-      .clka (sys_clk),  // input wire clka
-      .addra(rd_addr),  // input wire [7 : 0] addra
-      .douta(rd_data)   // output wire [7 : 0] douta
+  // waveform_ctl
+  waveform_ctl #(
+      .DEBOUNCE_CNT_MAX(DEBOUNCE_CNT_MAX)
+  ) waveform_ctl_0 (
+      .sys_clk  (clk_50m),  // system clock
+      .sys_rst_n(rst_n),    // system reset active low
+      .raw_keys (keys),     // raw keys
+      .addr     (rd_addr),  // address of data read from rom
+      .data     (rd_data)   // data read from rom
   );
 
   // intergrated logic analyzer
