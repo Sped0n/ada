@@ -38,10 +38,15 @@ module hs_ad_da (
     output [5:0] seg_sel,    // segment select
     output [7:0] seg_disp,   // segment display data
     // led
-    output [3:0] led         // led
+    output [3:0] led,        // led
+    // uart
+    input        uart_rxd,   // uart receive data
+    output       uart_txd    // uart transmit data
 );
   // parameter define
   parameter DEBOUNCE_CNT_MAX = 20'd100_0000;  // debounce for 100_0000 * 20ns(1s/50MHz) = 20ms
+  parameter SYS_CLK_FREQ = 50_000_000;  // system clock frequency
+  parameter BAUD_RATE = 115_200;  // baud rate
 
   // wire define
   wire [ 7:0] rd_addr;  // address of data read from rom
@@ -116,6 +121,17 @@ module hs_ad_da (
       .en       (seg_en),
       .seg_sel  (seg_sel),
       .seg_disp (seg_disp)
+  );
+
+  // uart_loopback
+  uart_loopback #(
+      .SYS_CLK_FREQ(SYS_CLK_FREQ),
+      .BAUD_RATE(BAUD_RATE)
+  ) uart_loopback_0 (
+      .sys_clk  (sys_clk),
+      .sys_rst_n(rst_n),
+      .uart_rxd (uart_rxd),
+      .uart_txd (uart_txd)
   );
 
   // intergrated logic analyzer

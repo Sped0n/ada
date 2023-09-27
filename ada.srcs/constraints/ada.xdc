@@ -63,3 +63,7 @@ set_property -dict {IOSTANDARD LVCMOS33 PACKAGE_PIN Y2} [get_ports {led[3]}]
 set_property -dict {IOSTANDARD LVCMOS33 PACKAGE_PIN V2} [get_ports {led[2]}]
 set_property -dict {IOSTANDARD LVCMOS33 PACKAGE_PIN R3} [get_ports {led[1]}]
 set_property -dict {IOSTANDARD LVCMOS33 PACKAGE_PIN R2} [get_ports {led[0]}]
+
+## uart
+set_property -dict {IOSTANDARD LVCMOS33 PACKAGE_PIN U5} [get_ports uart_rxd]
+set_property -dict {IOSTANDARD LVCMOS33 PACKAGE_PIN T6} [get_ports uart_txd]
