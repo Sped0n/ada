@@ -68,6 +68,8 @@ module uart_tx (
       end else begin
         baud_cnt <= 16'd0;
       end
+    end else begin
+      baud_cnt <= 16'd0;
     end
   end
 
@@ -108,5 +110,5 @@ module uart_tx (
       uart_txd <= 1'b1;  // idle state
     end
   end
-  
+
 endmodule
