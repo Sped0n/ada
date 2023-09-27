@@ -37,22 +37,22 @@ module tb_hs_ad_da ();
     sys_rst_n = 1'b0;
     #200 sys_rst_n = 1'b1;
     // key signal change
-    #32000 keys = 4'b0111;
+    #32000 keys = 4'b1110;
     #2000 keys = 4'b1111;
-    #5000 keys = 4'b0111;
+    #5000 keys = 4'b1110;
     #4000 keys = 4'b1111;
-    #2000 keys = 4'b0111;
+    #2000 keys = 4'b1110;
     #30000 keys = 4'b1111;
-    #5000 keys = 4'b0111;
+    #5000 keys = 4'b1110;
     #4000 keys = 4'b1111;
-    #30000 keys = 4'b0111;
+    #30000 keys = 4'b1110;
   end
 
   // clock generator
   always #(CLK_PERIOD / 2) sys_clk = ~sys_clk;
   hs_ad_da #(
       .DEBOUNCE_CNT_MAX(DEBOUNCE_CNT_MAX)
-  ) hs_ad_da_0 (
+  ) hs_ad_da_tb0 (
       .sys_clk  (sys_clk),    // system clock
       .sys_rst_n(sys_rst_n),  // system reset active low
       // dac interface
@@ -65,6 +65,9 @@ module tb_hs_ad_da ();
       // buzzer
       .buzzer   (),           // buzzer (beep when adc data is over range)
       // keys
-      .keys     (keys)        // keys
+      .keys     (keys),       // keys
+      // 7-segment display
+      .seg_sel  (),           // segment select
+      .seg_disp ()            // segment display data
   );
 endmodule

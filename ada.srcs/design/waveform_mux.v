@@ -29,6 +29,7 @@ module waveform_mux (
   // parameter define
   parameter MAINTAIN_HIGH = 8'd255;  // maintain high level
   parameter MAINTAIN_LOW = 8'd0;  // maintain low level
+  parameter OFF = 8'd127;  // turn off
 
   // wire define
   wire [7:0] sine_wave;  // sine wave
@@ -68,7 +69,9 @@ module waveform_mux (
       3'd2: data <= triangle_wave;
       3'd3: data <= sawtooth_wave;
       3'd4: data <= MAINTAIN_HIGH;
-      default: data <= MAINTAIN_LOW;
+      3'd5: data <= MAINTAIN_LOW;
+      3'd6: data <= OFF;
+      default: data <= OFF;
     endcase
   end
 
