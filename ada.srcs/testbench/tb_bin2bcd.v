@@ -22,25 +22,27 @@
 
 module tb_bin2bcd ();
   // reg define
+  reg         clk;
   reg  [ 7:0] bin;
-  reg  [ 8:0] i;
 
   // wire define
   wire [11:0] bcd;
 
   // initial block
   initial begin
-    for (i = 0; i < 256; i = i + 1) begin
-      bin = i;
-      #10;  // delay 10ns
+    clk = 0;
+    repeat (20) begin
+      bin = {$random} % 256;
+      #20;
     end
-    $finish;
   end
 
-  //main code
-  bin2bcd bin2bcd_0 (
+  bin2bcd bin2bcd_tb0 (
       .bin(bin),
       .bcd(bcd)
   );
+
+  // clock generation
+  always #10 clk = ~clk;
 
 endmodule

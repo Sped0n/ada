@@ -50,15 +50,13 @@ module ila_0 (
 clk,
 
 
-probe0,
-probe1
+probe0
 );
 
 input clk;
 
 
-input [0 : 0] probe0;
-input [7 : 0] probe1;
+input [7 : 0] probe0;
 
 
 endmodule
