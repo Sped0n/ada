@@ -36,8 +36,18 @@ module acquisition_fifo_wr (
   // reg define
   reg trigger_delay0;
   reg trigger_delay1;
+  reg wr_en_tmp; // for delaying wr_en signal, because we don't want to write first invalid data into the fifo
 
   // main code
+
+  // delaying wr_en signal
+  always @(posedge wr_clk or negedge rst_n) begin
+    if (!rst_n) begin
+      wr_en <= 1'b0;
+    end else begin
+      wr_en <= wr_en_tmp;
+    end
+  end
 
   // just incase trigger is in the different clock domain
   always @(posedge wr_clk or negedge rst_n) begin
@@ -53,14 +63,14 @@ module acquisition_fifo_wr (
   // assign value to fifo write enable, start pushing data when trigger is high till fifo is almost full
   always @(posedge wr_clk or negedge rst_n) begin
     if (!rst_n) begin
-      wr_en <= 1'b0;
+      wr_en_tmp <= 1'b0;
     end else if (!wr_rst_busy) begin
       if (trigger_delay1) begin  // trigger is high, start writing data
-        wr_en <= 1'b1;
+        wr_en_tmp <= 1'b1;
       end else if (almost_full) begin  // fifo is almost full, stop writing data
-        wr_en <= 1'b0;
+        wr_en_tmp <= 1'b0;
       end else begin
-        wr_en <= wr_en;
+        wr_en_tmp <= wr_en_tmp;
       end
     end
   end
@@ -69,7 +79,7 @@ module acquisition_fifo_wr (
   always @(posedge wr_clk or negedge rst_n) begin
     if (!rst_n) begin
       wr_data <= 8'd0;
-    end else if (wr_en) begin  // write adc data into fifo when wr_en is high
+    end else if (wr_en_tmp) begin  // write adc data into fifo when wr_en is high
       wr_data <= ad_data;
     end else begin
       wr_data <= 8'd0;

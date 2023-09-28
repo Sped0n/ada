@@ -33,10 +33,10 @@ module acquisition_uart (
   wire rd_rst_busy;
   wire wr_en;
   wire rd_en;
-  wire wr_data;
-  wire rd_data;
+  wire [7:0] wr_data;
+  wire [7:0] rd_data;
   wire almost_full;
-  wire almost_empty;
+  wire empty;
   wire full;
 
   // main code
@@ -51,9 +51,9 @@ module acquisition_uart (
       .din         (wr_data),
       .dout        (rd_data),
       .almost_full (almost_full),
-      .almost_empty(almost_empty),
+      .almost_empty(),
       .full        (full),
-      .empty       (),
+      .empty       (empty),
       .wr_rst_busy (wr_rst_busy),
       .rd_rst_busy (rd_rst_busy)
   );
@@ -72,13 +72,13 @@ module acquisition_uart (
 
   // fifo read
   acquisition_fifo_rd_uart acquisition_fifo_rd_uart_0 (
-      .rd_clk      (clk_50m),
-      .rst_n       (sys_rst_n),
-      .rd_rst_busy (rd_rst_busy),
-      .rd_data     (rd_data),
-      .full        (full),
-      .almost_empty(almost_empty),
-      .rd_en       (rd_en),
-      .uart_txd    (uart_txd)
+      .rd_clk     (clk_50m),
+      .rst_n      (sys_rst_n),
+      .wr_rst_busy(wr_rst_busy),
+      .rd_data    (rd_data),
+      .full       (full),
+      .empty      (empty),
+      .rd_en      (rd_en),
+      .uart_txd   (uart_txd)
   );
 endmodule
