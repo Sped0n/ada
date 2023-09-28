@@ -228,7 +228,7 @@
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/design/acquisition.v">
+      <File Path="$PSRCDIR/design/acquisition_uart.v">
         <FileInfo>
           <Attr Name="AutoDisabled" Val="1"/>
           <Attr Name="UsedIn" Val="synthesis"/>
