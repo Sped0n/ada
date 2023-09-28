@@ -22,16 +22,16 @@
 
 module acquisition_fifo_wr (
     // clock
-    input wr_clk,
-    input rst_n,
+    input            wr_clk,
+    input            rst_n,
     // fifo interface
-    input wr_rst_busy,  // fifo write reset busy
-    input trigger,  // acquisition trigger signal, active high
-    input alomost_full,  // fifo almost full signal
-    output reg wr_en,  // fifo write enable
-    output reg [7:0] wr_data,  // fifo write data
+    input            wr_rst_busy,  // fifo write reset busy
+    input            trigger,      // acquisition trigger signal, active high
+    input            almost_full,  // fifo almost full signal
+    output reg       wr_en,        // fifo write enable
+    output reg [7:0] wr_data,      // fifo write data
     // adc
-    input [7:0] ad_data
+    input      [7:0] ad_data
 );
   // reg define
   reg trigger_delay0;
@@ -57,7 +57,7 @@ module acquisition_fifo_wr (
     end else if (!wr_rst_busy) begin
       if (trigger_delay1) begin  // trigger is high, start writing data
         wr_en <= 1'b1;
-      end else if (alomost_full) begin  // fifo is almost full, stop writing data
+      end else if (almost_full) begin  // fifo is almost full, stop writing data
         wr_en <= 1'b0;
       end else begin
         wr_en <= wr_en;
