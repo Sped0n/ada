@@ -22,16 +22,16 @@
 
 module acquisition_fifo_rd_uart (
     // clock, use system clock here (50MHz)
-    input rd_clk,
-    input rst_n,
+    input            rd_clk,
+    input            rst_n,
     // fifo interface
-    input rd_rst_busy,
-    input [7:0] rd_data,
-    input full,
-    input almost_empty,
-    output reg rd_en,
+    input            rd_rst_busy,
+    input      [7:0] rd_data,
+    input            full,
+    input            almost_empty,
+    output reg       rd_en,
     // uart interface
-    output uart_txd
+    output           uart_txd
 );
   // parameter define
   parameter IDLE = 5'b00001;
