@@ -54,7 +54,7 @@ module acquisition_fifo_rd_uart (
   reg rd_en_tmp_delay0;
   reg rd_en_delay0;  // for state machine to swtich state more precisely (do not switch state when fifo is resetting)
   reg uart_tx_en;
-  reg empty_delay0;  // fifo read delay, in order to get all data, we have to delay empty for one clock cycle
+  reg empty_delay0;  // fifo empty delay, we still have one unfetched datawhen empty is high, in order to get all data, we have to delay empty for one clock cycle
 
   // wire define
   wire uart_tx_busy;
@@ -191,4 +191,5 @@ module acquisition_fifo_rd_uart (
       endcase
     end
   end
+
 endmodule
