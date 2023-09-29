@@ -21,10 +21,11 @@
 
 
 module acquisition_pulse_gen (
-    input        sys_clk,    // 50MHz
+    input        clk_50m,    // 50MHz
+    input        clk_25m,    // 25MHz
     input        sys_rst_n,
     input  [3:0] sel,        // 15 clock to select
-    output       pulse
+    output       pulse       // pulse (25MHz clock domain)
 );
   // parameter define
   parameter CLK_CNT_MAX_25MHZ = 0;  // 25MHz (1us/div)
@@ -62,19 +63,22 @@ module acquisition_pulse_gen (
   // pulse
   assign pulse = pulse_flag_delay0 & (~pulse_flag_delay1);
 
-  // sel_delay0
-  // pluse_flag is like a different clock, so we have to delay it to get the pulse in system clock domain
-  always @(posedge sys_clk or negedge sys_rst_n) begin
+  // sel_delay0 (50MHz clock domain)
+  always @(posedge clk_50m or negedge sys_rst_n) begin
     if (!sys_rst_n) begin
-      // sel_delay0
       sel_delay0 <= 4'd0;
-      // pulse_flag_delay
+    end else begin
+      sel_delay0 <= sel;
+    end
+  end
+
+  // pluse_flag is like a different clock, so we have to delay it to get the pulse in system clock domain
+  // 25MHz clock domain
+  always @(posedge clk_25m or negedge sys_rst_n) begin
+    if (!sys_rst_n) begin
       pulse_flag_delay0 <= 1'b0;
       pulse_flag_delay1 <= 1'b0;
     end else begin
-      // sel_delay0
-      sel_delay0 <= sel;
-      // pulse_flag_delay
       pulse_flag_delay0 <= pulse_flag;
       pulse_flag_delay1 <= pulse_flag_delay0;
     end
@@ -103,7 +107,7 @@ module acquisition_pulse_gen (
   end
 
   // pulse flag gen
-  always @(posedge sys_clk or negedge sys_rst_n) begin
+  always @(posedge clk_50m or negedge sys_rst_n) begin
     if (!sys_rst_n) begin
       pulse_flag <= 1'b0;
       clk_cnt <= 16'd0;
@@ -120,6 +124,5 @@ module acquisition_pulse_gen (
       end
     end
   end
-
 
 endmodule
