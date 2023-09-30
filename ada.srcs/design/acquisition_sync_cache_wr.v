@@ -21,23 +21,22 @@
 
 
 module acquisition_sync_cache_wr (
-    input            wr_clk,                   // 25MHz
+    input            wr_clk,            // 25MHz
     input            rst_n,
     // config
     input      [7:0] ad_data,
     input            en,
-    input            trigger_enable,
-    input      [7:0] trigger_threshold,
-    input            trigger_is_rising_slope,
     input      [2:0] trigger_position,
+    // trigger signal
+    input            triggered,
     // handshake
     input            cache_rd_busy,
     output reg       cache_wr_ready,
     // dual port ram
-    output           wr_we,                    // ram write enable
-    output reg       wr_en,                    // ram write port enable (same as ram_wr_we)
-    output reg [7:0] wr_addr,                  // ram write address (0-254)
-    output     [7:0] wr_data,                  // ram write data
+    output           wr_we,             // ram write enable
+    output reg       wr_en,             // ram write port enable (same as ram_wr_we)
+    output reg [7:0] wr_addr,           // ram write address (0-254)
+    output     [7:0] wr_data,           // ram write data
     // acquisiton pulse
     input            acquisition_pulse
 );
@@ -57,12 +56,13 @@ module acquisition_sync_cache_wr (
   // reg define
   reg [4:0] state;
   reg [4:0] next_state;
+
   reg [7:0] cache_cnt;
+
   reg [7:0] wfrd_cnt;
   reg [7:0] wfrd_cnt_max;
 
-  // wire define
-  wire triggered;
+  reg trigger_enable;
 
   // main code
 
@@ -72,12 +72,34 @@ module acquisition_sync_cache_wr (
   // trigger_positon control
   always @(*) begin
     case (trigger_position)
-      3'd0: wfrd_cnt_max = WFRD_CNT_MAX_0;
-      3'd1: wfrd_cnt_max = WFRD_CNT_MAX_25;
-      3'd2: wfrd_cnt_max = WFRD_CNT_MAX_50;
-      3'd3: wfrd_cnt_max = WFRD_CNT_MAX_75;
-      3'd4: wfrd_cnt_max = WFRD_CNT_MAX_100;
-      default: wfrd_cnt_max = WFRD_CNT_MAX_0;
+      3'd0: begin
+        wfrd_cnt_max   = WFRD_CNT_MAX_0;
+        trigger_enable = 1'b1;
+      end
+      3'd1: begin
+        wfrd_cnt_max   = WFRD_CNT_MAX_25;
+        trigger_enable = 1'b1;
+      end
+      3'd2: begin
+        wfrd_cnt_max   = WFRD_CNT_MAX_50;
+        trigger_enable = 1'b1;
+      end
+      3'd3: begin
+        wfrd_cnt_max   = WFRD_CNT_MAX_75;
+        trigger_enable = 1'b1;
+      end
+      3'd4: begin
+        wfrd_cnt_max   = WFRD_CNT_MAX_100;
+        trigger_enable = 1'b1;
+      end
+      3'd5: begin
+        wfrd_cnt_max   = WFRD_CNT_MAX_0;
+        trigger_enable = 1'b0;
+      end
+      default: begin
+        wfrd_cnt_max   = WFRD_CNT_MAX_0;
+        trigger_enable = 1'b0;
+      end
     endcase
   end
 
@@ -209,14 +231,4 @@ module acquisition_sync_cache_wr (
     end
   end
 
-  // trigger
-  trigger trigger_0 (
-      .acquisition_clk  (wr_clk),
-      .rst_n            (rst_n),
-      .acquisition_pulse(acquisition_pulse),
-      .is_rising_slope  (trigger_is_rising_slope),
-      .threshold        (trigger_threshold),
-      .ad_data          (ad_data),
-      .trigger          (triggered)
-  );
 endmodule
