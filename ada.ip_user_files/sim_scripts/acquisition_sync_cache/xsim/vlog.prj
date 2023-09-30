@@ -1,0 +1,6 @@
+verilog xil_defaultlib  \
+"../../../../ada.srcs/ips/acquisition_sync_cache/sim/acquisition_sync_cache.v" \
+
+verilog xil_defaultlib "glbl.v"
+
+nosort
