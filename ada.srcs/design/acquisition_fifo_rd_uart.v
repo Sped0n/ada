@@ -120,7 +120,7 @@ module acquisition_fifo_rd_uart (
     end
   end
 
-  // state update
+  // state transition logic
   always @(*) begin
     case (state)
       IDLE: begin
@@ -161,7 +161,7 @@ module acquisition_fifo_rd_uart (
     endcase
   end
 
-  // state output
+  // state machine output logic
   always @(posedge rd_clk or negedge rst_n) begin
     if (!rst_n) begin
       rd_en_tmp  <= 1'b0;
