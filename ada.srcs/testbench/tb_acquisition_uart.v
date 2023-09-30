@@ -29,7 +29,7 @@ module tb_acquisition_uart ();
   reg        sys_clk;
   reg        sys_rst_n;
   reg  [7:0] ad_data;
-  reg        trigger;
+  reg        fifo_wr_en;
 
   // wire define
   wire       clk_50m;  // 50MHz clock
@@ -39,14 +39,14 @@ module tb_acquisition_uart ();
 
   // initial block
   initial begin
-    sys_clk   = 1'b0;
+    sys_clk = 1'b0;
     sys_rst_n = 1'b0;
-    trigger   = 1'b0;
+    fifo_wr_en = 1'b0;
     #200 sys_rst_n = 1'b1;
     #10000 sys_rst_n = 1'b0;
     #400 sys_rst_n = 1'b1;
-    #4000 trigger = 1'b1;
-    #200 trigger = 1'b0;
+    #4000 fifo_wr_en = 1'b1;
+    #200 fifo_wr_en = 1'b0;
   end
 
   // main code
@@ -79,7 +79,7 @@ module tb_acquisition_uart ();
       .clk_50m  (clk_50m),
       .clk_25m  (clk_25m),
       .sys_rst_n(rst_n),
-      .trigger  (trigger),
+      .en       (fifo_wr_en),
       .ad_data  (ad_data),
       .uart_txd ()
   );

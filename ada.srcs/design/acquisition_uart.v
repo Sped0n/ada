@@ -24,7 +24,7 @@ module acquisition_uart (
     input        clk_50m,
     input        clk_25m,
     input        sys_rst_n,
-    input        trigger,
+    input        en,
     input  [7:0] ad_data,
     output       uart_txd
 );
@@ -63,7 +63,7 @@ module acquisition_uart (
       .wr_clk     (clk_25m),
       .rst_n      (sys_rst_n),
       .wr_rst_busy(wr_rst_busy),
-      .trigger    (trigger),
+      .en         (en),
       .almost_full(almost_full),
       .wr_en      (wr_en),
       .wr_data    (wr_data),
