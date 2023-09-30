@@ -61,7 +61,7 @@ module acquisition_pulse_gen (
   assign sel_changed = sel_delay0 != sel;
 
   // pulse
-  assign pulse = pulse_flag_delay0 & (~pulse_flag_delay1);
+  assign pulse = ((pulse_flag_delay0 & (~pulse_flag_delay1)) | (sel == 4'd0)) & clk_25m;
 
   // sel_delay0 (50MHz clock domain)
   always @(posedge clk_50m or negedge sys_rst_n) begin
@@ -72,7 +72,7 @@ module acquisition_pulse_gen (
     end
   end
 
-  // pluse_flag is like a different clock, so we have to delay it to get the pulse in system clock domain
+  // pulse_flag is like a different clock, so we have to delay it to get the pulse in system clock domain
   // 25MHz clock domain
   always @(posedge clk_25m or negedge sys_rst_n) begin
     if (!sys_rst_n) begin
