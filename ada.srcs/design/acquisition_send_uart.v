@@ -24,8 +24,10 @@ module acquisition_send_uart (
     input        clk_50m,
     input        clk_25m,
     input        sys_rst_n,
-    input        en,
-    input  [7:0] ad_data,
+    // acquisition sample
+    input        sample_completed,
+    input  [7:0] sample_data,
+    // uart interface
     output       uart_txd
 );
   // wire define
@@ -48,7 +50,7 @@ module acquisition_send_uart (
       .rd_clk      (clk_50m),
       .wr_en       (wr_en),
       .rd_en       (rd_en),
-      .din         (wr_data),
+      .din         (sample_data),
       .dout        (rd_data),
       .almost_full (almost_full),
       .almost_empty(),
@@ -63,11 +65,9 @@ module acquisition_send_uart (
       .wr_clk     (clk_25m),
       .rst_n      (sys_rst_n),
       .wr_rst_busy(wr_rst_busy),
-      .en         (en),
+      .en         (sample_completed),
       .almost_full(almost_full),
-      .wr_en      (wr_en),
-      .wr_data    (wr_data),
-      .ad_data    (ad_data)
+      .wr_en      (wr_en)
   );
 
   // fifo read
