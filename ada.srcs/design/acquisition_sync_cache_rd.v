@@ -55,16 +55,18 @@ module acquisition_sync_cache_rd (
     end
   end
 
-  // rd_addr control
+  // rd_addr and rd_cnt control
   always @(posedge rd_clk or negedge rst_n) begin
     if (!rst_n) begin
       rd_addr <= 8'd0;
+      rd_cnt  <= 8'd0;
     end else begin
       if (rd_en) begin  // write enable
-        if (rd_addr == 8'd0) begin  // reach the end of ram
-          rd_addr <= 8'd254;
+        rd_cnt <= rd_cnt + 1'b1;
+        if (rd_addr == 8'd254) begin  // reach the end of ram
+          rd_addr <= 8'd0;
         end else begin
-          rd_addr <= rd_addr - 1'b1;
+          rd_addr <= rd_addr + 1'b1;
         end
       end else begin
         rd_addr <= start_addr;
