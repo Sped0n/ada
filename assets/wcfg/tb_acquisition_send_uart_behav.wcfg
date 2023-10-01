@@ -3,10 +3,10 @@
    <wave_state>
    </wave_state>
    <db_ref_list>
-      <db_ref path="tb_acquisition_uart_behav.wdb" id="1">
+      <db_ref path="tb_acquisition_send_uart_behav.wdb" id="1">
          <top_modules>
             <top_module name="glbl" />
-            <top_module name="tb_acquisition_uart" />
+            <top_module name="tb_acquisition_send_uart" />
          </top_modules>
       </db_ref>
    </db_ref_list>
@@ -20,93 +20,93 @@
       <ValueColumnWidth column_width="102"></ValueColumnWidth>
    </column_width_setting>
    <WVObjectSize size="22" />
-   <wvobject fp_name="/tb_acquisition_uart/sys_clk" type="logic">
+   <wvobject fp_name="/tb_acquisition_send_uart/sys_clk" type="logic">
       <obj_property name="ElementShortName">sys_clk</obj_property>
       <obj_property name="ObjectShortName">sys_clk</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_acquisition_uart/sys_rst_n" type="logic">
+   <wvobject fp_name="/tb_acquisition_send_uart/sys_rst_n" type="logic">
       <obj_property name="ElementShortName">sys_rst_n</obj_property>
       <obj_property name="ObjectShortName">sys_rst_n</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_acquisition_uart/fifo_wr_en" type="logic">
+   <wvobject fp_name="/tb_acquisition_send_uart/fifo_wr_en" type="logic">
       <obj_property name="ElementShortName">fifo_wr_en</obj_property>
       <obj_property name="ObjectShortName">fifo_wr_en</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_acquisition_uart/clk_50m" type="logic">
+   <wvobject fp_name="/tb_acquisition_send_uart/clk_50m" type="logic">
       <obj_property name="ElementShortName">clk_50m</obj_property>
       <obj_property name="ObjectShortName">clk_50m</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_acquisition_uart/clk_25m" type="logic">
+   <wvobject fp_name="/tb_acquisition_send_uart/clk_25m" type="logic">
       <obj_property name="ElementShortName">clk_25m</obj_property>
       <obj_property name="ObjectShortName">clk_25m</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_acquisition_uart/locked" type="logic">
+   <wvobject fp_name="/tb_acquisition_send_uart/locked" type="logic">
       <obj_property name="ElementShortName">locked</obj_property>
       <obj_property name="ObjectShortName">locked</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_acquisition_uart/rst_n" type="logic">
+   <wvobject fp_name="/tb_acquisition_send_uart/rst_n" type="logic">
       <obj_property name="ElementShortName">rst_n</obj_property>
       <obj_property name="ObjectShortName">rst_n</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_acquisition_uart/CLK_PERIOD" type="array">
+   <wvobject fp_name="/tb_acquisition_send_uart/CLK_PERIOD" type="array">
       <obj_property name="ElementShortName">CLK_PERIOD[31:0]</obj_property>
       <obj_property name="ObjectShortName">CLK_PERIOD[31:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_tb0/async_fifo_8b_0/full" type="logic">
+   <wvobject fp_name="/tb_acquisition_send_uart/acquisition_send_uart_tb0/async_fifo_8b_0/full" type="logic">
       <obj_property name="ElementShortName">full</obj_property>
       <obj_property name="ObjectShortName">full</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_tb0/async_fifo_8b_0/almost_full" type="logic">
+   <wvobject fp_name="/tb_acquisition_send_uart/acquisition_send_uart_tb0/async_fifo_8b_0/almost_full" type="logic">
       <obj_property name="ElementShortName">almost_full</obj_property>
       <obj_property name="ObjectShortName">almost_full</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_tb0/async_fifo_8b_0/empty" type="logic">
+   <wvobject fp_name="/tb_acquisition_send_uart/acquisition_send_uart_tb0/async_fifo_8b_0/empty" type="logic">
       <obj_property name="ElementShortName">empty</obj_property>
       <obj_property name="ObjectShortName">empty</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_tb0/async_fifo_8b_0/almost_empty" type="logic">
+   <wvobject fp_name="/tb_acquisition_send_uart/acquisition_send_uart_tb0/async_fifo_8b_0/almost_empty" type="logic">
       <obj_property name="ElementShortName">almost_empty</obj_property>
       <obj_property name="ObjectShortName">almost_empty</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_tb0/async_fifo_8b_0/wr_rst_busy" type="logic">
+   <wvobject fp_name="/tb_acquisition_send_uart/acquisition_send_uart_tb0/async_fifo_8b_0/wr_rst_busy" type="logic">
       <obj_property name="ElementShortName">wr_rst_busy</obj_property>
       <obj_property name="ObjectShortName">wr_rst_busy</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_tb0/async_fifo_8b_0/rd_rst_busy" type="logic">
+   <wvobject fp_name="/tb_acquisition_send_uart/acquisition_send_uart_tb0/async_fifo_8b_0/rd_rst_busy" type="logic">
       <obj_property name="ElementShortName">rd_rst_busy</obj_property>
       <obj_property name="ObjectShortName">rd_rst_busy</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_tb0/ad_data" type="array">
+   <wvobject fp_name="/tb_acquisition_send_uart/acquisition_send_uart_tb0/ad_data" type="array">
       <obj_property name="ElementShortName">ad_data[7:0]</obj_property>
       <obj_property name="ObjectShortName">ad_data[7:0]</obj_property>
       <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_tb0/acquisition_fifo_wr_0/wr_en" type="logic">
+   <wvobject fp_name="/tb_acquisition_send_uart/acquisition_send_uart_tb0/acquisition_fifo_wr_0/wr_en" type="logic">
       <obj_property name="ElementShortName">wr_en</obj_property>
       <obj_property name="ObjectShortName">wr_en</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_tb0/acquisition_fifo_wr_0/wr_module_busy" type="logic">
+   <wvobject fp_name="/tb_acquisition_send_uart/acquisition_send_uart_tb0/acquisition_fifo_wr_0/wr_module_busy" type="logic">
       <obj_property name="ElementShortName">wr_module_busy</obj_property>
       <obj_property name="ObjectShortName">wr_module_busy</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_tb0/acquisition_fifo_rd_uart_0/state" type="array">
+   <wvobject fp_name="/tb_acquisition_send_uart/acquisition_send_uart_tb0/acquisition_fifo_rd_uart_0/state" type="array">
       <obj_property name="ElementShortName">state[3:0]</obj_property>
       <obj_property name="ObjectShortName">state[3:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_tb0/acquisition_fifo_rd_uart_0/rd_data" type="array">
+   <wvobject fp_name="/tb_acquisition_send_uart/acquisition_send_uart_tb0/acquisition_fifo_rd_uart_0/rd_data" type="array">
       <obj_property name="ElementShortName">rd_data[7:0]</obj_property>
       <obj_property name="ObjectShortName">rd_data[7:0]</obj_property>
       <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_tb0/acquisition_fifo_rd_uart_0/uart_tx_en" type="logic">
+   <wvobject fp_name="/tb_acquisition_send_uart/acquisition_send_uart_tb0/acquisition_fifo_rd_uart_0/uart_tx_en" type="logic">
       <obj_property name="ElementShortName">uart_tx_en</obj_property>
       <obj_property name="ObjectShortName">uart_tx_en</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_tb0/acquisition_fifo_rd_uart_0/uart_tx_busy" type="logic">
+   <wvobject fp_name="/tb_acquisition_send_uart/acquisition_send_uart_tb0/acquisition_fifo_rd_uart_0/uart_tx_busy" type="logic">
       <obj_property name="ElementShortName">uart_tx_busy</obj_property>
       <obj_property name="ObjectShortName">uart_tx_busy</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_tb0/acquisition_fifo_rd_uart_0/uart_txd" type="logic">
+   <wvobject fp_name="/tb_acquisition_send_uart/acquisition_send_uart_tb0/acquisition_fifo_rd_uart_0/uart_txd" type="logic">
       <obj_property name="ElementShortName">uart_txd</obj_property>
       <obj_property name="ObjectShortName">uart_txd</obj_property>
    </wvobject>

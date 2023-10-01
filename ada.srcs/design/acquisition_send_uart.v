@@ -5,7 +5,7 @@
 // 
 // Create Date: 09/29/2023 01:03:43 AM
 // Design Name: 
-// Module Name: acquisition_uart
+// Module Name: acquisition_send_uart
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module acquisition_uart (
+module acquisition_send_uart (
     input        clk_50m,
     input        clk_25m,
     input        sys_rst_n,
@@ -29,15 +29,15 @@ module acquisition_uart (
     output       uart_txd
 );
   // wire define
-  wire wr_rst_busy;
-  wire rd_rst_busy;
-  wire wr_en;
-  wire rd_en;
+  wire       wr_rst_busy;
+  wire       rd_rst_busy;
+  wire       wr_en;
+  wire       rd_en;
   wire [7:0] wr_data;
   wire [7:0] rd_data;
-  wire almost_full;
-  wire empty;
-  wire full;
+  wire       almost_full;
+  wire       empty;
+  wire       full;
 
   // main code
 
@@ -81,4 +81,5 @@ module acquisition_uart (
       .rd_en      (rd_en),
       .uart_txd   (uart_txd)
   );
+
 endmodule

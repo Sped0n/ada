@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module tb_acquisition_uart ();
+module tb_acquisition_send_uart ();
 
   // parameter define
   parameter CLK_PERIOD = 20;
@@ -74,8 +74,8 @@ module tb_acquisition_uart ();
       .clk_in1     (sys_clk)   // input clock
   );
 
-  // acquisition_uart
-  acquisition_uart acquisition_uart_tb0 (
+  // acquisition_send_uart
+  acquisition_send_uart acquisition_send_uart_tb0 (
       .clk_50m  (clk_50m),
       .clk_25m  (clk_25m),
       .sys_rst_n(rst_n),
