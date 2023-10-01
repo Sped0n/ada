@@ -380,6 +380,8 @@
         <Option Name="PamPseudoTop" Val="pseudo_tb"/>
         <Option Name="SrcSet" Val="sources_1"/>
         <Option Name="XSimWcfgFile" Val="$PPRDIR/assets/wcfg/tb_acquisition_uart_behav.wcfg"/>
+        <Option Name="XSimWcfgFile" Val="$PPRDIR/assets/wcfg/tb_acquisition_sample_behav.wcfg"/>
+        <Option Name="XSimWcfgFile" Val="$PPRDIR/assets/wcfg/tb_trigger_with_pulse_behav.wcfg"/>
       </Config>
     </FileSet>
     <FileSet Name="sin_rom_256x8b" Type="BlockSrcs" RelSrcDir="$PSRCDIR/sin_rom_256x8b" RelGenDir="$PGENDIR/sin_rom_256x8b">

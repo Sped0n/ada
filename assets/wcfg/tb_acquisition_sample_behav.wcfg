@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="tb_acquisition_sample_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="tb_acquisition_sample" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="418,412.000 ns"></ZoomStartTime>
+      <ZoomEndTime time="421,652.001 ns"></ZoomEndTime>
+      <Cursor1Time time="419,329.999 ns"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="328"></NameColumnWidth>
+      <ValueColumnWidth column_width="102"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="24" />
+   <wvobject fp_name="/tb_acquisition_sample/sys_clk" type="logic">
+      <obj_property name="ElementShortName">sys_clk</obj_property>
+      <obj_property name="ObjectShortName">sys_clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_sample/sys_rst_n" type="logic">
+      <obj_property name="ElementShortName">sys_rst_n</obj_property>
+      <obj_property name="ObjectShortName">sys_rst_n</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_sample/acquisition_en" type="logic">
+      <obj_property name="ElementShortName">acquisition_en</obj_property>
+      <obj_property name="ObjectShortName">acquisition_en</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_sample/clk_50m" type="logic">
+      <obj_property name="ElementShortName">clk_50m</obj_property>
+      <obj_property name="ObjectShortName">clk_50m</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_sample/clk_25m" type="logic">
+      <obj_property name="ElementShortName">clk_25m</obj_property>
+      <obj_property name="ObjectShortName">clk_25m</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_sample/locked" type="logic">
+      <obj_property name="ElementShortName">locked</obj_property>
+      <obj_property name="ObjectShortName">locked</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_sample/rst_n" type="logic">
+      <obj_property name="ElementShortName">rst_n</obj_property>
+      <obj_property name="ObjectShortName">rst_n</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_sample/ad_data" type="array">
+      <obj_property name="ElementShortName">ad_data[7:0]</obj_property>
+      <obj_property name="ObjectShortName">ad_data[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_sample/acquisition_sample_0/fifo_en_flag" type="logic">
+      <obj_property name="ElementShortName">fifo_en_flag</obj_property>
+      <obj_property name="ObjectShortName">fifo_en_flag</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_sample/acquisition_sample_0/cache_wr_ready" type="logic">
+      <obj_property name="ElementShortName">cache_wr_ready</obj_property>
+      <obj_property name="ObjectShortName">cache_wr_ready</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_sample/acquisition_sample_0/cache_rd_busy" type="logic">
+      <obj_property name="ElementShortName">cache_rd_busy</obj_property>
+      <obj_property name="ObjectShortName">cache_rd_busy</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_sample/acquisition_sample_0/rd_en" type="logic">
+      <obj_property name="ElementShortName">rd_en</obj_property>
+      <obj_property name="ObjectShortName">rd_en</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_sample/acquisition_sample_0/rd_addr" type="array">
+      <obj_property name="ElementShortName">rd_addr[7:0]</obj_property>
+      <obj_property name="ObjectShortName">rd_addr[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_sample/acquisition_sample_0/acquisition_data" type="array">
+      <obj_property name="ElementShortName">acquisition_data[7:0]</obj_property>
+      <obj_property name="ObjectShortName">acquisition_data[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_sample/acquisition_sample_0/acquisition_sync_cache_wr_0/wr_we" type="logic">
+      <obj_property name="ElementShortName">wr_we</obj_property>
+      <obj_property name="ObjectShortName">wr_we</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_sample/acquisition_sample_0/acquisition_sync_cache_wr_0/wr_en" type="logic">
+      <obj_property name="ElementShortName">wr_en</obj_property>
+      <obj_property name="ObjectShortName">wr_en</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_sample/acquisition_sample_0/wr_addr" type="array">
+      <obj_property name="ElementShortName">wr_addr[7:0]</obj_property>
+      <obj_property name="ObjectShortName">wr_addr[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_sample/acquisition_sample_0/acquisition_sync_cache_wr_0/wr_data" type="array">
+      <obj_property name="ElementShortName">wr_data[7:0]</obj_property>
+      <obj_property name="ObjectShortName">wr_data[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_sample/acquisition_sample_0/acquisition_sync_cache_wr_0/state" type="array">
+      <obj_property name="ElementShortName">state[4:0]</obj_property>
+      <obj_property name="ObjectShortName">state[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_sample/acquisition_sample_0/acquisition_sync_cache_wr_0/cache_cnt" type="array">
+      <obj_property name="ElementShortName">cache_cnt[7:0]</obj_property>
+      <obj_property name="ObjectShortName">cache_cnt[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_sample/acquisition_sample_0/acquisition_sync_cache_wr_0/wfrd_cnt" type="array">
+      <obj_property name="ElementShortName">wfrd_cnt[7:0]</obj_property>
+      <obj_property name="ObjectShortName">wfrd_cnt[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_sample/acquisition_sample_0/acquisition_sync_cache_wr_0/wfrd_cnt_max" type="array">
+      <obj_property name="ElementShortName">wfrd_cnt_max[7:0]</obj_property>
+      <obj_property name="ObjectShortName">wfrd_cnt_max[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_sample/acquisition_sample_0/acquisition_sync_cache_wr_0/acquisition_pulse" type="logic">
+      <obj_property name="ElementShortName">acquisition_pulse</obj_property>
+      <obj_property name="ObjectShortName">acquisition_pulse</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_sample/acquisition_sample_0/acquisition_sync_cache_wr_0/triggered" type="logic">
+      <obj_property name="ElementShortName">triggered</obj_property>
+      <obj_property name="ObjectShortName">triggered</obj_property>
+   </wvobject>
+</wave_config>
