@@ -21,16 +21,16 @@
 
 
 module trigger (
-    input        acquisition_clk,
-    input        rst_n,
-    input        acquisition_pulse,
+    input            acquisition_clk,
+    input            rst_n,
+    input            acquisition_pulse,
     // trigger params
-    input        is_rising_slope,
-    input  [7:0] threshold,
+    input            is_rising_slope,
+    input      [7:0] threshold,
     // ad data
-    input  [7:0] ad_data,
+    input      [7:0] ad_data,
     // result
-    output       trigger
+    output reg       trigger
 );
   // reg define
   reg cmp0;
@@ -38,18 +38,24 @@ module trigger (
 
   // main code
 
-  assign trigger = (~is_rising_slope ^ cmp0) & (~is_rising_slope ^ ~cmp1) & acquisition_pulse;
-
   always @(posedge acquisition_clk or rst_n) begin
     if (!rst_n) begin
       cmp0 <= 1'b0;
       cmp1 <= 1'b0;
     end else if (acquisition_pulse) begin
-      cmp0 <= (ad_data >= threshold);
+      cmp0 <= (ad_data >= (threshold - 8'd5));
       cmp1 <= cmp0;
     end else begin
       cmp0 <= cmp0;
       cmp1 <= cmp1;
+    end
+  end
+
+  always @(posedge acquisition_clk or negedge rst_n) begin
+    if (!rst_n) begin
+      trigger <= 1'b0;
+    end else begin
+      trigger <= (~is_rising_slope ^ cmp0) & (~is_rising_slope ^ ~cmp1) & acquisition_pulse;
     end
   end
 
