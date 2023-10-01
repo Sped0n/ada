@@ -29,8 +29,8 @@ module acquisition_sample (
     // ad data
     input  [7:0] ad_data,
     // data to fifo
-    output       fifo_en_flag,
-    output [7:0] acquisition_data,
+    output       sample_completed,
+    output [7:0] sample_data,
     // trigger config
     input  [7:0] trigger_threshold,
     input        trigger_is_rising_slope,
@@ -56,17 +56,16 @@ module acquisition_sample (
 
   // main code
 
-  assign fifo_en_flag = rd_en;
-
   // dual port ram read
   acquisition_sync_cache_rd acquisition_sync_cache_rd_0 (
-      .rd_clk        (clk_25m),
-      .rst_n         (sys_rst_n),
-      .cache_wr_ready(cache_wr_ready),
-      .cache_rd_busy (cache_rd_busy),
-      .start_addr    (wr_addr),
-      .rd_en         (rd_en),
-      .rd_addr       (rd_addr)
+      .rd_clk          (clk_25m),
+      .rst_n           (sys_rst_n),
+      .cache_wr_ready  (cache_wr_ready),
+      .cache_rd_busy   (cache_rd_busy),
+      .start_addr      (wr_addr),
+      .rd_en           (rd_en),
+      .rd_addr         (rd_addr),
+      .sample_completed(sample_completed)
   );
 
   // dual port ram write
@@ -96,7 +95,7 @@ module acquisition_sample (
       .clkb (clk_25m),
       .enb  (rd_en),
       .addrb(rd_addr),
-      .doutb(acquisition_data)
+      .doutb(sample_data)
   );
 
   // trigger

@@ -21,26 +21,30 @@
 
 
 module acquisition_sync_cache_rd (
-    input rd_clk,
-    input rst_n,
+    input            rd_clk,
+    input            rst_n,
     // handshake
-    input cache_wr_ready,
-    output cache_rd_busy,
+    input            cache_wr_ready,
+    output           cache_rd_busy,
     // address to start reading
-    input [7:0] start_addr,
+    input      [7:0] start_addr,
     // dual port ram
-    output reg rd_en,
-    output reg [7:0] rd_addr
+    output reg       rd_en,
+    output reg [7:0] rd_addr,
+    // fifo enable flag
+    output           sample_completed
 );
   // parameter define
   parameter RD_CNT_MAX = 255;
 
   // reg define
   reg [7:0] rd_cnt;
+  reg       rd_en_delay0;
 
   // main code
 
   assign cache_rd_busy = rd_en;
+  assign sample_completed = rd_en & (~rd_en_delay0);
 
   // handle cache_wr_ready
   always @(posedge rd_clk or negedge rst_n) begin
@@ -71,6 +75,15 @@ module acquisition_sync_cache_rd (
       end else begin
         rd_addr <= start_addr;
       end
+    end
+  end
+
+  // rd_en_delay0
+  always @(posedge rd_clk or negedge rst_n) begin
+    if (!rst_n) begin
+      rd_en_delay0 <= 1'b0;
+    end else begin
+      rd_en_delay0 <= rd_en;
     end
   end
 
