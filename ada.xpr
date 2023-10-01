@@ -57,7 +57,7 @@
     <Option Name="IPUserFilesDir" Val="$PIPUSERFILESDIR"/>
     <Option Name="IPStaticSourceDir" Val="$PIPUSERFILESDIR/ipstatic"/>
     <Option Name="EnableBDX" Val="FALSE"/>
-    <Option Name="WTXSimLaunchSim" Val="196"/>
+    <Option Name="WTXSimLaunchSim" Val="245"/>
     <Option Name="WTModelSimLaunchSim" Val="0"/>
     <Option Name="WTQuestaLaunchSim" Val="0"/>
     <Option Name="WTIesLaunchSim" Val="0"/>
@@ -315,7 +315,7 @@
     </FileSet>
     <FileSet Name="simulation" Type="SimulationSrcs" RelSrcDir="$PSRCDIR/simulation" RelGenDir="$PGENDIR/simulation">
       <Filter Type="Srcs"/>
-      <File Path="$PSRCDIR/testbench/tb_acquisition_uart.v">
+      <File Path="$PSRCDIR/testbench/tb_acquisition_sample.v">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
@@ -323,6 +323,14 @@
         </FileInfo>
       </File>
       <File Path="$PSRCDIR/testbench/tb_trigger_with_pulse.v">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/testbench/tb_acquisition_uart.v">
         <FileInfo>
           <Attr Name="AutoDisabled" Val="1"/>
           <Attr Name="UsedIn" Val="synthesis"/>
@@ -372,12 +380,23 @@
       </File>
       <File Path="$PPRDIR/assets/wcfg/tb_acquisition_uart_behav.wcfg">
         <FileInfo>
+          <Attr Name="UserDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PPRDIR/assets/wcfg/tb_acquisition_sample_behav.wcfg">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PPRDIR/assets/wcfg/tb_trigger_with_pulse_behav.wcfg">
+        <FileInfo>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
       <Config>
         <Option Name="DesignMode" Val="RTL"/>
-        <Option Name="TopModule" Val="tb_acquisition_uart"/>
+        <Option Name="TopModule" Val="tb_acquisition_sample"/>
         <Option Name="TopLib" Val="xil_defaultlib"/>
         <Option Name="TransportPathDelay" Val="0"/>
         <Option Name="TransportIntDelay" Val="0"/>
@@ -593,9 +612,7 @@
     </Run>
     <Run Id="acquisition_sync_cache_synth_1" Type="Ft3:Synth" SrcSet="acquisition_sync_cache" Part="xc7a35tfgg484-2" ConstrsSet="acquisition_sync_cache" Description="Vivado Synthesis Defaults" AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" Dir="$PRUNDIR/acquisition_sync_cache_synth_1" IncludeInArchive="true" IsChild="false">
       <Strategy Version="1" Minor="2">
-        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2022">
-          <Desc>Vivado Synthesis Defaults</Desc>
-        </StratHandle>
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2022"/>
         <Step Id="synth_design"/>
       </Strategy>
       <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
@@ -741,9 +758,7 @@
     </Run>
     <Run Id="acquisition_sync_cache_impl_1" Type="Ft2:EntireDesign" Part="xc7a35tfgg484-2" ConstrsSet="acquisition_sync_cache" Description="Default settings for Implementation." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" SynthRun="acquisition_sync_cache_synth_1" IncludeInArchive="false" IsChild="false" GenFullBitstream="true">
       <Strategy Version="1" Minor="2">
-        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2022">
-          <Desc>Default settings for Implementation.</Desc>
-        </StratHandle>
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2022"/>
         <Step Id="init_design"/>
         <Step Id="opt_design"/>
         <Step Id="power_opt_design"/>
