@@ -47,11 +47,11 @@ module acquisition_sync_cache_wr (
   parameter WFRD = 5'b01000;  // wait for rest data
   parameter HANDSHAKE = 5'b10000;
 
-  parameter WFRD_CNT_MAX_0 = 0;
-  parameter WFRD_CNT_MAX_25 = 63;
+  parameter WFRD_CNT_MAX_0 = 255;
+  parameter WFRD_CNT_MAX_25 = 191;
   parameter WFRD_CNT_MAX_50 = 127;
   parameter WFRD_CNT_MAX_75 = 191;
-  parameter WFRD_CNT_MAX_100 = 255;
+  parameter WFRD_CNT_MAX_100 = 63;
 
   // reg define
   reg [4:0] state;
@@ -66,7 +66,7 @@ module acquisition_sync_cache_wr (
 
   // main code
 
-  assign wr_re   = wr_en;
+  assign wr_we   = wr_en;
   assign wr_data = ad_data;
 
   // trigger_positon control
@@ -181,11 +181,13 @@ module acquisition_sync_cache_wr (
     if (!rst_n) begin
       cache_cnt <= 8'd0;
       wr_en <= 1'b0;
+      cache_wr_ready <= 1'b0;
+      wfrd_cnt <= 8'd0;
     end else begin
       case (state)
         IDLE: begin
           // reset ready flag
-          cache_wr_ready <= 8'd0;
+          cache_wr_ready <= 1'b0;
           // reset
           cache_cnt <= 8'd0;
           wfrd_cnt <= 8'd0;
@@ -221,7 +223,7 @@ module acquisition_sync_cache_wr (
         end
         HANDSHAKE: begin
           // enable ready flag
-          cache_wr_ready <= 8'd1;
+          cache_wr_ready <= 1'b1;
           // reset
           cache_cnt <= 8'd0;
           wfrd_cnt <= 8'd0;
