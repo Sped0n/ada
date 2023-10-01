@@ -47,6 +47,7 @@ module tb_trigger_with_pulse ();
     #200 sys_rst_n = 1'b1;
     #100000 sel = 4'd1;
     #100000 sel = 4'd0;
+    #100000 sel = 4'd5;
     is_rising_slope = 1'b0;
   end
 
