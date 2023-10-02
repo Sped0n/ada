@@ -194,6 +194,8 @@ module acquisition_sync_cache_wr (
           wr_en <= 1'b0;
         end
         CACHING: begin
+          cache_wr_ready <= 1'b0;
+          wfrd_cnt <= 8'd0;
           // filling cache, and use cache_cnt as the cache filled metric
           if (acquisition_pulse) begin
             cache_cnt <= cache_cnt + 1'b1;
@@ -204,6 +206,9 @@ module acquisition_sync_cache_wr (
           end
         end
         WFT: begin
+          cache_wr_ready <= 1'b0;
+          cache_cnt <= 8'd0;
+          wfrd_cnt <= 8'd0;
           // just keep sampling, state machine will automatically go to WFRD when trigger is detected
           if (acquisition_pulse) begin
             wr_en <= 1'b1;
@@ -212,6 +217,8 @@ module acquisition_sync_cache_wr (
           end
         end
         WFRD: begin
+          cache_wr_ready <= 1'b0;
+          cache_cnt <= 8'd0;
           // keep sampling, and use wfrd_cnt as the cache filled metric
           if (acquisition_pulse) begin
             wr_en <= 1'b1;
