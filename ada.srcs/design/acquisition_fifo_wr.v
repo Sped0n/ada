@@ -28,9 +28,13 @@ module acquisition_fifo_wr (
     input      wr_rst_busy,  // fifo write reset busy
     input      en,           // enable signal, active high
     input      almost_full,  // fifo almost full signal
-    output reg wr_en         // fifo write enable
+    output reg wr_en,        // fifo write enable
+    // busy signal
+    output     wr_busy
 );
   // main code
+
+  assign wr_busy = wr_en;
 
   // assign value to fifo write enable, start pushing data when en is high till fifo is almost full
   always @(posedge wr_clk or negedge rst_n) begin

@@ -22,16 +22,18 @@
 
 module acquisition_fifo_rd_uart (
     // clock, use system clock here (50MHz)
-    input        rd_clk,
-    input        rst_n,
+    input            rd_clk,
+    input            rst_n,
     // fifo interface
-    input        wr_rst_busy,
-    input  [7:0] rd_data,
-    input        full,
-    input        empty,
-    output       rd_en,
+    input            wr_rst_busy,
+    input      [7:0] rd_data,
+    input            full,
+    input            empty,
+    output           rd_en,
     // uart interface
-    output       uart_txd
+    output           uart_txd,
+    // busy signal
+    output reg       rd_busy
 );
   // parameter define
   parameter IDLE = 4'b0001;
@@ -54,7 +56,7 @@ module acquisition_fifo_rd_uart (
   reg rd_en_tmp_delay0;
   reg rd_en_delay0;  // for state machine to swtich state more precisely (do not switch state when fifo is resetting)
   reg uart_tx_en;
-  reg empty_delay0;  // fifo empty delay, we still have one unfetched datawhen empty is high, in order to get all data, we have to delay empty for one clock cycle
+  reg empty_delay0;  // fifo empty delay, we still have one unfetched data when empty is high, in order to get all data, we have to delay empty for one clock cycle
 
   // wire define
   wire uart_tx_busy;
@@ -166,27 +168,33 @@ module acquisition_fifo_rd_uart (
     if (!rst_n) begin
       rd_en_tmp  <= 1'b0;
       uart_tx_en <= 1'b0;
+      rd_busy    <= 1'b0;
     end else begin
       case (state)
         IDLE: begin
           rd_en_tmp  <= 1'b0;
           uart_tx_en <= 1'b0;
+          rd_busy    <= 1'b0;
         end
         FETCH: begin
           rd_en_tmp  <= 1'b1;
           uart_tx_en <= 1'b0;
+          rd_busy    <= 1'b1;
         end
         SEND_ENABLE: begin
           rd_en_tmp  <= 1'b0;
           uart_tx_en <= 1'b1;
+          rd_busy    <= 1'b1;
         end
         SENDING: begin
           rd_en_tmp  <= 1'b0;
           uart_tx_en <= 1'b0;
+          rd_busy    <= 1'b1;
         end
         default: begin
           rd_en_tmp  <= rd_en_tmp;
           uart_tx_en <= uart_tx_en;
+          rd_busy    <= rd_busy;
         end
       endcase
     end
