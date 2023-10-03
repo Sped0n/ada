@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="7,785.191666 us"></ZoomStartTime>
-      <ZoomEndTime time="10,444.161667 us"></ZoomEndTime>
-      <Cursor1Time time="10,001.000000 us"></Cursor1Time>
+      <ZoomStartTime time="20,511.497692 us"></ZoomStartTime>
+      <ZoomEndTime time="23,751.497693 us"></ZoomEndTime>
+      <Cursor1Time time="22,397.330000 us"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="335"></NameColumnWidth>
+      <NameColumnWidth column_width="328"></NameColumnWidth>
       <ValueColumnWidth column_width="102"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="21" />
+   <WVObjectSize size="26" />
    <wvobject fp_name="/tb_acquisition_send_uart/sys_clk" type="logic">
       <obj_property name="ElementShortName">sys_clk</obj_property>
       <obj_property name="ObjectShortName">sys_clk</obj_property>
@@ -80,9 +80,31 @@
       <obj_property name="ElementShortName">wr_en</obj_property>
       <obj_property name="ObjectShortName">wr_en</obj_property>
    </wvobject>
+   <wvobject fp_name="/tb_acquisition_send_uart/acquisition_send_uart_tb0/async_fifo_8b_0/din" type="array">
+      <obj_property name="ElementShortName">din[7:0]</obj_property>
+      <obj_property name="ObjectShortName">din[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_send_uart/acquisition_send_uart_tb0/acquisition_fifo_rd_uart_0/rd_en" type="logic">
+      <obj_property name="ElementShortName">rd_en</obj_property>
+      <obj_property name="ObjectShortName">rd_en</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_send_uart/acquisition_send_uart_tb0/async_fifo_8b_0/dout" type="array">
+      <obj_property name="ElementShortName">dout[7:0]</obj_property>
+      <obj_property name="ObjectShortName">dout[7:0]</obj_property>
+   </wvobject>
    <wvobject fp_name="/tb_acquisition_send_uart/acquisition_send_uart_tb0/acquisition_fifo_rd_uart_0/state" type="array">
       <obj_property name="ElementShortName">state[3:0]</obj_property>
       <obj_property name="ObjectShortName">state[3:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_send_uart/acquisition_send_uart_tb0/acquisition_fifo_rd_uart_0/send_cnt" type="array">
+      <obj_property name="ElementShortName">send_cnt[8:0]</obj_property>
+      <obj_property name="ObjectShortName">send_cnt[8:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_send_uart/acquisition_send_uart_tb0/acquisition_fifo_rd_uart_0/check_sum" type="array">
+      <obj_property name="ElementShortName">check_sum[7:0]</obj_property>
+      <obj_property name="ObjectShortName">check_sum[7:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/tb_acquisition_send_uart/acquisition_send_uart_tb0/acquisition_fifo_rd_uart_0/rd_data" type="array">
       <obj_property name="ElementShortName">rd_data[7:0]</obj_property>
@@ -100,7 +122,7 @@
    <wvobject fp_name="/tb_acquisition_send_uart/uart_tx_tbasu0/uart_tx_data" type="array">
       <obj_property name="ElementShortName">uart_tx_data[7:0]</obj_property>
       <obj_property name="ObjectShortName">uart_tx_data[7:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/tb_acquisition_send_uart/uart_tx_tbasu0/uart_txd" type="logic">
       <obj_property name="ElementShortName">uart_txd</obj_property>

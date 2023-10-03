@@ -32,7 +32,7 @@ module acquisition_fifo_rd_uart (
     output           rd_en,
     // uart interface
     output reg       uart_tx_en,
-    output     [7:0] uart_tx_data,
+    output reg [7:0] uart_tx_data,
     input            uart_tx_busy,
     // busy signal
     output reg       rd_busy
@@ -42,6 +42,7 @@ module acquisition_fifo_rd_uart (
   parameter FETCH = 4'b0010;
   parameter SEND_ENABLE = 4'b0100;
   parameter SENDING = 4'b1000;
+
 
   // reg define
   reg [3:0] state;
@@ -53,8 +54,10 @@ module acquisition_fifo_rd_uart (
   reg wr_rst_busy_delay1;
   reg rd_en_tmp;
   reg rd_en_tmp_delay0;
-  reg rd_en_delay0;  // data will be outputed one clock cycle after rd_en is high
-  reg empty_delay0;  // fifo empty delay, we still have one unfetched data when empty is high, in order to get all data, we have to delay empty for one clock cycle
+  reg [8:0] send_cnt;
+  reg [7:0] check_sum;
+  reg fetched;
+  reg stat_refreshed;
 
   // wire define
   wire rd_en_pulse;
@@ -62,8 +65,6 @@ module acquisition_fifo_rd_uart (
   // main code
 
   assign rd_en = rd_en_tmp & (~rd_en_tmp_delay0);
-
-  assign uart_tx_data = rd_data;
 
   // full and wr_rst_busy is from write clock domain
   // rd_en_tmp_delay and rd_en_delay
@@ -77,10 +78,6 @@ module acquisition_fifo_rd_uart (
       wr_rst_busy_delay1 <= 1'b0;
       // rd_en_tmp
       rd_en_tmp_delay0 <= 1'b0;
-      // rd_en
-      rd_en_delay0 <= 1'b0;
-      // empty
-      empty_delay0 <= 1'b0;
     end else begin
       // full
       full_delay0 <= full;
@@ -90,10 +87,6 @@ module acquisition_fifo_rd_uart (
       wr_rst_busy_delay1 <= wr_rst_busy_delay0;
       // rd_en_tmp
       rd_en_tmp_delay0 <= rd_en_tmp;
-      // rd_en
-      rd_en_delay0 <= rd_en;
-      // empty
-      empty_delay0 <= empty;
     end
   end
 
@@ -118,15 +111,13 @@ module acquisition_fifo_rd_uart (
           next_state = IDLE;
         end
       end
-      FETCH: begin  // fetch data from fifo
-        if (empty_delay0) begin  // fifo is empty, stop reading data
+      FETCH: begin  // fetch data
+        if (send_cnt == 9'd259) begin
           next_state = IDLE;
+        end else if (fetched) begin
+          next_state = SEND_ENABLE;
         end else begin
-          if (rd_en_delay0 == 1'b1) begin
-            next_state = SEND_ENABLE;
-          end else begin
-            next_state = FETCH;
-          end
+          next_state = FETCH;
         end
       end
       SEND_ENABLE: begin  // send data to uart
@@ -155,32 +146,73 @@ module acquisition_fifo_rd_uart (
       rd_en_tmp  <= 1'b0;
       uart_tx_en <= 1'b0;
       rd_busy    <= 1'b0;
+      send_cnt   <= 9'd0;
+      uart_tx_data <= 8'd0;
+      check_sum  <= 8'd0;
+      fetched    <= 1'b0;
     end else begin
       case (state)
         IDLE: begin
           rd_en_tmp  <= 1'b0;
           uart_tx_en <= 1'b0;
           rd_busy    <= 1'b0;
+          send_cnt   <= 9'd0;
+          uart_tx_data <= 8'd0;
+          check_sum  <= 8'd0;
+          fetched    <= 1'b0;
+          stat_refreshed <= 1'b0;
         end
         FETCH: begin
-          rd_en_tmp  <= 1'b1;
+          if ((send_cnt > 9'd2) && (send_cnt < 9'd258)) begin
+            rd_en_tmp <= 1'b1;
+          end else begin
+            rd_en_tmp <= 1'b0;
+          end
           uart_tx_en <= 1'b0;
           rd_busy    <= 1'b1;
+          fetched    <= 1'b1;
+          stat_refreshed <= 1'b0;
         end
         SEND_ENABLE: begin
+          if (send_cnt == 9'd0) begin
+            uart_tx_data <= 8'h55;  // packet header
+          end else if (send_cnt == 9'd1) begin
+            uart_tx_data <= 8'h01;  // packet type
+          end else if (send_cnt == 9'd2) begin
+            uart_tx_data <= 8'd255;  // packet data length
+          end else if ((send_cnt > 9'd2) && (send_cnt < 9'd258)) begin
+            uart_tx_data <= rd_data;
+            check_sum    <= check_sum + rd_data;
+          end else if (send_cnt == 9'd258) begin
+            uart_tx_data <= check_sum;
+          end else begin
+            uart_tx_data <= 8'h00;
+          end
           rd_en_tmp  <= 1'b0;
           uart_tx_en <= 1'b1;
           rd_busy    <= 1'b1;
+          fetched    <= 1'b0;
+          stat_refreshed <= 1'b0;
         end
         SENDING: begin
+          if (!stat_refreshed) begin
+            check_sum <= check_sum + uart_tx_data;
+            send_cnt <= send_cnt + 9'd1;
+            stat_refreshed <= 1'b1;
+          end
           rd_en_tmp  <= 1'b0;
           uart_tx_en <= 1'b0;
           rd_busy    <= 1'b1;
+          fetched    <= 1'b0;
         end
         default: begin
           rd_en_tmp  <= rd_en_tmp;
           uart_tx_en <= uart_tx_en;
           rd_busy    <= rd_busy;
+          send_cnt   <= send_cnt;
+          uart_tx_data <= uart_tx_data;
+          check_sum  <= check_sum;
+          fetched    <= fetched;
         end
       endcase
     end
