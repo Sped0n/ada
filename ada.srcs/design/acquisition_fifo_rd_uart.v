@@ -49,11 +49,11 @@ module acquisition_fifo_rd_uart (
 
   reg full_delay0;
   reg full_delay1;
-  reg wr_rst_busy_delay0;
+  reg wr_rst_busy_delay0; // for state machine to swtich state more precisely (do not switch state when fifo is resetting)
   reg wr_rst_busy_delay1;
   reg rd_en_tmp;
   reg rd_en_tmp_delay0;
-  reg rd_en_delay0;  // for state machine to swtich state more precisely (do not switch state when fifo is resetting)
+  reg rd_en_delay0;  // data will be outputed one clock cycle after rd_en is high
   reg empty_delay0;  // fifo empty delay, we still have one unfetched data when empty is high, in order to get all data, we have to delay empty for one clock cycle
 
   // wire define

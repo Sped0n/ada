@@ -1,10 +1,10 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
 // Company: 
-// Engineer: 
+// Engineer: spedon wen
 // 
 // Create Date: 09/28/2023 02:38:39 AM
-// Design Name: spedon wen
+// Design Name:
 // Module Name: uart_tx
 // Project Name: 
 // Target Devices: 
