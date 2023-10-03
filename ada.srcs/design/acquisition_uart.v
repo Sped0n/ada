@@ -35,7 +35,9 @@ module acquisition_uart (
     // acquisition pulse config
     input      [3:0] acquisition_pulse_sel,
     // uart
-    output           uart_txd,
+    output           uart_tx_en,
+    output     [7:0] uart_tx_data,
+    input            uart_tx_busy,
     // busy signal
     output reg       acquisition_busy
 );
@@ -120,28 +122,30 @@ module acquisition_uart (
 
   // acquisition_sample
   acquisition_sample acquisition_sample_0 (
-      .clk_50m(clk_50m),
-      .clk_25m(clk_25m),
-      .sys_rst_n(sys_rst_n),
-      .acquisition_en(acquisition_en),
-      .ad_data(ad_data),
-      .sample_completed(sample_completed),
-      .sample_data(sample_data),
-      .trigger_threshold(trigger_threshold),
+      .clk_50m                (clk_50m),
+      .clk_25m                (clk_25m),
+      .sys_rst_n              (sys_rst_n),
+      .acquisition_en         (acquisition_en),
+      .ad_data                (ad_data),
+      .sample_completed       (sample_completed),
+      .sample_data            (sample_data),
+      .trigger_threshold      (trigger_threshold),
       .trigger_is_rising_slope(trigger_is_rising_slope),
-      .trigger_position(trigger_position),
-      .acquisition_pulse_sel(acquisition_pulse_sel)
+      .trigger_position       (trigger_position),
+      .acquisition_pulse_sel  (acquisition_pulse_sel)
   );
 
   // aqcquisition_send_uart
   acquisition_send_uart acquisition_send_uart_0 (
-      .clk_50m(clk_50m),
-      .clk_25m(clk_25m),
-      .sys_rst_n(sys_rst_n),
+      .clk_50m         (clk_50m),
+      .clk_25m         (clk_25m),
+      .sys_rst_n       (sys_rst_n),
       .sample_completed(sample_completed),
-      .sample_data(sample_data),
-      .uart_txd(uart_txd),
-      .send_busy(send_busy)
+      .sample_data     (sample_data),
+      .uart_tx_en      (uart_tx_en),
+      .uart_tx_data    (uart_tx_data),
+      .uart_tx_busy    (uart_tx_busy),
+      .send_busy       (send_busy)
   );
 
 endmodule

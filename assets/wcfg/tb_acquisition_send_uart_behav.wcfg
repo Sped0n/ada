@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="24,561.999 ns"></ZoomStartTime>
-      <ZoomEndTime time="25,365.000 ns"></ZoomEndTime>
-      <Cursor1Time time="24,809.999 ns"></Cursor1Time>
+      <ZoomStartTime time="7,785.191666 us"></ZoomStartTime>
+      <ZoomEndTime time="10,444.161667 us"></ZoomEndTime>
+      <Cursor1Time time="10,001.000000 us"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="342"></NameColumnWidth>
+      <NameColumnWidth column_width="335"></NameColumnWidth>
       <ValueColumnWidth column_width="102"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="22" />
+   <WVObjectSize size="21" />
    <wvobject fp_name="/tb_acquisition_send_uart/sys_clk" type="logic">
       <obj_property name="ElementShortName">sys_clk</obj_property>
       <obj_property name="ObjectShortName">sys_clk</obj_property>
@@ -76,18 +76,9 @@
       <obj_property name="ElementShortName">rd_rst_busy</obj_property>
       <obj_property name="ObjectShortName">rd_rst_busy</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_acquisition_send_uart/acquisition_send_uart_tb0/ad_data" type="array">
-      <obj_property name="ElementShortName">ad_data[7:0]</obj_property>
-      <obj_property name="ObjectShortName">ad_data[7:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-   </wvobject>
    <wvobject fp_name="/tb_acquisition_send_uart/acquisition_send_uart_tb0/acquisition_fifo_wr_0/wr_en" type="logic">
       <obj_property name="ElementShortName">wr_en</obj_property>
       <obj_property name="ObjectShortName">wr_en</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_acquisition_send_uart/acquisition_send_uart_tb0/acquisition_fifo_wr_0/wr_module_busy" type="logic">
-      <obj_property name="ElementShortName">wr_module_busy</obj_property>
-      <obj_property name="ObjectShortName">wr_module_busy</obj_property>
    </wvobject>
    <wvobject fp_name="/tb_acquisition_send_uart/acquisition_send_uart_tb0/acquisition_fifo_rd_uart_0/state" type="array">
       <obj_property name="ElementShortName">state[3:0]</obj_property>
@@ -98,15 +89,20 @@
       <obj_property name="ObjectShortName">rd_data[7:0]</obj_property>
       <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_acquisition_send_uart/acquisition_send_uart_tb0/acquisition_fifo_rd_uart_0/uart_tx_en" type="logic">
+   <wvobject fp_name="/tb_acquisition_send_uart/uart_tx_tbasu0/uart_tx_en" type="logic">
       <obj_property name="ElementShortName">uart_tx_en</obj_property>
       <obj_property name="ObjectShortName">uart_tx_en</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_acquisition_send_uart/acquisition_send_uart_tb0/acquisition_fifo_rd_uart_0/uart_tx_busy" type="logic">
+   <wvobject fp_name="/tb_acquisition_send_uart/uart_tx_tbasu0/uart_tx_busy" type="logic">
       <obj_property name="ElementShortName">uart_tx_busy</obj_property>
       <obj_property name="ObjectShortName">uart_tx_busy</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_acquisition_send_uart/acquisition_send_uart_tb0/acquisition_fifo_rd_uart_0/uart_txd" type="logic">
+   <wvobject fp_name="/tb_acquisition_send_uart/uart_tx_tbasu0/uart_tx_data" type="array">
+      <obj_property name="ElementShortName">uart_tx_data[7:0]</obj_property>
+      <obj_property name="ObjectShortName">uart_tx_data[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_send_uart/uart_tx_tbasu0/uart_txd" type="logic">
       <obj_property name="ElementShortName">uart_txd</obj_property>
       <obj_property name="ObjectShortName">uart_txd</obj_property>
    </wvobject>

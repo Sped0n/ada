@@ -31,7 +31,9 @@ module acquisition_fifo_rd_uart (
     input            empty,
     output           rd_en,
     // uart interface
-    output           uart_txd,
+    output reg       uart_tx_en,
+    output     [7:0] uart_tx_data,
+    input            uart_tx_busy,
     // busy signal
     output reg       rd_busy
 );
@@ -40,9 +42,6 @@ module acquisition_fifo_rd_uart (
   parameter FETCH = 4'b0010;
   parameter SEND_ENABLE = 4'b0100;
   parameter SENDING = 4'b1000;
-
-  parameter SYS_CLK_FREQ = 50_000_000;  // system clock frequency
-  parameter BAUD_RATE = 115_200;  // baud rate
 
   // reg define
   reg [3:0] state;
@@ -55,29 +54,16 @@ module acquisition_fifo_rd_uart (
   reg rd_en_tmp;
   reg rd_en_tmp_delay0;
   reg rd_en_delay0;  // for state machine to swtich state more precisely (do not switch state when fifo is resetting)
-  reg uart_tx_en;
   reg empty_delay0;  // fifo empty delay, we still have one unfetched data when empty is high, in order to get all data, we have to delay empty for one clock cycle
 
   // wire define
-  wire uart_tx_busy;
   wire rd_en_pulse;
 
   // main code
 
   assign rd_en = rd_en_tmp & (~rd_en_tmp_delay0);
 
-  // uart transmission module
-  uart_tx #(
-      .SYS_CLK_FREQ(SYS_CLK_FREQ),
-      .BAUD_RATE(BAUD_RATE)
-  ) uart_tx_afru0 (
-      .sys_clk     (rd_clk),
-      .sys_rst_n   (rst_n),
-      .uart_tx_en  (uart_tx_en),
-      .uart_tx_data(rd_data),
-      .uart_txd    (uart_txd),
-      .uart_tx_busy(uart_tx_busy)
-  );
+  assign uart_tx_data = rd_data;
 
   // full and wr_rst_busy is from write clock domain
   // rd_en_tmp_delay and rd_en_delay

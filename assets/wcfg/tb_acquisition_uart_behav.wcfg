@@ -11,9 +11,9 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="13.304670000 ms"></ZoomStartTime>
-      <ZoomEndTime time="45.844670001 ms"></ZoomEndTime>
-      <Cursor1Time time="22.164670000 ms"></Cursor1Time>
+      <ZoomStartTime time="0.000000000 ms"></ZoomStartTime>
+      <ZoomEndTime time="12.780000001 ms"></ZoomEndTime>
+      <Cursor1Time time="0.001000000 ms"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="321"></NameColumnWidth>
@@ -104,20 +104,20 @@
       <obj_property name="ElementShortName">almost_empty</obj_property>
       <obj_property name="ObjectShortName">almost_empty</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/acquisition_send_uart_0/acquisition_fifo_rd_uart_0/uart_tx_en" type="logic">
+   <wvobject fp_name="/tb_acquisition_uart/uart_tx_tbau0/uart_tx_en" type="logic">
       <obj_property name="ElementShortName">uart_tx_en</obj_property>
       <obj_property name="ObjectShortName">uart_tx_en</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/acquisition_send_uart_0/acquisition_fifo_rd_uart_0/uart_tx_busy" type="logic">
+   <wvobject fp_name="/tb_acquisition_uart/uart_tx_tbau0/uart_tx_busy" type="logic">
       <obj_property name="ElementShortName">uart_tx_busy</obj_property>
       <obj_property name="ObjectShortName">uart_tx_busy</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/acquisition_send_uart_0/acquisition_fifo_rd_uart_0/uart_tx_afru0/uart_tx_data" type="array">
+   <wvobject fp_name="/tb_acquisition_uart/uart_tx_tbau0/uart_tx_data" type="array">
       <obj_property name="ElementShortName">uart_tx_data[7:0]</obj_property>
       <obj_property name="ObjectShortName">uart_tx_data[7:0]</obj_property>
       <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/acquisition_send_uart_0/uart_txd" type="logic">
+   <wvobject fp_name="/tb_acquisition_uart/uart_tx_tbau0/uart_txd" type="logic">
       <obj_property name="ElementShortName">uart_txd</obj_property>
       <obj_property name="ObjectShortName">uart_txd</obj_property>
    </wvobject>

@@ -24,6 +24,9 @@ module tb_acquisition_uart ();
   // parameter define
   parameter CLK_PERIOD = 20;
 
+  parameter SYS_CLK_FREQ = 50_000_000;  // system clock frequency
+  parameter BAUD_RATE = 115_200;  // baud rate
+
   // reg define
   reg        sys_clk;
   reg        sys_rst_n;
@@ -35,6 +38,10 @@ module tb_acquisition_uart ();
   wire       clk_25m;  // 25MHz clock
   wire       locked;  // pll lock signal
   wire       rst_n;  // reset signal, active low
+
+  wire       uart_tx_en;
+  wire [7:0] uart_tx_data;
+  wire       uart_tx_busy;
 
   // initial block
   initial begin
@@ -73,16 +80,32 @@ module tb_acquisition_uart ();
 
   // acquisition_uart
   acquisition_uart acquisition_uart_0 (
-      .clk_50m(clk_50m),
-      .clk_25m(clk_25m),
-      .sys_rst_n(sys_rst_n),
-      .acquisition_en(acquisition_en),
-      .ad_data(ad_data),
-      .trigger_threshold(8'd128),
+      .clk_50m                (clk_50m),
+      .clk_25m                (clk_25m),
+      .sys_rst_n              (sys_rst_n),
+      .acquisition_en         (acquisition_en),
+      .ad_data                (ad_data),
+      .trigger_threshold      (8'd128),
       .trigger_is_rising_slope(1'b1),
-      .trigger_position(3'd0),
-      .acquisition_pulse_sel(4'd2),
-      .uart_txd()
+      .trigger_position       (3'd0),
+      .acquisition_pulse_sel  (4'd2),
+      .uart_tx_en             (uart_tx_en),
+      .uart_tx_data           (uart_tx_data),
+      .uart_tx_busy           (uart_tx_busy),
+      .acquisition_busy       ()
+  );
+
+  // uart transmission module
+  uart_tx #(
+      .SYS_CLK_FREQ(SYS_CLK_FREQ),
+      .BAUD_RATE(BAUD_RATE)
+  ) uart_tx_tbau0 (
+      .sys_clk     (clk_50m),
+      .sys_rst_n   (rst_n),
+      .uart_tx_en  (uart_tx_en),
+      .uart_tx_data(uart_tx_data),
+      .uart_txd    (),
+      .uart_tx_busy(uart_tx_busy)
   );
 
 endmodule

@@ -28,7 +28,9 @@ module acquisition_send_uart (
     input            sample_completed,
     input      [7:0] sample_data,
     // uart interface
-    output           uart_txd,
+    output           uart_tx_en,
+    output     [7:0] uart_tx_data,
+    input            uart_tx_busy,
     // busy signal
     output reg       send_busy
 );
@@ -150,15 +152,17 @@ module acquisition_send_uart (
 
   // fifo read
   acquisition_fifo_rd_uart acquisition_fifo_rd_uart_0 (
-      .rd_clk     (clk_50m),
-      .rst_n      (sys_rst_n),
-      .wr_rst_busy(wr_rst_busy),
-      .rd_data    (rd_data),
-      .full       (full),
-      .empty      (empty),
-      .rd_en      (rd_en),
-      .uart_txd   (uart_txd),
-      .rd_busy    (rd_busy)
+      .rd_clk      (clk_50m),
+      .rst_n       (sys_rst_n),
+      .wr_rst_busy (wr_rst_busy),
+      .rd_data     (rd_data),
+      .full        (full),
+      .empty       (empty),
+      .rd_en       (rd_en),
+      .uart_tx_en  (uart_tx_en),
+      .uart_tx_data(uart_tx_data),
+      .uart_tx_busy(uart_tx_busy),
+      .rd_busy     (rd_busy)
   );
 
 endmodule
