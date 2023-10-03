@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="0.000000000 ms"></ZoomStartTime>
-      <ZoomEndTime time="12.780000001 ms"></ZoomEndTime>
-      <Cursor1Time time="0.001000000 ms"></Cursor1Time>
+      <ZoomStartTime time="21,457.841243 us"></ZoomStartTime>
+      <ZoomEndTime time="23,091.841244 us"></ZoomEndTime>
+      <Cursor1Time time="376.450000 us"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="321"></NameColumnWidth>
+      <NameColumnWidth column_width="314"></NameColumnWidth>
       <ValueColumnWidth column_width="102"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="25" />
+   <WVObjectSize size="33" />
    <wvobject fp_name="/tb_acquisition_uart/sys_clk" type="logic">
       <obj_property name="ElementShortName">sys_clk</obj_property>
       <obj_property name="ObjectShortName">sys_clk</obj_property>
@@ -120,5 +120,39 @@
    <wvobject fp_name="/tb_acquisition_uart/uart_tx_tbau0/uart_txd" type="logic">
       <obj_property name="ElementShortName">uart_txd</obj_property>
       <obj_property name="ObjectShortName">uart_txd</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/trigger_threshold_reg" type="array">
+      <obj_property name="ElementShortName">trigger_threshold_reg[7:0]</obj_property>
+      <obj_property name="ObjectShortName">trigger_threshold_reg[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/trigger_position_reg" type="array">
+      <obj_property name="ElementShortName">trigger_position_reg[2:0]</obj_property>
+      <obj_property name="ObjectShortName">trigger_position_reg[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/trigger_is_rising_slope_reg" type="logic">
+      <obj_property name="ElementShortName">trigger_is_rising_slope_reg</obj_property>
+      <obj_property name="ObjectShortName">trigger_is_rising_slope_reg</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/acquisition_pulse_sel_reg" type="array">
+      <obj_property name="ElementShortName">acquisition_pulse_sel_reg[3:0]</obj_property>
+      <obj_property name="ObjectShortName">acquisition_pulse_sel_reg[3:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/acquisition_en_reg" type="logic">
+      <obj_property name="ElementShortName">acquisition_en_reg</obj_property>
+      <obj_property name="ObjectShortName">acquisition_en_reg</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/param_set" type="logic">
+      <obj_property name="ElementShortName">param_set</obj_property>
+      <obj_property name="ObjectShortName">param_set</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/state" type="array">
+      <obj_property name="ElementShortName">state[3:0]</obj_property>
+      <obj_property name="ObjectShortName">state[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/next_state" type="array">
+      <obj_property name="ElementShortName">next_state[3:0]</obj_property>
+      <obj_property name="ObjectShortName">next_state[3:0]</obj_property>
    </wvobject>
 </wave_config>
