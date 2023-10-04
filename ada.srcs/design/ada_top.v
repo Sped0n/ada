@@ -5,7 +5,7 @@
 // 
 // Create Date: 09/24/2023 08:09:07 PM
 // Design Name: 
-// Module Name: hs_ad_da
+// Module Name: ada_top
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module hs_ad_da (
+module ada_top (
     input        sys_clk,    // system clock
     input        sys_rst_n,  // system reset active low
     // dac interface

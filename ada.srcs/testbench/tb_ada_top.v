@@ -5,7 +5,7 @@
 // 
 // Create Date: 09/24/2023 08:32:12 PM
 // Design Name: 
-// Module Name: tb_hs_ad_da
+// Module Name: tb_ada_top
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module tb_hs_ad_da ();
+module tb_ada_top ();
   // parameter define
   parameter CLK_PERIOD = 20;  // clock period in ns
   parameter DEBOUNCE_CNT_MAX = 20'd1000;  // debounce for 1000 * 20ns(1s/50MHz) = 20000ns / 20us
@@ -50,9 +50,9 @@ module tb_hs_ad_da ();
 
   // clock generator
   always #(CLK_PERIOD / 2) sys_clk = ~sys_clk;
-  hs_ad_da #(
+  ada_top #(
       .DEBOUNCE_CNT_MAX(DEBOUNCE_CNT_MAX)
-  ) hs_ad_da_tb0 (
+  ) ada_top_tb0 (
       .sys_clk  (sys_clk),    // system clock
       .sys_rst_n(sys_rst_n),  // system reset active low
       // dac interface
