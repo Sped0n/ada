@@ -29,8 +29,7 @@ module acquisition_sync_cache_wr (
     input      [2:0] trigger_position,
     // trigger signal
     input            triggered,
-    // handshake
-    input            cache_rd_busy,
+    // ready flag
     output reg       cache_wr_ready,
     // dual port ram
     output           wr_we,             // ram write enable
@@ -167,7 +166,7 @@ module acquisition_sync_cache_wr (
         end
       end
       HANDSHAKE: begin
-        if (cache_rd_busy) begin
+        if (cache_wr_ready) begin
           next_state = IDLE;
         end else begin
           next_state = HANDSHAKE;

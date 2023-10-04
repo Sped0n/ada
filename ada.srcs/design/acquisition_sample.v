@@ -42,7 +42,6 @@ module acquisition_sample (
   // wire define
   // handshake
   wire       cache_wr_ready;
-  wire       cache_rd_busy;
   // dual port ram
   wire       rd_en;
   wire [7:0] rd_addr;
@@ -61,7 +60,7 @@ module acquisition_sample (
       .rd_clk          (clk_25m),
       .rst_n           (sys_rst_n),
       .cache_wr_ready  (cache_wr_ready),
-      .cache_rd_busy   (cache_rd_busy),
+      .cache_rd_busy   (),
       .start_addr      (wr_addr),
       .rd_en           (rd_en),
       .rd_addr         (rd_addr),
@@ -76,7 +75,6 @@ module acquisition_sample (
       .en               (acquisition_en),
       .trigger_position (trigger_position),
       .triggered        (triggered),
-      .cache_rd_busy    (cache_rd_busy),
       .cache_wr_ready   (cache_wr_ready),
       .wr_we            (wr_we),
       .wr_en            (wr_en),
