@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="tb_acquisition_ctl_uart_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="tb_acquisition_ctl_uart" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0.000000 us"></ZoomStartTime>
+      <ZoomEndTime time="8,205.000001 us"></ZoomEndTime>
+      <Cursor1Time time="6,635.121794 us"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="307"></NameColumnWidth>
+      <ValueColumnWidth column_width="102"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="19" />
+   <wvobject fp_name="/tb_acquisition_ctl_uart/sys_clk" type="logic">
+      <obj_property name="ElementShortName">sys_clk</obj_property>
+      <obj_property name="ObjectShortName">sys_clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_uart/sys_rst_n" type="logic">
+      <obj_property name="ElementShortName">sys_rst_n</obj_property>
+      <obj_property name="ObjectShortName">sys_rst_n</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_uart/clk_50m" type="logic">
+      <obj_property name="ElementShortName">clk_50m</obj_property>
+      <obj_property name="ObjectShortName">clk_50m</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_uart/clk_25m" type="logic">
+      <obj_property name="ElementShortName">clk_25m</obj_property>
+      <obj_property name="ObjectShortName">clk_25m</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_uart/locked" type="logic">
+      <obj_property name="ElementShortName">locked</obj_property>
+      <obj_property name="ObjectShortName">locked</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_uart/rst_n" type="logic">
+      <obj_property name="ElementShortName">rst_n</obj_property>
+      <obj_property name="ObjectShortName">rst_n</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_uart/uart_rx_done" type="logic">
+      <obj_property name="ElementShortName">uart_rx_done</obj_property>
+      <obj_property name="ObjectShortName">uart_rx_done</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_uart/uart_rx_data" type="array">
+      <obj_property name="ElementShortName">uart_rx_data[7:0]</obj_property>
+      <obj_property name="ObjectShortName">uart_rx_data[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_uart/acquisition_ctl_uart_tb0/checksum" type="array">
+      <obj_property name="ElementShortName">checksum[7:0]</obj_property>
+      <obj_property name="ObjectShortName">checksum[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_uart/acquisition_ctl_uart_tb0/data_len" type="array">
+      <obj_property name="ElementShortName">data_len[7:0]</obj_property>
+      <obj_property name="ObjectShortName">data_len[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_uart/acquisition_ctl_uart_tb0/data_cnt" type="array">
+      <obj_property name="ElementShortName">data_cnt[2:0]</obj_property>
+      <obj_property name="ObjectShortName">data_cnt[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_uart/acquisition_ctl_uart_tb0/parse_completed" type="logic">
+      <obj_property name="ElementShortName">parse_completed</obj_property>
+      <obj_property name="ObjectShortName">parse_completed</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_uart/acquisition_ctl_uart_tb0/parse_result" type="array">
+      <obj_property name="ElementShortName">parse_result[7:0]</obj_property>
+      <obj_property name="ObjectShortName">parse_result[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_uart/acquisition_ctl_uart_tb0/parse_cmd" type="array">
+      <obj_property name="ElementShortName">parse_cmd[7:0]</obj_property>
+      <obj_property name="ObjectShortName">parse_cmd[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_uart/acquisition_ctl_uart_tb0/trigger_threshold" type="array">
+      <obj_property name="ElementShortName">trigger_threshold[7:0]</obj_property>
+      <obj_property name="ObjectShortName">trigger_threshold[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_uart/acquisition_ctl_uart_tb0/trigger_is_rising_slope" type="logic">
+      <obj_property name="ElementShortName">trigger_is_rising_slope</obj_property>
+      <obj_property name="ObjectShortName">trigger_is_rising_slope</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_uart/acquisition_ctl_uart_tb0/trigger_position" type="array">
+      <obj_property name="ElementShortName">trigger_position[2:0]</obj_property>
+      <obj_property name="ObjectShortName">trigger_position[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_uart/acquisition_ctl_uart_tb0/acquisition_pulse_sel" type="array">
+      <obj_property name="ElementShortName">acquisition_pulse_sel[3:0]</obj_property>
+      <obj_property name="ObjectShortName">acquisition_pulse_sel[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_uart/acquisition_ctl_uart_tb0/acquisition_en" type="logic">
+      <obj_property name="ElementShortName">acquisition_en</obj_property>
+      <obj_property name="ObjectShortName">acquisition_en</obj_property>
+   </wvobject>
+</wave_config>
