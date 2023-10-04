@@ -35,7 +35,7 @@ module acquisition_sync_cache_rd (
     output           sample_completed
 );
   // parameter define
-  parameter RD_CNT_MAX = 255;
+  parameter BRAM_DEPTH = 255;
 
   // reg define
   reg [7:0] rd_cnt;
@@ -52,7 +52,7 @@ module acquisition_sync_cache_rd (
       rd_en <= 1'b0;
     end else if (cache_wr_ready) begin
       rd_en <= 1'b1;
-    end else if (rd_cnt == RD_CNT_MAX) begin
+    end else if (rd_cnt == BRAM_DEPTH - 1'b1) begin
       rd_en <= 1'b0;
     end else begin
       rd_en <= rd_en;
