@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="21,457.841243 us"></ZoomStartTime>
-      <ZoomEndTime time="23,091.841244 us"></ZoomEndTime>
-      <Cursor1Time time="376.450000 us"></Cursor1Time>
+      <ZoomStartTime time="122,025.499 ns"></ZoomStartTime>
+      <ZoomEndTime time="122,846.000 ns"></ZoomEndTime>
+      <Cursor1Time time="122,169.999 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="314"></NameColumnWidth>
+      <NameColumnWidth column_width="307"></NameColumnWidth>
       <ValueColumnWidth column_width="102"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="33" />
+   <WVObjectSize size="39" />
    <wvobject fp_name="/tb_acquisition_uart/sys_clk" type="logic">
       <obj_property name="ElementShortName">sys_clk</obj_property>
       <obj_property name="ObjectShortName">sys_clk</obj_property>
@@ -80,9 +80,13 @@
       <obj_property name="ElementShortName">cache_wr_ready</obj_property>
       <obj_property name="ObjectShortName">cache_wr_ready</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/acquisition_sample_0/cache_rd_busy" type="logic">
-      <obj_property name="ElementShortName">cache_rd_busy</obj_property>
-      <obj_property name="ObjectShortName">cache_rd_busy</obj_property>
+   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/acquisition_sample_0/acquisition_sync_cache_wr_0/wr_en" type="logic">
+      <obj_property name="ElementShortName">wr_en</obj_property>
+      <obj_property name="ObjectShortName">wr_en</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/acquisition_sample_0/acquisition_sync_cache_wr_0/wr_addr" type="array">
+      <obj_property name="ElementShortName">wr_addr[7:0]</obj_property>
+      <obj_property name="ObjectShortName">wr_addr[7:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/acquisition_sample_0/acquisition_sync_cache_wr_0/wr_data" type="array">
       <obj_property name="ElementShortName">wr_data[7:0]</obj_property>
@@ -154,5 +158,25 @@
    <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/next_state" type="array">
       <obj_property name="ElementShortName">next_state[3:0]</obj_property>
       <obj_property name="ObjectShortName">next_state[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/acquisition_sample_0/acquisition_sync_cache_rd_0/rd_en" type="logic">
+      <obj_property name="ElementShortName">rd_en</obj_property>
+      <obj_property name="ObjectShortName">rd_en</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/acquisition_sample_0/acquisition_sync_cache_rd_0/rd_en_delay0" type="logic">
+      <obj_property name="ElementShortName">rd_en_delay0</obj_property>
+      <obj_property name="ObjectShortName">rd_en_delay0</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/acquisition_sample_0/acquisition_sync_cache_rd_0/rd_addr" type="array">
+      <obj_property name="ElementShortName">rd_addr[7:0]</obj_property>
+      <obj_property name="ObjectShortName">rd_addr[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/acquisition_sample_0/acquisition_sync_cache_rd_0/sample_completed" type="logic">
+      <obj_property name="ElementShortName">sample_completed</obj_property>
+      <obj_property name="ObjectShortName">sample_completed</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/acquisition_sample_0/acquisition_sync_cache_0/doutb" type="array">
+      <obj_property name="ElementShortName">doutb[7:0]</obj_property>
+      <obj_property name="ObjectShortName">doutb[7:0]</obj_property>
    </wvobject>
 </wave_config>
