@@ -78,8 +78,8 @@ module hs_ad_da (
       .clk_in1     (sys_clk)        // input clock
   );
 
-  // da_wave_send
-  da_wave_send da_wave_send_0 (
+  // da_ctl
+  da_ctl da_ctl_0 (
       .clk     (clk_50m),   // clock
       .rst_n   (rst_n),     // reset active low
       .freq_adj(freq_adj),  // frequency adjust

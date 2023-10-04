@@ -5,7 +5,7 @@
 // 
 // Create Date: 09/24/2023 07:37:39 PM
 // Design Name: 
-// Module Name: da_wave_send
+// Module Name: da_ctl
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module da_wave_send (
+module da_ctl (
     input clk,  // clock
     input rst_n,  // reset active low
     input [7:0] freq_adj,  // frequency adjust
