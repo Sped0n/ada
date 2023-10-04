@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="tb_acquisition_top_uart_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="tb_acquisition_top_uart" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="15,043.000000 us"></ZoomStartTime>
+      <ZoomEndTime time="16,684.000001 us"></ZoomEndTime>
+      <Cursor1Time time="15,242.000000 us"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="307"></NameColumnWidth>
+      <ValueColumnWidth column_width="102"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="19" />
+   <wvobject fp_name="/tb_acquisition_top_uart/sys_clk" type="logic">
+      <obj_property name="ElementShortName">sys_clk</obj_property>
+      <obj_property name="ObjectShortName">sys_clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_top_uart/sys_rst_n" type="logic">
+      <obj_property name="ElementShortName">sys_rst_n</obj_property>
+      <obj_property name="ObjectShortName">sys_rst_n</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_top_uart/ad_data" type="array">
+      <obj_property name="ElementShortName">ad_data[7:0]</obj_property>
+      <obj_property name="ObjectShortName">ad_data[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_top_uart/uart_rx_data" type="array">
+      <obj_property name="ElementShortName">uart_rx_data[7:0]</obj_property>
+      <obj_property name="ObjectShortName">uart_rx_data[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_top_uart/uart_rx_done" type="logic">
+      <obj_property name="ElementShortName">uart_rx_done</obj_property>
+      <obj_property name="ObjectShortName">uart_rx_done</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_top_uart/clk_50m" type="logic">
+      <obj_property name="ElementShortName">clk_50m</obj_property>
+      <obj_property name="ObjectShortName">clk_50m</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_top_uart/clk_25m" type="logic">
+      <obj_property name="ElementShortName">clk_25m</obj_property>
+      <obj_property name="ObjectShortName">clk_25m</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_top_uart/locked" type="logic">
+      <obj_property name="ElementShortName">locked</obj_property>
+      <obj_property name="ObjectShortName">locked</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_top_uart/rst_n" type="logic">
+      <obj_property name="ElementShortName">rst_n</obj_property>
+      <obj_property name="ObjectShortName">rst_n</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_top_uart/uart_tx_en" type="logic">
+      <obj_property name="ElementShortName">uart_tx_en</obj_property>
+      <obj_property name="ObjectShortName">uart_tx_en</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_top_uart/acquisition_top_uart_tb0/acquisition_uart_0/acquisition_en" type="logic">
+      <obj_property name="ElementShortName">acquisition_en</obj_property>
+      <obj_property name="ObjectShortName">acquisition_en</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_top_uart/acquisition_top_uart_tb0/acquisition_uart_0/state" type="array">
+      <obj_property name="ElementShortName">state[3:0]</obj_property>
+      <obj_property name="ObjectShortName">state[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_top_uart/acquisition_top_uart_tb0/acquisition_uart_0/trigger_threshold_reg" type="array">
+      <obj_property name="ElementShortName">trigger_threshold_reg[7:0]</obj_property>
+      <obj_property name="ObjectShortName">trigger_threshold_reg[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_top_uart/acquisition_top_uart_tb0/acquisition_uart_0/trigger_is_rising_slope_reg" type="logic">
+      <obj_property name="ElementShortName">trigger_is_rising_slope_reg</obj_property>
+      <obj_property name="ObjectShortName">trigger_is_rising_slope_reg</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_top_uart/acquisition_top_uart_tb0/acquisition_uart_0/trigger_position_reg" type="array">
+      <obj_property name="ElementShortName">trigger_position_reg[2:0]</obj_property>
+      <obj_property name="ObjectShortName">trigger_position_reg[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_top_uart/acquisition_top_uart_tb0/acquisition_uart_0/acquisition_pulse_sel_reg" type="array">
+      <obj_property name="ElementShortName">acquisition_pulse_sel_reg[3:0]</obj_property>
+      <obj_property name="ObjectShortName">acquisition_pulse_sel_reg[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_top_uart/uart_tx_data" type="array">
+      <obj_property name="ElementShortName">uart_tx_data[7:0]</obj_property>
+      <obj_property name="ObjectShortName">uart_tx_data[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_top_uart/acquisition_top_uart_tb0/acquisition_uart_0/acquisition_en_reg" type="logic">
+      <obj_property name="ElementShortName">acquisition_en_reg</obj_property>
+      <obj_property name="ObjectShortName">acquisition_en_reg</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_top_uart/uart_tx_busy" type="logic">
+      <obj_property name="ElementShortName">uart_tx_busy</obj_property>
+      <obj_property name="ObjectShortName">uart_tx_busy</obj_property>
+   </wvobject>
+</wave_config>
