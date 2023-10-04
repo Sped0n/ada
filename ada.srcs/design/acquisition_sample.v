@@ -23,7 +23,7 @@
 module acquisition_sample (
     input        clk_50m,
     input        clk_25m,
-    input        sys_rst_n,                // active low
+    input        sys_rst_n,         // active low
     // enable signal
     input        acquisition_en,
     // ad data
@@ -31,12 +31,10 @@ module acquisition_sample (
     // data to fifo
     output       sample_completed,
     output [7:0] sample_data,
-    // trigger config
-    input  [7:0] trigger_threshold,
-    input        trigger_is_rising_slope,
+    // triggered and acquisition pulse
+    input        triggered,
     input  [2:0] trigger_position,
-    // acquisition pulse config
-    input  [3:0] acquisition_pulse_sel
+    input        acquisition_pulse
 );
 
   // wire define
@@ -49,22 +47,19 @@ module acquisition_sample (
   wire       wr_we;
   wire       wr_en;
   wire [7:0] wr_data;
-  // others
-  wire       acquisition_pulse;
-  wire       triggered;
 
   // main code
 
   // dual port ram read
   acquisition_sync_cache_rd acquisition_sync_cache_rd_0 (
-      .rd_clk          (clk_25m),
-      .rst_n           (sys_rst_n),
-      .cache_wr_ready  (cache_wr_ready),
-      .cache_rd_busy   (),
-      .start_addr      (wr_addr),
-      .rd_en           (rd_en),
-      .rd_addr         (rd_addr),
-      .sample_completed(sample_completed)
+      .rd_clk           (clk_25m),
+      .rst_n            (sys_rst_n),
+      .en               (cache_wr_ready),
+      .start_addr       (wr_addr),
+      .rd_en            (rd_en),
+      .rd_addr          (rd_addr),
+      .sample_completed (sample_completed),
+      .pushing_last_data()
   );
 
   // dual port ram write
@@ -94,26 +89,6 @@ module acquisition_sample (
       .enb  (rd_en),
       .addrb(rd_addr),
       .doutb(sample_data)
-  );
-
-  // trigger
-  trigger trigger_0 (
-      .acquisition_clk  (clk_25m),
-      .rst_n            (sys_rst_n),
-      .acquisition_pulse(acquisition_pulse),
-      .is_rising_slope  (trigger_is_rising_slope),
-      .threshold        (trigger_threshold),
-      .ad_data          (ad_data),
-      .trigger          (triggered)
-  );
-
-  // acquisition pulse
-  acquisition_pulse_gen acquisition_pulse_gen_0 (
-      .clk_50m  (clk_50m),
-      .clk_25m  (clk_25m),
-      .sys_rst_n(sys_rst_n),
-      .sel      (acquisition_pulse_sel),
-      .pulse    (acquisition_pulse)
   );
 
 endmodule

@@ -51,6 +51,8 @@ module acquisition_uart (
   wire [7:0] sample_data;
   wire       sample_completed;
   wire       send_busy;
+  wire       triggered;
+  wire       acquisition_pulse;
 
   // reg define
   reg  [3:0] state;
@@ -165,17 +167,16 @@ module acquisition_uart (
 
   // acquisition_sample
   acquisition_sample acquisition_sample_0 (
-      .clk_50m                (clk_50m),
-      .clk_25m                (clk_25m),
-      .sys_rst_n              (sys_rst_n),
-      .acquisition_en         (acquisition_en_reg),
-      .ad_data                (ad_data),
-      .sample_completed       (sample_completed),
-      .sample_data            (sample_data),
-      .trigger_threshold      (trigger_threshold_reg),
-      .trigger_is_rising_slope(trigger_is_rising_slope_reg),
-      .trigger_position       (trigger_position_reg),
-      .acquisition_pulse_sel  (acquisition_pulse_sel_reg)
+      .clk_50m          (clk_50m),
+      .clk_25m          (clk_25m),
+      .sys_rst_n        (sys_rst_n),
+      .acquisition_en   (acquisition_en_reg),
+      .ad_data          (ad_data),
+      .sample_completed (sample_completed),
+      .sample_data      (sample_data),
+      .triggered        (triggered),
+      .trigger_position (trigger_position_reg),
+      .acquisition_pulse(acquisition_pulse)
   );
 
   // aqcquisition_send_uart
@@ -189,6 +190,26 @@ module acquisition_uart (
       .uart_tx_data    (uart_tx_data),
       .uart_tx_busy    (uart_tx_busy),
       .send_busy       (send_busy)
+  );
+
+  // trigger
+  trigger trigger_0 (
+      .acquisition_clk  (clk_25m),
+      .rst_n            (sys_rst_n),
+      .acquisition_pulse(acquisition_pulse),
+      .is_rising_slope  (trigger_is_rising_slope_reg),
+      .threshold        (trigger_threshold_reg),
+      .ad_data          (ad_data),
+      .trigger          (triggered)
+  );
+
+  // acquisition pulse
+  acquisition_pulse_gen acquisition_pulse_gen_0 (
+      .clk_50m  (clk_50m),
+      .clk_25m  (clk_25m),
+      .sys_rst_n(sys_rst_n),
+      .sel      (acquisition_pulse_sel_reg),
+      .pulse    (acquisition_pulse)
   );
 
 endmodule
