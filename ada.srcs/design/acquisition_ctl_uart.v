@@ -246,7 +246,7 @@ module acquisition_ctl_uart (
   // cmd processing
   always @(posedge clk_50m or negedge sys_rst_n) begin
     if (!sys_rst_n) begin
-      trigger_threshold <= 8'd0;  // trigger threshold is 0
+      trigger_threshold <= 8'd128;  // trigger threshold is 128
       trigger_is_rising_slope <= 1'b1;  // rising slope
       trigger_position <= 3'd5;  // trigger disabled
       trigger_channel <= 1'b0;  // channel 1
