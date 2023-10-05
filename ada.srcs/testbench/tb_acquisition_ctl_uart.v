@@ -92,7 +92,7 @@ module tb_acquisition_ctl_uart ();
     #150000 uart_rx_data <= 8'd92;  // checksum
     uart_rx_done <= 1'b1;
     #20 uart_rx_done <= 1'b0;
-    // trigger position control
+    // trigger channel control
     #150000 uart_rx_data <= 8'h55;  // header
     uart_rx_done <= 1'b1;
     #20 uart_rx_done <= 1'b0;
