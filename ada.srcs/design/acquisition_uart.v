@@ -41,7 +41,11 @@ module acquisition_uart (
     output     [7:0] uart_tx_data,
     input            uart_tx_busy,
     // busy signal
-    output reg       acquisition_busy
+    output reg       acquisition_busy,
+    // state for debug
+    output     [3:0] acquisition_state,
+    output     [4:0] ch1_cache_wr_state,
+    output     [4:0] ch2_cache_wr_state
 );
   // parameter define
   parameter IDLE = 4'b0001;
@@ -87,6 +91,8 @@ module acquisition_uart (
   reg        param_set;
 
   // main code
+
+  assign acquissition_state = state;
 
   // trigger channel mux
   assign trigger_ad_data = (trigger_channel_reg == 1'b0) ? ch1_ad_data : ch2_ad_data;
@@ -144,7 +150,7 @@ module acquisition_uart (
     if (!sys_rst_n) begin
       acquisition_busy <= 1'b0;
       param_set <= 1'b0;
-      trigger_threshold_reg <= 8'd0;
+      trigger_threshold_reg <= 8'd128;
       trigger_is_rising_slope_reg <= 1'b1;
       trigger_position_reg <= 3'd5;
       trigger_channel_reg <= 1'b0;
@@ -205,7 +211,8 @@ module acquisition_uart (
       .push_ready       (ch1_push_ready),
       .push_started     (ch1_push_started),
       .pushing_last_data(ch1_pushing_last_data),
-      .push_completed   (ch1_push_completed)
+      .push_completed   (ch1_push_completed),
+      .cache_wr_state   (ch1_cache_wr_state)
   );
 
   // channel 2 sample
@@ -223,7 +230,8 @@ module acquisition_uart (
       .push_ready       (ch2_push_ready),
       .push_started     (ch2_push_started),
       .pushing_last_data(ch2_pushing_last_data),
-      .push_completed   (ch2_push_completed)
+      .push_completed   (ch2_push_completed),
+      .cache_wr_state   (ch2_cache_wr_state)
   );
 
   // acquisition multi channel glue

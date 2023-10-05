@@ -39,7 +39,9 @@ module acquisition_sample (
     output       push_ready,
     output       push_started,
     output       pushing_last_data,
-    output       push_completed
+    output       push_completed,
+    // debug
+    output [4:0] cache_wr_state
 );
 
   // wire define
@@ -79,7 +81,8 @@ module acquisition_sample (
       .wr_en            (wr_en),
       .wr_addr          (wr_addr),
       .wr_data          (wr_data),
-      .acquisition_pulse(acquisition_pulse)
+      .acquisition_pulse(acquisition_pulse),
+      .cache_wr_state   (cache_wr_state)
   );
 
   // dual port ram

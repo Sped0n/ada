@@ -33,7 +33,13 @@ module acquisition_top_uart (
     input        uart_tx_busy,
     // uart rx
     input        uart_rx_done,
-    input  [7:0] uart_rx_data
+    input  [7:0] uart_rx_data,
+    // acquisition busy
+    output       acquisition_busy,
+    // debug
+    output [3:0] acquisition_state,
+    output [4:0] ch1_cache_wr_state,
+    output [4:0] ch2_cache_wr_state
 );
   // wire define
   wire [7:0] trigger_threhold;
@@ -61,7 +67,10 @@ module acquisition_top_uart (
       .uart_tx_en             (uart_tx_en),
       .uart_tx_data           (uart_tx_data),
       .uart_tx_busy           (uart_tx_busy),
-      .acquisition_busy       ()
+      .acquisition_busy       (acquisition_busy),
+      .acquisition_state      (acquisition_state),
+      .ch1_cache_wr_state     (ch1_cache_wr_state),
+      .ch2_cache_wr_state     (ch2_cache_wr_state)
   );
 
   // acquisition_ctl_uart

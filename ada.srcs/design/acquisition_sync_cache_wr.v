@@ -21,7 +21,7 @@
 
 
 module acquisition_sync_cache_wr (
-    input            wr_clk,            // 25MHz
+    input            wr_clk,             // 25MHz
     input            rst_n,
     // config
     input      [7:0] ad_data,
@@ -33,12 +33,14 @@ module acquisition_sync_cache_wr (
     output reg       push_ready,
     input            push_started,
     // dual port ram
-    output           wr_we,             // ram write enable
-    output reg       wr_en,             // ram write port enable (same as ram_wr_we)
-    output reg [7:0] wr_addr,           // ram write address (0-254)
-    output     [7:0] wr_data,           // ram write data
+    output           wr_we,              // ram write enable
+    output reg       wr_en,              // ram write port enable (same as ram_wr_we)
+    output reg [7:0] wr_addr,            // ram write address (0-254)
+    output     [7:0] wr_data,            // ram write data
     // acquisiton pulse
-    input            acquisition_pulse
+    input            acquisition_pulse,
+    // debug
+    output     [4:0] cache_wr_state
 );
   // parameter define
   parameter BRAM_DEPTH = 8'd255;
@@ -68,8 +70,10 @@ module acquisition_sync_cache_wr (
 
   // main code
 
-  assign wr_we   = wr_en;
+  assign wr_we = wr_en;
   assign wr_data = ad_data;
+
+  assign cache_wr_state = state;
 
   // trigger_positon control
   always @(*) begin
