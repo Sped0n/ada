@@ -43,7 +43,7 @@ module trigger (
       cmp0 <= 1'b0;
       cmp1 <= 1'b0;
     end else if (acquisition_pulse) begin
-      cmp0 <= (ad_data >= (threshold - 8'd5));
+      cmp0 <= (ad_data >= threshold);
       cmp1 <= cmp0;
     end else begin
       cmp0 <= cmp0;
