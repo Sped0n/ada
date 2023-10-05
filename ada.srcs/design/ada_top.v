@@ -49,25 +49,37 @@ module ada_top (
   parameter BAUD_RATE = 115_200;  // baud rate
 
   // wire define
-  wire [ 7:0] rd_addr;  // address of data read from rom
-  wire [ 7:0] rd_data;  // data read from rom
   wire        clk_50m;  // 50MHz clock
   wire        clk_25m;  // 25MHz clock
   wire        clk_25m_120d;  // 25MHz clock 120 degree phase shift
   wire        locked;  // pll lock signal
   wire        rst_n;  // reset signal, active low
+
+  wire [ 7:0] rd_addr;  // address of data read from rom
+  wire [ 7:0] rd_data;  // data read from rom
   wire [ 7:0] freq_adj;  // frequency adjust
   wire [ 3:0] filtered_keys;  // filtered keys
   wire        seg_en;  // 7-segment display enable
   wire [35:0] seg_data;  // 7-segment display data
   wire [ 5:0] seg_dots;  // 7-segment display dots
 
+  wire        uart_tx_en;
+  wire [ 7:0] uart_tx_data;
+  wire        uart_tx_busy;
+  wire        uart_rx_done;
+  wire [ 7:0] uart_rx_data;
+
+  wire [ 7:0] mock_ad_data;
+
+  wire [ 3:0] acquisition_state;
+
   // main code
 
   assign rst_n = sys_rst_n & locked; // generate a new reset signal from system reset and pll lock signal
   assign ad_clk = clk_25m;  // adc clock is 25MHz
   assign buzzer = ad_otr;  // buzzer is on when adc data is over range
-  assign led = filtered_keys;  // led is on when any key is pressed
+  assign led = (~filtered_keys) | acquisition_state;  // led is on when any key is pressed
+  assign mock_ad_data = ad_data - 8'd128;  // mock adc data
 
   // pll
   clk_wiz_0 pll_ad_da (
@@ -106,15 +118,15 @@ module ada_top (
   key #(
       .DEBOUNCE_CNT_MAX(DEBOUNCE_CNT_MAX)
   ) key_0 (
-      .sys_clk(sys_clk),
+      .sys_clk  (clk_50m),
       .sys_rst_n(rst_n),
-      .raw_keys(keys),
-      .keys(filtered_keys)
+      .raw_keys (keys),
+      .keys     (filtered_keys)
   );
 
   // 7-segment display
   seg seg_0 (
-      .sys_clk  (sys_clk),
+      .sys_clk  (clk_50m),
       .sys_rst_n(rst_n),
       .data     (seg_data),
       .dots     (seg_dots),
@@ -123,21 +135,53 @@ module ada_top (
       .seg_disp (seg_disp)
   );
 
-  // uart_loopback
-  uart_loopback #(
-      .SYS_CLK_FREQ(SYS_CLK_FREQ),
-      .BAUD_RATE(BAUD_RATE)
-  ) uart_loopback_0 (
-      .sys_clk  (sys_clk),
-      .sys_rst_n(rst_n),
-      .uart_rxd (uart_rxd),
-      .uart_txd (uart_txd)
+  // acquisition_top_uart
+  acquisition_top_uart acquisition_top_uart_0 (
+      .clk_50m           (clk_50m),
+      .clk_25m           (clk_25m),
+      .sys_rst_n         (rst_n),
+      .ch1_ad_data       (ad_data),
+      .ch2_ad_data       (mock_ad_data),
+      .uart_tx_en        (uart_tx_en),
+      .uart_tx_data      (uart_tx_data),
+      .uart_tx_busy      (uart_tx_busy),
+      .uart_rx_done      (uart_rx_done),
+      .uart_rx_data      (uart_rx_data),
+      .acquisition_busy  (),
+      .acquisition_state (acquisition_state),
+      .ch1_cache_wr_state(),
+      .ch2_cache_wr_state()
   );
 
-  // intergrated logic analyzer
-  ila_0 ila_0 (
-      .clk   (clk_25m_120d),  // input wire clk
-      .probe0(ad_data)        // input wire [7:0] probe0
+  // uart rx
+  uart_rx #(
+      .SYS_CLK_FREQ(SYS_CLK_FREQ),
+      .BAUD_RATE(BAUD_RATE)
+  ) uart_rx_0 (
+      .sys_clk     (clk_50m),
+      .sys_rst_n   (rst_n),
+      .uart_rxd    (uart_rxd),
+      .uart_rx_done(uart_rx_done),
+      .uart_rx_data(uart_rx_data)
+  );
+
+  // uart tx
+  uart_tx #(
+      .SYS_CLK_FREQ(SYS_CLK_FREQ),
+      .BAUD_RATE(BAUD_RATE)
+  ) uart_tx_0 (
+      .sys_clk     (clk_50m),
+      .sys_rst_n   (rst_n),
+      .uart_tx_en  (uart_tx_en),
+      .uart_tx_data(uart_tx_data),
+      .uart_txd    (uart_txd),
+      .uart_tx_busy(uart_tx_busy)
+  );
+
+  // ila
+  ila_0 ila_ad (
+      .clk(clk_25m_120d),
+      .probe0(ad_data)
   );
 
 endmodule
