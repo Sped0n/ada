@@ -25,7 +25,8 @@ module acquisition_top_uart (
     input        clk_25m,
     input        sys_rst_n,
     // adc interface
-    input  [7:0] ad_data,
+    input  [7:0] ch1_ad_data,
+    input  [7:0] ch2_ad_data,
     // uart tx
     output       uart_tx_en,
     output [7:0] uart_tx_data,
@@ -38,6 +39,7 @@ module acquisition_top_uart (
   wire [7:0] trigger_threhold;
   wire       trigger_is_rising_slope;
   wire [2:0] trigger_position;
+  wire       trigger_channel;
   wire [3:0] acquisition_pulse_sel;
   wire       acquisition_en;
 
@@ -49,10 +51,12 @@ module acquisition_top_uart (
       .clk_25m                (clk_25m),
       .sys_rst_n              (sys_rst_n),
       .acquisition_en         (acquisition_en),
-      .ad_data                (ad_data),
+      .ch1_ad_data            (ch1_ad_data),
+      .ch2_ad_data            (ch2_ad_data),
       .trigger_threshold      (trigger_threhold),
       .trigger_is_rising_slope(trigger_is_rising_slope),
       .trigger_position       (trigger_position),
+      .trigger_channel        (trigger_channel),
       .acquisition_pulse_sel  (acquisition_pulse_sel),
       .uart_tx_en             (uart_tx_en),
       .uart_tx_data           (uart_tx_data),
@@ -69,6 +73,7 @@ module acquisition_top_uart (
       .trigger_threshold      (trigger_threhold),
       .trigger_is_rising_slope(trigger_is_rising_slope),
       .trigger_position       (trigger_position),
+      .trigger_channel        (trigger_channel),
       .acquisition_pulse_sel  (acquisition_pulse_sel),
       .acquisition_en         (acquisition_en),
       .parse_completed        (),

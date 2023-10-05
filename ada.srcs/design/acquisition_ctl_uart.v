@@ -30,6 +30,7 @@ module acquisition_ctl_uart (
     output reg [7:0] trigger_threshold,
     output reg       trigger_is_rising_slope,
     output reg [2:0] trigger_position,
+    output reg       trigger_channel,
     output reg [3:0] acquisition_pulse_sel,
     output reg       acquisition_en,
     // parse info
@@ -43,8 +44,9 @@ module acquisition_ctl_uart (
   parameter TRG_THS = 8'h02;
   parameter TRG_SLOPE = 8'h03;
   parameter TRG_POS = 8'h04;
-  parameter ACQ_PULSE = 8'h05;
-  parameter ACQ_EN = 8'h06;
+  parameter TRG_CH = 8'h05;
+  parameter ACQ_PULSE = 8'h06;
+  parameter ACQ_EN = 8'h07;
 
   parameter ERR_HEADER = 8'hE0;
   parameter ERR_CMD = 8'hE1;
@@ -173,6 +175,7 @@ module acquisition_ctl_uart (
             if (uart_rx_data == TRG_THS ||
                 uart_rx_data == TRG_SLOPE ||
                 uart_rx_data == TRG_POS ||
+                uart_rx_data == TRG_CH ||
                 uart_rx_data == ACQ_PULSE ||
                 uart_rx_data == ACQ_EN) begin
               jmp <= 1'b1;
@@ -246,6 +249,7 @@ module acquisition_ctl_uart (
       trigger_threshold <= 8'd0;  // trigger threshold is 0
       trigger_is_rising_slope <= 1'b1;  // rising slope
       trigger_position <= 3'd5;  // trigger disabled
+      trigger_channel <= 1'b0;  // channel 1
       acquisition_pulse_sel <= 4'd0;  // 25MHz (1us/div)
       acquisition_en <= 1'b0;  // acquisition disabled
     end else if ((parse_result == NO_ERR) && (parse_completed == 1'b1)) begin
@@ -255,6 +259,8 @@ module acquisition_ctl_uart (
         trigger_is_rising_slope <= rx_data[0];
       end else if ((parse_cmd == TRG_POS) && (data_len == 8'd1)) begin
         trigger_position <= rx_data[2:0];
+      end else if ((parse_cmd == TRG_CH) && (data_len == 8'd1)) begin
+        trigger_channel <= rx_data[0];
       end else if ((parse_cmd == ACQ_PULSE) && (data_len == 8'd1)) begin
         acquisition_pulse_sel <= rx_data[3:0];
       end else if ((parse_cmd == ACQ_EN) && (data_len == 8'd1)) begin

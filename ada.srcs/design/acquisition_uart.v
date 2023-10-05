@@ -27,11 +27,13 @@ module acquisition_uart (
     // enable signal
     input            acquisition_en,
     // ad data
-    input      [7:0] ad_data,
+    input      [7:0] ch1_ad_data,
+    input      [7:0] ch2_ad_data,
     // trigger config
     input      [7:0] trigger_threshold,
     input            trigger_is_rising_slope,
     input      [2:0] trigger_position,
+    input            trigger_channel,
     // acquisition pulse config
     input      [3:0] acquisition_pulse_sel,
     // uart
@@ -48,11 +50,28 @@ module acquisition_uart (
   parameter SENDING = 4'b1000;
 
   // wire define
-  wire [7:0] sample_data;
+  wire [7:0] ch1_sample_data;
+  wire       ch1_push_en;
+  wire       ch1_push_ready;
+  wire       ch1_push_started;
+  wire       ch1_pushing_last_data;
+  wire       ch1_push_completed;
+
+  wire [7:0] ch2_sample_data;
+  wire       ch2_push_en;
+  wire       ch2_push_ready;
+  wire       ch2_push_started;
+  wire       ch2_pushing_last_data;
+  wire       ch2_push_completed;
+
   wire       sample_completed;
+  wire [7:0] sample_data;
+
   wire       send_busy;
   wire       triggered;
   wire       acquisition_pulse;
+
+  wire [7:0] trigger_ad_data;
 
   // reg define
   reg  [3:0] state;
@@ -63,10 +82,14 @@ module acquisition_uart (
   reg  [2:0] trigger_position_reg;
   reg  [3:0] acquisition_pulse_sel_reg;
   reg        acquisition_en_reg;
+  reg        trigger_channel_reg;
 
   reg        param_set;
 
   // main code
+
+  // trigger channel mux
+  assign trigger_ad_data = (trigger_channel_reg == 1'b0) ? ch1_ad_data : ch2_ad_data;
 
   // state machine
 
@@ -124,6 +147,7 @@ module acquisition_uart (
       trigger_threshold_reg <= 8'd0;
       trigger_is_rising_slope_reg <= 1'b1;
       trigger_position_reg <= 3'd5;
+      trigger_channel_reg <= 1'b0;
       acquisition_pulse_sel_reg <= 4'd0;
       acquisition_en_reg <= 1'b0;
     end else begin
@@ -140,6 +164,7 @@ module acquisition_uart (
           trigger_is_rising_slope_reg <= trigger_is_rising_slope;
           trigger_position_reg <= trigger_position;
           acquisition_pulse_sel_reg <= acquisition_pulse_sel;
+          trigger_channel_reg <= trigger_channel;
           acquisition_en_reg <= 1'b1;
         end
         SAMPLING: begin
@@ -165,18 +190,63 @@ module acquisition_uart (
     end
   end
 
-  // acquisition_sample
-  acquisition_sample acquisition_sample_0 (
+  // channel 1 sample
+  acquisition_sample ch1 (
       .clk_50m          (clk_50m),
       .clk_25m          (clk_25m),
       .sys_rst_n        (sys_rst_n),
       .acquisition_en   (acquisition_en_reg),
-      .ad_data          (ad_data),
-      .sample_completed (sample_completed),
-      .sample_data      (sample_data),
+      .ad_data          (ch1_ad_data),
+      .sample_data      (ch1_sample_data),
       .triggered        (triggered),
       .trigger_position (trigger_position_reg),
-      .acquisition_pulse(acquisition_pulse)
+      .acquisition_pulse(acquisition_pulse),
+      .push_en          (ch1_push_en),
+      .push_ready       (ch1_push_ready),
+      .push_started     (ch1_push_started),
+      .pushing_last_data(ch1_pushing_last_data),
+      .push_completed   (ch1_push_completed)
+  );
+
+  // channel 2 sample
+  acquisition_sample ch2 (
+      .clk_50m          (clk_50m),
+      .clk_25m          (clk_25m),
+      .sys_rst_n        (sys_rst_n),
+      .acquisition_en   (acquisition_en_reg),
+      .ad_data          (ch2_ad_data),
+      .sample_data      (ch2_sample_data),
+      .triggered        (triggered),
+      .trigger_position (trigger_position_reg),
+      .acquisition_pulse(acquisition_pulse),
+      .push_en          (ch2_push_en),
+      .push_ready       (ch2_push_ready),
+      .push_started     (ch2_push_started),
+      .pushing_last_data(ch2_pushing_last_data),
+      .push_completed   (ch2_push_completed)
+  );
+
+  // acquisition multi channel glue
+  acquisition_multich_glue acquisition_multich_glue_0 (
+      .clk_25m              (clk_25m),
+      .rst_n                (sys_rst_n),
+      // channel 1
+      .ch1_sample_data      (ch1_sample_data),
+      .ch1_push_ready       (ch1_push_ready),
+      .ch1_push_started     (ch1_push_started),
+      .ch1_pushing_last_data(ch1_pushing_last_data),
+      .ch1_push_completed   (ch1_push_completed),
+      .ch1_push_en          (ch1_push_en),
+      // channel 2
+      .ch2_sample_data      (ch2_sample_data),
+      .ch2_push_ready       (ch2_push_ready),
+      .ch2_push_started     (ch2_push_started),
+      .ch2_pushing_last_data(ch2_pushing_last_data),
+      .ch2_push_completed   (ch2_push_completed),
+      .ch2_push_en          (ch2_push_en),
+      // signal to fifo
+      .sample_completed     (sample_completed),
+      .sample_data          (sample_data)
   );
 
   // aqcquisition_send_uart
@@ -199,7 +269,7 @@ module acquisition_uart (
       .acquisition_pulse(acquisition_pulse),
       .is_rising_slope  (trigger_is_rising_slope_reg),
       .threshold        (trigger_threshold_reg),
-      .ad_data          (ad_data),
+      .ad_data          (trigger_ad_data),
       .trigger          (triggered)
   );
 
