@@ -23,24 +23,26 @@
 module acquisition_sample (
     input        clk_50m,
     input        clk_25m,
-    input        sys_rst_n,         // active low
+    input        sys_rst_n,          // active low
     // enable signal
     input        acquisition_en,
     // ad data
     input  [7:0] ad_data,
     // data to fifo
-    output       sample_completed,
     output [7:0] sample_data,
     // triggered and acquisition pulse
     input        triggered,
     input  [2:0] trigger_position,
-    input        acquisition_pulse
+    input        acquisition_pulse,
+    // push
+    input        push_en,
+    output       push_ready,
+    output       push_started,
+    output       pushing_last_data,
+    output       push_completed
 );
 
   // wire define
-  // handshake
-  wire       cache_wr_ready;
-  // dual port ram
   wire       rd_en;
   wire [7:0] rd_addr;
   wire [7:0] wr_addr;
@@ -54,12 +56,13 @@ module acquisition_sample (
   acquisition_sync_cache_rd acquisition_sync_cache_rd_0 (
       .rd_clk           (clk_25m),
       .rst_n            (sys_rst_n),
-      .en               (cache_wr_ready),
+      .push_en          (push_en),
       .start_addr       (wr_addr),
       .rd_en            (rd_en),
       .rd_addr          (rd_addr),
-      .sample_completed (sample_completed),
-      .pushing_last_data()
+      .push_started     (push_started),
+      .pushing_last_data(pushing_last_data),
+      .push_completed   (push_completed)
   );
 
   // dual port ram write
@@ -70,7 +73,8 @@ module acquisition_sample (
       .en               (acquisition_en),
       .trigger_position (trigger_position),
       .triggered        (triggered),
-      .cache_wr_ready   (cache_wr_ready),
+      .push_ready       (push_ready),
+      .push_started     (push_started),
       .wr_we            (wr_we),
       .wr_en            (wr_en),
       .wr_addr          (wr_addr),
