@@ -36,7 +36,7 @@ module acquisition_sync_cache_rd (
     output           push_completed
 );
   // parameter define
-  parameter BRAM_DEPTH = 255;
+  parameter BRAM_DEPTH = 8'd255;
 
   parameter IDLE = 2'b01;
   parameter READING = 2'b10;
@@ -67,7 +67,7 @@ module acquisition_sync_cache_rd (
     end else begin
       if (rd_en) begin  // write enable
         rd_cnt <= rd_cnt + 1'b1;
-        if (rd_addr == 8'd254) begin  // reach the end of ram
+        if (rd_addr == (BRAM_DEPTH - 8'd1)) begin  // reach the end of ram
           rd_addr <= 8'd0;
         end else begin
           rd_addr <= rd_addr + 1'b1;
