@@ -52,7 +52,6 @@ module acquisition_send_uart (
   wire [7:0] wr_data;
   wire [7:0] rd_data;
   wire       almost_full;
-  wire       empty;
   wire       full;
   // others
   wire       rd_busy;
@@ -134,7 +133,7 @@ module acquisition_send_uart (
       .almost_full (almost_full),
       .almost_empty(),
       .full        (full),
-      .empty       (empty),
+      .empty       (),
       .wr_rst_busy (wr_rst_busy),
       .rd_rst_busy (rd_rst_busy)
   );
@@ -157,7 +156,6 @@ module acquisition_send_uart (
       .wr_rst_busy (wr_rst_busy),
       .rd_data     (rd_data),
       .full        (full),
-      .empty       (empty),
       .rd_en       (rd_en),
       .uart_tx_en  (uart_tx_en),
       .uart_tx_data(uart_tx_data),
