@@ -38,7 +38,7 @@ module trigger (
 
   // main code
 
-  always @(posedge acquisition_clk or rst_n) begin
+  always @(posedge acquisition_clk or negedge rst_n) begin
     if (!rst_n) begin
       cmp0 <= 1'b0;
       cmp1 <= 1'b0;
