@@ -92,7 +92,7 @@ module tb_acquisition_ctl_uart ();
     #150000 uart_rx_data <= 8'd92;  // checksum
     uart_rx_done <= 1'b1;
     #20 uart_rx_done <= 1'b0;
-    // acquisition pulse select control
+    // trigger position control
     #150000 uart_rx_data <= 8'h55;  // header
     uart_rx_done <= 1'b1;
     #20 uart_rx_done <= 1'b0;
@@ -102,13 +102,13 @@ module tb_acquisition_ctl_uart ();
     #150000 uart_rx_data <= 8'd1;  // data length
     uart_rx_done <= 1'b1;
     #20 uart_rx_done <= 1'b0;
-    #150000 uart_rx_data <= 8'd4;  // data
+    #150000 uart_rx_data <= 8'd1;  // data
     uart_rx_done <= 1'b1;
     #20 uart_rx_done <= 1'b0;
-    #150000 uart_rx_data <= 8'd95;  // checksum
+    #150000 uart_rx_data <= 8'd92;  // checksum
     uart_rx_done <= 1'b1;
     #20 uart_rx_done <= 1'b0;
-    // acquisition enable control
+    // acquisition pulse select control
     #150000 uart_rx_data <= 8'h55;  // header
     uart_rx_done <= 1'b1;
     #20 uart_rx_done <= 1'b0;
@@ -118,10 +118,26 @@ module tb_acquisition_ctl_uart ();
     #150000 uart_rx_data <= 8'd1;  // data length
     uart_rx_done <= 1'b1;
     #20 uart_rx_done <= 1'b0;
+    #150000 uart_rx_data <= 8'd4;  // data
+    uart_rx_done <= 1'b1;
+    #20 uart_rx_done <= 1'b0;
+    #150000 uart_rx_data <= 8'd96;  // checksum
+    uart_rx_done <= 1'b1;
+    #20 uart_rx_done <= 1'b0;
+    // acquisition enable control
+    #150000 uart_rx_data <= 8'h55;  // header
+    uart_rx_done <= 1'b1;
+    #20 uart_rx_done <= 1'b0;
+    #150000 uart_rx_data <= 8'h07;  // packet type
+    uart_rx_done <= 1'b1;
+    #20 uart_rx_done <= 1'b0;
+    #150000 uart_rx_data <= 8'd1;  // data length
+    uart_rx_done <= 1'b1;
+    #20 uart_rx_done <= 1'b0;
     #150000 uart_rx_data <= 8'd1;  // data
     uart_rx_done <= 1'b1;
     #20 uart_rx_done <= 1'b0;
-    #150000 uart_rx_data <= 8'd93;  // checksum
+    #150000 uart_rx_data <= 8'd94;  // checksum
     uart_rx_done <= 1'b1;
     #20 uart_rx_done <= 1'b0;
   end
@@ -151,6 +167,7 @@ module tb_acquisition_ctl_uart ();
       .trigger_threshold(),
       .trigger_is_rising_slope(),
       .trigger_position(),
+      .trigger_channel(),
       .acquisition_pulse_sel(),
       .acquisition_en(),
       .parse_completed(),

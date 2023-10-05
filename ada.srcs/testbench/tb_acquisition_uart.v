@@ -43,6 +43,8 @@ module tb_acquisition_uart ();
   wire [7:0] uart_tx_data;
   wire       uart_tx_busy;
 
+  wire [7:0] mock_ad_data;
+
   // initial block
   initial begin
     sys_clk = 1'b0;
@@ -56,6 +58,8 @@ module tb_acquisition_uart ();
   // main code
 
   assign rst_n = sys_rst_n & locked; // generate a new reset signal from system reset and pll lock signal
+
+  assign mock_ad_data = ad_data - 8'd128;
 
   // clock gen
   always #(CLK_PERIOD / 2) sys_clk = ~sys_clk;  // 50MHz
@@ -84,10 +88,12 @@ module tb_acquisition_uart ();
       .clk_25m                (clk_25m),
       .sys_rst_n              (sys_rst_n),
       .acquisition_en         (acquisition_en),
-      .ad_data                (ad_data),
+      .ch1_ad_data            (ad_data),
+      .ch2_ad_data            (mock_ad_data),
       .trigger_threshold      (8'd128),
       .trigger_is_rising_slope(1'b1),
       .trigger_position       (3'd0),
+      .trigger_channel        (1'b0),
       .acquisition_pulse_sel  (4'd2),
       .uart_tx_en             (uart_tx_en),
       .uart_tx_data           (uart_tx_data),

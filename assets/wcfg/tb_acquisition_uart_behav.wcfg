@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="122,025.499 ns"></ZoomStartTime>
-      <ZoomEndTime time="122,846.000 ns"></ZoomEndTime>
-      <Cursor1Time time="122,169.999 ns"></Cursor1Time>
+      <ZoomStartTime time="0.000000000 ms"></ZoomStartTime>
+      <ZoomEndTime time="10.780395261 ms"></ZoomEndTime>
+      <Cursor1Time time="0.001000000 ms"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="307"></NameColumnWidth>
+      <NameColumnWidth column_width="293"></NameColumnWidth>
       <ValueColumnWidth column_width="102"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="39" />
+   <WVObjectSize size="46" />
    <wvobject fp_name="/tb_acquisition_uart/sys_clk" type="logic">
       <obj_property name="ElementShortName">sys_clk</obj_property>
       <obj_property name="ObjectShortName">sys_clk</obj_property>
@@ -35,10 +35,6 @@
    <wvobject fp_name="/tb_acquisition_uart/acquisition_en" type="logic">
       <obj_property name="ElementShortName">acquisition_en</obj_property>
       <obj_property name="ObjectShortName">acquisition_en</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/acquisition_sample_0/sample_completed" type="logic">
-      <obj_property name="ElementShortName">sample_completed</obj_property>
-      <obj_property name="ObjectShortName">sample_completed</obj_property>
    </wvobject>
    <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/acquisition_busy" type="logic">
       <obj_property name="ElementShortName">acquisition_busy</obj_property>
@@ -59,38 +55,6 @@
    <wvobject fp_name="/tb_acquisition_uart/rst_n" type="logic">
       <obj_property name="ElementShortName">rst_n</obj_property>
       <obj_property name="ObjectShortName">rst_n</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/acquisition_sample_0/ad_data" type="array">
-      <obj_property name="ElementShortName">ad_data[7:0]</obj_property>
-      <obj_property name="ObjectShortName">ad_data[7:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/acquisition_sample_0/acquisition_pulse" type="logic">
-      <obj_property name="ElementShortName">acquisition_pulse</obj_property>
-      <obj_property name="ObjectShortName">acquisition_pulse</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/acquisition_sample_0/triggered" type="logic">
-      <obj_property name="ElementShortName">triggered</obj_property>
-      <obj_property name="ObjectShortName">triggered</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/acquisition_sample_0/ad_data" type="array">
-      <obj_property name="ElementShortName">ad_data[7:0]</obj_property>
-      <obj_property name="ObjectShortName">ad_data[7:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/acquisition_sample_0/cache_wr_ready" type="logic">
-      <obj_property name="ElementShortName">cache_wr_ready</obj_property>
-      <obj_property name="ObjectShortName">cache_wr_ready</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/acquisition_sample_0/acquisition_sync_cache_wr_0/wr_en" type="logic">
-      <obj_property name="ElementShortName">wr_en</obj_property>
-      <obj_property name="ObjectShortName">wr_en</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/acquisition_sample_0/acquisition_sync_cache_wr_0/wr_addr" type="array">
-      <obj_property name="ElementShortName">wr_addr[7:0]</obj_property>
-      <obj_property name="ObjectShortName">wr_addr[7:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/acquisition_sample_0/acquisition_sync_cache_wr_0/wr_data" type="array">
-      <obj_property name="ElementShortName">wr_data[7:0]</obj_property>
-      <obj_property name="ObjectShortName">wr_data[7:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/acquisition_send_uart_0/async_fifo_8b_0/full" type="logic">
       <obj_property name="ElementShortName">full</obj_property>
@@ -124,6 +88,15 @@
    <wvobject fp_name="/tb_acquisition_uart/uart_tx_tbau0/uart_txd" type="logic">
       <obj_property name="ElementShortName">uart_txd</obj_property>
       <obj_property name="ObjectShortName">uart_txd</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/acquisition_send_uart_0/acquisition_fifo_rd_uart_0/send_cnt" type="array">
+      <obj_property name="ElementShortName">send_cnt[15:0]</obj_property>
+      <obj_property name="ObjectShortName">send_cnt[15:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/acquisition_send_uart_0/acquisition_fifo_rd_uart_0/checksum" type="array">
+      <obj_property name="ElementShortName">checksum[7:0]</obj_property>
+      <obj_property name="ObjectShortName">checksum[7:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/trigger_threshold_reg" type="array">
       <obj_property name="ElementShortName">trigger_threshold_reg[7:0]</obj_property>
@@ -159,24 +132,85 @@
       <obj_property name="ElementShortName">next_state[3:0]</obj_property>
       <obj_property name="ObjectShortName">next_state[3:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/acquisition_sample_0/acquisition_sync_cache_rd_0/rd_en" type="logic">
+   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/acquisition_multich_glue_0/ch1_push_ready" type="logic">
+      <obj_property name="ElementShortName">ch1_push_ready</obj_property>
+      <obj_property name="ObjectShortName">ch1_push_ready</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/acquisition_multich_glue_0/ch1_push_started" type="logic">
+      <obj_property name="ElementShortName">ch1_push_started</obj_property>
+      <obj_property name="ObjectShortName">ch1_push_started</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/acquisition_multich_glue_0/ch1_pushing_last_data" type="logic">
+      <obj_property name="ElementShortName">ch1_pushing_last_data</obj_property>
+      <obj_property name="ObjectShortName">ch1_pushing_last_data</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/acquisition_multich_glue_0/ch1_push_en" type="logic">
+      <obj_property name="ElementShortName">ch1_push_en</obj_property>
+      <obj_property name="ObjectShortName">ch1_push_en</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/acquisition_multich_glue_0/ch1_push_completed" type="logic">
+      <obj_property name="ElementShortName">ch1_push_completed</obj_property>
+      <obj_property name="ObjectShortName">ch1_push_completed</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/acquisition_multich_glue_0/ch1_sample_data" type="array">
+      <obj_property name="ElementShortName">ch1_sample_data[7:0]</obj_property>
+      <obj_property name="ObjectShortName">ch1_sample_data[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/acquisition_multich_glue_0/ch2_push_ready" type="logic">
+      <obj_property name="ElementShortName">ch2_push_ready</obj_property>
+      <obj_property name="ObjectShortName">ch2_push_ready</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/acquisition_multich_glue_0/ch2_push_started" type="logic">
+      <obj_property name="ElementShortName">ch2_push_started</obj_property>
+      <obj_property name="ObjectShortName">ch2_push_started</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/acquisition_multich_glue_0/ch2_pushing_last_data" type="logic">
+      <obj_property name="ElementShortName">ch2_pushing_last_data</obj_property>
+      <obj_property name="ObjectShortName">ch2_pushing_last_data</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/acquisition_multich_glue_0/ch2_push_en" type="logic">
+      <obj_property name="ElementShortName">ch2_push_en</obj_property>
+      <obj_property name="ObjectShortName">ch2_push_en</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/acquisition_multich_glue_0/ch2_push_completed" type="logic">
+      <obj_property name="ElementShortName">ch2_push_completed</obj_property>
+      <obj_property name="ObjectShortName">ch2_push_completed</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/acquisition_multich_glue_0/ch2_sample_data" type="array">
+      <obj_property name="ElementShortName">ch2_sample_data[7:0]</obj_property>
+      <obj_property name="ObjectShortName">ch2_sample_data[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/acquisition_multich_glue_0/state" type="array">
+      <obj_property name="ElementShortName">state[2:0]</obj_property>
+      <obj_property name="ObjectShortName">state[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/acquisition_multich_glue_0/next_state" type="array">
+      <obj_property name="ElementShortName">next_state[2:0]</obj_property>
+      <obj_property name="ObjectShortName">next_state[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/acquisition_multich_glue_0/sample_data" type="array">
+      <obj_property name="ElementShortName">sample_data[7:0]</obj_property>
+      <obj_property name="ObjectShortName">sample_data[7:0]</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/acquisition_send_uart_0/wr_en" type="logic">
+      <obj_property name="ElementShortName">wr_en</obj_property>
+      <obj_property name="ObjectShortName">wr_en</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/acquisition_send_uart_0/async_fifo_8b_0/din" type="array">
+      <obj_property name="ElementShortName">din[7:0]</obj_property>
+      <obj_property name="ObjectShortName">din[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/acquisition_send_uart_0/async_fifo_8b_0/rd_en" type="logic">
       <obj_property name="ElementShortName">rd_en</obj_property>
       <obj_property name="ObjectShortName">rd_en</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/acquisition_sample_0/acquisition_sync_cache_rd_0/rd_en_delay0" type="logic">
-      <obj_property name="ElementShortName">rd_en_delay0</obj_property>
-      <obj_property name="ObjectShortName">rd_en_delay0</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/acquisition_sample_0/acquisition_sync_cache_rd_0/rd_addr" type="array">
-      <obj_property name="ElementShortName">rd_addr[7:0]</obj_property>
-      <obj_property name="ObjectShortName">rd_addr[7:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/acquisition_sample_0/acquisition_sync_cache_rd_0/sample_completed" type="logic">
-      <obj_property name="ElementShortName">sample_completed</obj_property>
-      <obj_property name="ObjectShortName">sample_completed</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/acquisition_sample_0/acquisition_sync_cache_0/doutb" type="array">
-      <obj_property name="ElementShortName">doutb[7:0]</obj_property>
-      <obj_property name="ObjectShortName">doutb[7:0]</obj_property>
+   <wvobject fp_name="/tb_acquisition_uart/acquisition_uart_0/acquisition_send_uart_0/async_fifo_8b_0/dout" type="array">
+      <obj_property name="ElementShortName">dout[7:0]</obj_property>
+      <obj_property name="ObjectShortName">dout[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
 </wave_config>

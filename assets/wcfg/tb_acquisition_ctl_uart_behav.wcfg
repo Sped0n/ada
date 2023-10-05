@@ -12,14 +12,14 @@
    </db_ref_list>
    <zoom_setting>
       <ZoomStartTime time="0.000000 us"></ZoomStartTime>
-      <ZoomEndTime time="8,205.000001 us"></ZoomEndTime>
-      <Cursor1Time time="6,635.121794 us"></Cursor1Time>
+      <ZoomEndTime time="8,240.000001 us"></ZoomEndTime>
+      <Cursor1Time time="3,000.430000 us"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="307"></NameColumnWidth>
+      <NameColumnWidth column_width="300"></NameColumnWidth>
       <ValueColumnWidth column_width="102"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="19" />
+   <WVObjectSize size="20" />
    <wvobject fp_name="/tb_acquisition_ctl_uart/sys_clk" type="logic">
       <obj_property name="ElementShortName">sys_clk</obj_property>
       <obj_property name="ObjectShortName">sys_clk</obj_property>
@@ -87,6 +87,10 @@
    <wvobject fp_name="/tb_acquisition_ctl_uart/acquisition_ctl_uart_tb0/trigger_position" type="array">
       <obj_property name="ElementShortName">trigger_position[2:0]</obj_property>
       <obj_property name="ObjectShortName">trigger_position[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_uart/acquisition_ctl_uart_tb0/trigger_channel" type="logic">
+      <obj_property name="ElementShortName">trigger_channel</obj_property>
+      <obj_property name="ObjectShortName">trigger_channel</obj_property>
    </wvobject>
    <wvobject fp_name="/tb_acquisition_ctl_uart/acquisition_ctl_uart_tb0/acquisition_pulse_sel" type="array">
       <obj_property name="ElementShortName">acquisition_pulse_sel[3:0]</obj_property>

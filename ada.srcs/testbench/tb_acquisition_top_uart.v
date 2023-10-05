@@ -46,6 +46,8 @@ module tb_acquisition_top_uart ();
   wire [7:0] uart_tx_data;
   wire       uart_tx_busy;
 
+  wire [7:0] mock_ad_data;
+
   // initial block
   initial begin
     sys_clk = 1'b0;
@@ -81,10 +83,10 @@ module tb_acquisition_top_uart ();
     #150000 uart_rx_data <= 8'd1;  // data length
     uart_rx_done <= 1'b1;
     #20 uart_rx_done <= 1'b0;
-    #150000 uart_rx_data <= 8'd0;  // data
+    #150000 uart_rx_data <= 8'd1;  // data
     uart_rx_done <= 1'b1;
     #20 uart_rx_done <= 1'b0;
-    #150000 uart_rx_data <= 8'd89;  // checksum
+    #150000 uart_rx_data <= 8'd90;  // checksum
     uart_rx_done <= 1'b1;
     #20 uart_rx_done <= 1'b0;
     // trigger position control
@@ -103,7 +105,7 @@ module tb_acquisition_top_uart ();
     #150000 uart_rx_data <= 8'd92;  // checksum
     uart_rx_done <= 1'b1;
     #20 uart_rx_done <= 1'b0;
-    // acquisition pulse select control
+    // trigger channel control
     #150000 uart_rx_data <= 8'h55;  // header
     uart_rx_done <= 1'b1;
     #20 uart_rx_done <= 1'b0;
@@ -113,13 +115,13 @@ module tb_acquisition_top_uart ();
     #150000 uart_rx_data <= 8'd1;  // data length
     uart_rx_done <= 1'b1;
     #20 uart_rx_done <= 1'b0;
-    #150000 uart_rx_data <= 8'd4;  // data
+    #150000 uart_rx_data <= 8'd1;  // data
     uart_rx_done <= 1'b1;
     #20 uart_rx_done <= 1'b0;
-    #150000 uart_rx_data <= 8'd95;  // checksum
+    #150000 uart_rx_data <= 8'd92;  // checksum
     uart_rx_done <= 1'b1;
     #20 uart_rx_done <= 1'b0;
-    // acquisition enable control
+    // acquisition pulse select control
     #150000 uart_rx_data <= 8'h55;  // header
     uart_rx_done <= 1'b1;
     #20 uart_rx_done <= 1'b0;
@@ -129,10 +131,26 @@ module tb_acquisition_top_uart ();
     #150000 uart_rx_data <= 8'd1;  // data length
     uart_rx_done <= 1'b1;
     #20 uart_rx_done <= 1'b0;
+    #150000 uart_rx_data <= 8'd4;  // data
+    uart_rx_done <= 1'b1;
+    #20 uart_rx_done <= 1'b0;
+    #150000 uart_rx_data <= 8'd96;  // checksum
+    uart_rx_done <= 1'b1;
+    #20 uart_rx_done <= 1'b0;
+    // acquisition enable control
+    #150000 uart_rx_data <= 8'h55;  // header
+    uart_rx_done <= 1'b1;
+    #20 uart_rx_done <= 1'b0;
+    #150000 uart_rx_data <= 8'h07;  // packet type
+    uart_rx_done <= 1'b1;
+    #20 uart_rx_done <= 1'b0;
+    #150000 uart_rx_data <= 8'd1;  // data length
+    uart_rx_done <= 1'b1;
+    #20 uart_rx_done <= 1'b0;
     #150000 uart_rx_data <= 8'd1;  // data
     uart_rx_done <= 1'b1;
     #20 uart_rx_done <= 1'b0;
-    #150000 uart_rx_data <= 8'd93;  // checksum
+    #150000 uart_rx_data <= 8'd94;  // checksum
     uart_rx_done <= 1'b1;
     #20 uart_rx_done <= 1'b0;
   end
@@ -140,6 +158,8 @@ module tb_acquisition_top_uart ();
   // main code
 
   assign rst_n = sys_rst_n & locked; // generate a new reset signal from system reset and pll lock signal
+
+  assign mock_ad_data = ad_data - 8'd128;
 
   // clock gen
   always #(CLK_PERIOD / 2) sys_clk = ~sys_clk;  // 50MHz
@@ -167,7 +187,8 @@ module tb_acquisition_top_uart ();
       .clk_50m     (clk_50m),
       .clk_25m     (clk_25m),
       .sys_rst_n   (sys_rst_n),
-      .ad_data     (ad_data),
+      .ch1_ad_data (ad_data),
+      .ch2_ad_data (mock_ad_data),
       .uart_tx_en  (uart_tx_en),
       .uart_tx_data(uart_tx_data),
       .uart_tx_busy(uart_tx_busy),
