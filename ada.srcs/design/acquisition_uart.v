@@ -92,10 +92,10 @@ module acquisition_uart (
 
   // main code
 
-  assign acquissition_state = state;
+  assign acquisition_state = state;
 
   // trigger channel mux
-  assign trigger_ad_data = (trigger_channel_reg == 1'b0) ? ch1_ad_data : ch2_ad_data;
+  assign trigger_ad_data   = (trigger_channel_reg == 1'b0) ? ch1_ad_data : ch2_ad_data;
 
   // state machine
 
