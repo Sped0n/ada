@@ -33,6 +33,8 @@ module acquisition_ctl_uart (
     output reg       trigger_channel,
     output reg [3:0] acquisition_pulse_sel,
     output reg       acquisition_en,
+    // input
+    input            acquisition_busy,
     // parse info
     output reg       parse_completed,
     output reg [7:0] parse_result,
@@ -72,7 +74,7 @@ module acquisition_ctl_uart (
   reg [7:0] checksum;
   reg       jmp;
 
-  reg       acquisition_en_delay0;
+  reg       acquisition_busy_delay0;
 
   // main code
 
@@ -252,33 +254,36 @@ module acquisition_ctl_uart (
       trigger_channel <= 1'b0;  // channel 1
       acquisition_pulse_sel <= 4'd0;  // 25MHz (1us/div)
       acquisition_en <= 1'b0;  // acquisition disabled
-    end else if ((parse_result == NO_ERR) && (parse_completed == 1'b1)) begin
-      if ((parse_cmd == TRG_THS) && (data_len == 8'd1)) begin
-        trigger_threshold <= rx_data;
-      end else if ((parse_cmd == TRG_SLOPE) && (data_len == 8'd1)) begin
-        trigger_is_rising_slope <= rx_data[0];
-      end else if ((parse_cmd == TRG_POS) && (data_len == 8'd1)) begin
-        trigger_position <= rx_data[2:0];
-      end else if ((parse_cmd == TRG_CH) && (data_len == 8'd1)) begin
-        trigger_channel <= rx_data[0];
-      end else if ((parse_cmd == ACQ_PULSE) && (data_len == 8'd1)) begin
-        acquisition_pulse_sel <= rx_data[3:0];
-      end else if ((parse_cmd == ACQ_EN) && (data_len == 8'd1)) begin
-        acquisition_en <= rx_data[0];
-      end
     end else begin
-      if (acquisition_en_delay0) begin  // generate a pulse instead of a level signal
+      // cmd handling
+      if ((parse_result == NO_ERR) && (parse_completed == 1'b1)) begin
+        if ((parse_cmd == TRG_THS) && (data_len == 8'd1)) begin
+          trigger_threshold <= rx_data;
+        end else if ((parse_cmd == TRG_SLOPE) && (data_len == 8'd1)) begin
+          trigger_is_rising_slope <= rx_data[0];
+        end else if ((parse_cmd == TRG_POS) && (data_len == 8'd1)) begin
+          trigger_position <= rx_data[2:0];
+        end else if ((parse_cmd == TRG_CH) && (data_len == 8'd1)) begin
+          trigger_channel <= rx_data[0];
+        end else if ((parse_cmd == ACQ_PULSE) && (data_len == 8'd1)) begin
+          acquisition_pulse_sel <= rx_data[3:0];
+        end else if ((parse_cmd == ACQ_EN) && (data_len == 8'd1)) begin
+          acquisition_en <= rx_data[0];
+        end
+      end
+      // generate a pulse instead of a level signal
+      if (acquisition_busy & ~acquisition_busy_delay0) begin
         acquisition_en <= 1'b0;
       end
     end
   end
 
-  // acquisition_en_delay0
+  // acquisition_busy_delay0
   always @(posedge clk_50m or negedge sys_rst_n) begin
     if (!sys_rst_n) begin
-      acquisition_en_delay0 <= 1'b0;
+      acquisition_busy_delay0 <= 1'b0;
     end else begin
-      acquisition_en_delay0 <= acquisition_en;
+      acquisition_busy_delay0 <= acquisition_busy;
     end
   end
 

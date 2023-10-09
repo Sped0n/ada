@@ -85,6 +85,7 @@ module acquisition_top_uart (
       .trigger_channel        (trigger_channel),
       .acquisition_pulse_sel  (acquisition_pulse_sel),
       .acquisition_en         (acquisition_en),
+      .acquisition_busy       (acquisition_busy),
       .parse_completed        (),
       .parse_result           (),
       .parse_cmd              ()
