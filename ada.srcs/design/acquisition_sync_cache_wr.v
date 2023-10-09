@@ -57,14 +57,19 @@ module acquisition_sync_cache_wr (
   parameter WFRD_CNT_MAX_75 = 191;
   parameter WFRD_CNT_MAX_100 = 63;
 
+  // just incase state machine won't be stucked if we don't meet the trigger condition in WFT state
+  parameter WFT_CNT_MAX = 2500;
+
   // reg define
   reg [4:0] state;
   reg [4:0] next_state;
 
-  reg [7:0] cache_cnt;
+  reg [15:0] cache_cnt;
 
-  reg [7:0] wfrd_cnt;
-  reg [7:0] wfrd_cnt_max;
+  reg [15:0] wfrd_cnt;
+  reg [15:0] wfrd_cnt_max;
+
+  reg [15:0] wft_cnt;
 
   reg trigger_enable;
 
@@ -148,7 +153,7 @@ module acquisition_sync_cache_wr (
         end
       end
       CACHING: begin
-        if (cache_cnt == 8'd255) begin
+        if (cache_cnt == BRAM_DEPTH) begin
           if (trigger_enable) begin
             next_state = WFT;
           end else begin
@@ -161,6 +166,8 @@ module acquisition_sync_cache_wr (
       WFT: begin
         if (triggered) begin
           next_state = WFRD;
+        end else if (wft_cnt == WFT_CNT_MAX) begin
+          next_state = HANDSHAKE;
         end else begin
           next_state = WFT;
         end
@@ -185,23 +192,26 @@ module acquisition_sync_cache_wr (
   // state machine output logic
   always @(posedge wr_clk or negedge rst_n) begin
     if (!rst_n) begin
-      cache_cnt <= 8'd0;
+      cache_cnt <= 16'd0;
       wr_en <= 1'b0;
       push_ready <= 1'b0;
-      wfrd_cnt <= 8'd0;
+      wfrd_cnt <= 16'd0;
+      wft_cnt <= 16'd0;
     end else begin
       case (state)
         IDLE: begin
           // reset ready flag
           push_ready <= 1'b0;
           // reset
-          cache_cnt <= 8'd0;
-          wfrd_cnt <= 8'd0;
+          cache_cnt <= 16'd0;
+          wfrd_cnt <= 16'd0;
+          wft_cnt <= 16'd0;
           wr_en <= 1'b0;
         end
         CACHING: begin
           push_ready <= 1'b0;
-          wfrd_cnt   <= 8'd0;
+          wfrd_cnt   <= 16'd0;
+          wft_cnt    <= 16'd0;
           // filling cache, and use cache_cnt as the cache filled metric
           if (acquisition_pulse) begin
             cache_cnt <= cache_cnt + 1'b1;
@@ -213,18 +223,21 @@ module acquisition_sync_cache_wr (
         end
         WFT: begin
           push_ready <= 1'b0;
-          cache_cnt  <= 8'd0;
-          wfrd_cnt   <= 8'd0;
+          cache_cnt  <= 16'd0;
+          wfrd_cnt   <= 16'd0;
           // just keep sampling, state machine will automatically go to WFRD when trigger is detected
           if (acquisition_pulse) begin
-            wr_en <= 1'b1;
+            wr_en   <= 1'b1;
+            wft_cnt <= wft_cnt + 1'b1;
           end else begin
-            wr_en <= 1'b0;
+            wr_en   <= 1'b0;
+            wft_cnt <= wft_cnt;
           end
         end
         WFRD: begin
           push_ready <= 1'b0;
-          cache_cnt  <= 8'd0;
+          cache_cnt  <= 16'd0;
+          wft_cnt    <= 16'd0;
           // keep sampling, and use wfrd_cnt as the cache filled metric
           if (acquisition_pulse) begin
             wr_en <= 1'b1;
@@ -238,8 +251,9 @@ module acquisition_sync_cache_wr (
           // enable ready flag
           push_ready <= 1'b1;
           // reset
-          cache_cnt <= 8'd0;
-          wfrd_cnt <= 8'd0;
+          cache_cnt <= 16'd0;
+          wfrd_cnt <= 16'd0;
+          wft_cnt <= 16'd0;
           wr_en <= 1'b0;
         end
       endcase
