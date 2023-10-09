@@ -46,7 +46,7 @@ module ada_top (
   // parameter define
   parameter DEBOUNCE_CNT_MAX = 20'd100_0000;  // debounce for 100_0000 * 20ns(1s/50MHz) = 20ms
   parameter SYS_CLK_FREQ = 50_000_000;  // system clock frequency
-  parameter BAUD_RATE = 115_200;  // baud rate
+  parameter BAUD_RATE = 1000_000;  // baud rate
 
   // wire define
   wire        clk_50m;  // 50MHz clock
