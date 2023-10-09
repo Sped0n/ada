@@ -150,6 +150,7 @@ module acquisition_fifo_rd_uart (
       uart_tx_data <= 8'd0;
       checksum  <= 8'd0;
       fetched    <= 1'b0;
+      stat_refreshed <= 1'b0;
     end else begin
       case (state)
         IDLE: begin
