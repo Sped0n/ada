@@ -190,6 +190,7 @@ module acquisition_uart (
           trigger_is_rising_slope_reg <= trigger_is_rising_slope_reg;
           trigger_position_reg <= trigger_position_reg;
           acquisition_pulse_sel_reg <= acquisition_pulse_sel_reg;
+          trigger_channel_reg <= trigger_channel_reg;
           acquisition_en_reg <= acquisition_en_reg;
         end
       endcase
