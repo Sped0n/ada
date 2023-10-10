@@ -79,7 +79,7 @@ module ada_top (
   assign ad_clk = clk_25m;  // adc clock is 25MHz
   assign buzzer = ad_otr;  // buzzer is on when adc data is over range
   assign led = (~filtered_keys) | acquisition_state;  // led is on when any key is pressed
-  assign mock_ad_data = ad_data - 8'd128;  // mock adc data
+  assign mock_ad_data = da_data;  // mock adc data
 
   // pll
   clk_wiz_0 pll_ad_da (
