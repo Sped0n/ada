@@ -114,23 +114,6 @@ module acquisition_sync_cache_wr (
     endcase
   end
 
-  // wr_addr control
-  always @(posedge wr_clk or negedge rst_n) begin
-    if (!rst_n) begin
-      wr_addr <= 8'd0;
-    end else begin
-      if (wr_en) begin  // write enable
-        if (wr_addr == (BRAM_DEPTH - 8'd1)) begin  // reach the end of ram
-          wr_addr <= 8'd0;
-        end else begin
-          wr_addr <= wr_addr + 1'b1;
-        end
-      end else begin
-        wr_addr <= wr_addr;
-      end
-    end
-  end
-
   // state machine
 
   // state transition
@@ -197,7 +180,17 @@ module acquisition_sync_cache_wr (
       push_ready <= 1'b0;
       wfrd_cnt <= 16'd0;
       wft_cnt <= 16'd0;
+      wr_addr <= 8'd0;
     end else begin
+      // wr_addr control
+      if (wr_en) begin  // write enable
+        if (wr_addr == (BRAM_DEPTH - 8'd1)) begin  // reach the end of ram
+          wr_addr <= 8'd0;
+        end else begin
+          wr_addr <= wr_addr + 1'b1;
+        end
+      end
+      // state machine
       case (state)
         IDLE: begin
           // reset ready flag
@@ -207,6 +200,7 @@ module acquisition_sync_cache_wr (
           wfrd_cnt <= 16'd0;
           wft_cnt <= 16'd0;
           wr_en <= 1'b0;
+          wr_addr <= 8'd0;
         end
         CACHING: begin
           push_ready <= 1'b0;
