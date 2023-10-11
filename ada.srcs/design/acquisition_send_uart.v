@@ -25,9 +25,9 @@ module acquisition_send_uart (
     input            clk_25m,
     input            sys_rst_n,
     // acquisition sample
-    input            fifo_wr_en,
+    input            async_ram_wr_en,
     input      [7:0] sample_data,
-    input            fifo_wr_completed,
+    input            async_ram_wr_completed,
     // uart interface
     output           uart_tx_en,
     output     [7:0] uart_tx_data,
@@ -43,16 +43,14 @@ module acquisition_send_uart (
   // reg define
   reg  [2:0] state;
   reg  [2:0] next_state;
+  reg  [14:0] wr_addr;
+  reg  [14:0] rd_addr;
+  reg         send_en;
 
   // wire define
-  // fifo interface
-  wire       wr_rst_busy;
-  wire       wr_en;
-  wire       rd_en;
-  wire [7:0] wr_data;
-  wire [7:0] rd_data;
-  // others
-  wire       rd_busy;
+  wire [ 7:0] rd_data;
+
+  wire        rd_busy;
 
   // main code
 
@@ -71,14 +69,14 @@ module acquisition_send_uart (
   always @(*) begin
     case (state)
       IDLE: begin
-        if (fifo_wr_en) begin  // enable flag is high, start writing
+        if (async_ram_wr_en) begin  // enable flag is high, start writing
           next_state = WRITING;
         end else begin
           next_state = IDLE;
         end
       end
       WRITING: begin
-        if (rd_busy) begin  // fifo is full, stop writing and start reading
+        if (async_ram_wr_completed) begin  // finish writing
           next_state = READING;
         end else begin
           next_state = WRITING;
@@ -101,10 +99,18 @@ module acquisition_send_uart (
   always @(posedge clk_50m or negedge sys_rst_n) begin
     if (!sys_rst_n) begin
       send_busy <= 1'b0;
+      rd_addr   <= 15'd0;
     end else begin
+      // async ram rd_addr control
+      if (rd_en) begin  // write enable
+        rd_addr <= rd_addr + 1'b1;
+      end
+      // state machine
       case (state)
         IDLE: begin
+          // reset
           send_busy <= 1'b0;
+          rd_addr   <= 15'd0;
         end
         WRITING: begin
           send_busy <= 1'b1;
@@ -119,35 +125,46 @@ module acquisition_send_uart (
     end
   end
 
-  // fifo generator
-  async_fifo_8b async_fifo_8b_0 (
-      .rst         (~sys_rst_n),
-      .wr_clk      (clk_25m),
-      .rd_clk      (clk_50m),
-      .wr_en       (fifo_wr_en),
-      .rd_en       (rd_en),
-      .din         (sample_data),
-      .dout        (rd_data),
-      .almost_full (),
-      .almost_empty(),
-      .full        (),
-      .empty       (),
-      .wr_rst_busy (wr_rst_busy),
-      .rd_rst_busy ()
+  // async ram wr_addr control
+  always @(posedge clk_25m or negedge sys_rst_n) begin
+    if (!sys_rst_n) begin
+      wr_addr <= 15'd0;
+    end else begin
+      // async ram wr_addr control
+      if (async_ram_wr_en) begin  // write enable
+        wr_addr <= wr_addr + 1'b1;
+      end
+      // reset wr_addr
+      if (state == READING) begin
+        wr_addr <= 15'd0;
+      end
+    end
+  end
+
+  // async ram
+  async_trans_ram async_trans_ram_0 (
+      .clka (clk_25m),
+      .ena  (async_ram_wr_en),
+      .wea  (async_ram_wr_en),
+      .addra(wr_addr),
+      .dina (sample_data),
+      .clkb (clk_50m),
+      .enb  (rd_en),
+      .addrb(rd_addr),
+      .doutb(rd_data)
   );
 
   // fifo read
-  acquisition_fifo_rd_uart acquisition_fifo_rd_uart_0 (
-      .rd_clk           (clk_50m),
-      .rst_n            (sys_rst_n),
-      .fifo_wr_completed(fifo_wr_completed),
-      .wr_rst_busy      (wr_rst_busy),
-      .rd_data          (rd_data),
-      .rd_en            (rd_en),
-      .uart_tx_en       (uart_tx_en),
-      .uart_tx_data     (uart_tx_data),
-      .uart_tx_busy     (uart_tx_busy),
-      .rd_busy          (rd_busy)
+  acquisition_async_ram_rd_uart acquisition_async_ram_rd_uart_0 (
+      .rd_clk      (clk_50m),
+      .rst_n       (sys_rst_n),
+      .send_en     (send_en),
+      .rd_data     (rd_data),
+      .rd_en       (rd_en),
+      .uart_tx_en  (uart_tx_en),
+      .uart_tx_data(uart_tx_data),
+      .uart_tx_busy(uart_tx_busy),
+      .rd_busy     (rd_busy)
   );
 
 endmodule

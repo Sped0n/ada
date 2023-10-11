@@ -40,8 +40,8 @@ module acquisition_multich_glue (
     input            ch2_push_completed,
     output reg       ch2_push_en,
     // signal to fifo
-    output           fifo_wr_en,
-    output reg       fifo_wr_completed,
+    output           async_ram_wr_en,
+    output reg       async_ram_wr_completed,
     output reg [7:0] sample_data
 );
   // parameter define
@@ -57,12 +57,12 @@ module acquisition_multich_glue (
   reg       ch1_cache_rd_en_delay0;
   reg       ch2_cache_rd_en_delay0;
 
-  reg [2:0] fifo_wr_completed_cnt;
+  reg [2:0] async_ram_wr_completed_cnt;
 
   // main code
 
-  // fifo_wr_en
-  assign fifo_wr_en = ch1_cache_rd_en_delay0 | ch2_cache_rd_en_delay0;
+  // async_ram_wr_en
+  assign async_ram_wr_en = ch1_cache_rd_en_delay0 | ch2_cache_rd_en_delay0;
 
   // cache_rd_en delay
   always @(posedge clk_25m or negedge rst_n) begin
@@ -132,7 +132,7 @@ module acquisition_multich_glue (
         end
       end
       INFORM: begin
-        if (fifo_wr_completed_cnt == 3'd6) begin
+        if (async_ram_wr_completed_cnt == 3'd6) begin
           next_state = IDLE;
         end else begin
           next_state = INFORM;
@@ -149,37 +149,37 @@ module acquisition_multich_glue (
     if (!rst_n) begin
       ch1_push_en <= 1'b0;
       ch2_push_en <= 1'b0;
-      fifo_wr_completed <= 1'b0;
-      fifo_wr_completed_cnt <= 3'd0;
+      async_ram_wr_completed <= 1'b0;
+      async_ram_wr_completed_cnt <= 3'd0;
     end else begin
       case (next_state)  // instant response
         IDLE: begin
           ch1_push_en <= 1'b0;
           ch2_push_en <= 1'b0;
-          fifo_wr_completed <= 1'b0;
-          fifo_wr_completed_cnt <= 3'd0;
+          async_ram_wr_completed <= 1'b0;
+          async_ram_wr_completed_cnt <= 3'd0;
         end
         PUSH_CH1: begin
           ch1_push_en <= 1'b1;
           ch2_push_en <= 1'b0;
-          fifo_wr_completed <= 1'b0;
-          fifo_wr_completed_cnt <= 3'd0;
+          async_ram_wr_completed <= 1'b0;
+          async_ram_wr_completed_cnt <= 3'd0;
         end
         PUSH_CH2: begin
           ch1_push_en <= 1'b0;
           ch2_push_en <= 1'b1;
-          fifo_wr_completed <= 1'b0;
-          fifo_wr_completed_cnt <= 3'd0;
+          async_ram_wr_completed <= 1'b0;
+          async_ram_wr_completed_cnt <= 3'd0;
         end
         INFORM: begin
           ch1_push_en <= 1'b0;
           ch2_push_en <= 1'b0;
-          if (fifo_wr_completed_cnt > 3'd3) begin
-            fifo_wr_completed <= 1'b1;
+          if (async_ram_wr_completed_cnt > 3'd3) begin
+            async_ram_wr_completed <= 1'b1;
           end else begin
-            fifo_wr_completed <= 1'b0;
+            async_ram_wr_completed <= 1'b0;
           end
-          fifo_wr_completed_cnt <= fifo_wr_completed_cnt + 1'b1;
+          async_ram_wr_completed_cnt <= async_ram_wr_completed_cnt + 1'b1;
         end
       endcase
     end
