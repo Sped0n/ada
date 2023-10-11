@@ -1,7 +1,7 @@
 -- Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2022.2 (win64) Build 3671981 Fri Oct 14 05:00:03 MDT 2022
--- Date        : Sun Sep 24 18:50:22 2023
+-- Date        : Thu Oct 12 05:39:09 2023
 -- Host        : Zen running 64-bit major release  (build 9200)
 -- Command     : write_vhdl -force -mode funcsim
 --               c:/Users/spedon/Documents/eeworks/FPGA/ada/ada.srcs/ips/clk_wiz_0/clk_wiz_0_sim_netlist.vhdl
@@ -18,14 +18,14 @@ entity clk_wiz_0_clk_wiz is
   port (
     clk_50m : out STD_LOGIC;
     clk_25m : out STD_LOGIC;
-    clk_25m_120d : out STD_LOGIC;
+    clk_200m : out STD_LOGIC;
     locked : out STD_LOGIC;
     clk_in1 : in STD_LOGIC
   );
 end clk_wiz_0_clk_wiz;
 
 architecture STRUCTURE of clk_wiz_0_clk_wiz is
-  signal clk_25m_120d_clk_wiz_0 : STD_LOGIC;
+  signal clk_200m_clk_wiz_0 : STD_LOGIC;
   signal clk_25m_clk_wiz_0 : STD_LOGIC;
   signal clk_50m_clk_wiz_0 : STD_LOGIC;
   signal clk_in1_clk_wiz_0 : STD_LOGIC;
@@ -85,28 +85,28 @@ clkout2_buf: unisim.vcomponents.BUFG
     );
 clkout3_buf: unisim.vcomponents.BUFG
      port map (
-      I => clk_25m_120d_clk_wiz_0,
-      O => clk_25m_120d
+      I => clk_200m_clk_wiz_0,
+      O => clk_200m
     );
 mmcm_adv_inst: unisim.vcomponents.MMCME2_ADV
     generic map(
       BANDWIDTH => "OPTIMIZED",
-      CLKFBOUT_MULT_F => 19.500000,
+      CLKFBOUT_MULT_F => 20.000000,
       CLKFBOUT_PHASE => 0.000000,
       CLKFBOUT_USE_FINE_PS => false,
       CLKIN1_PERIOD => 20.000000,
       CLKIN2_PERIOD => 0.000000,
-      CLKOUT0_DIVIDE_F => 19.500000,
+      CLKOUT0_DIVIDE_F => 20.000000,
       CLKOUT0_DUTY_CYCLE => 0.500000,
       CLKOUT0_PHASE => 0.000000,
       CLKOUT0_USE_FINE_PS => false,
-      CLKOUT1_DIVIDE => 39,
+      CLKOUT1_DIVIDE => 40,
       CLKOUT1_DUTY_CYCLE => 0.500000,
       CLKOUT1_PHASE => 0.000000,
       CLKOUT1_USE_FINE_PS => false,
-      CLKOUT2_DIVIDE => 39,
+      CLKOUT2_DIVIDE => 5,
       CLKOUT2_DUTY_CYCLE => 0.500000,
-      CLKOUT2_PHASE => 120.000000,
+      CLKOUT2_PHASE => 0.000000,
       CLKOUT2_USE_FINE_PS => false,
       CLKOUT3_DIVIDE => 1,
       CLKOUT3_DUTY_CYCLE => 0.500000,
@@ -152,7 +152,7 @@ mmcm_adv_inst: unisim.vcomponents.MMCME2_ADV
       CLKOUT0B => NLW_mmcm_adv_inst_CLKOUT0B_UNCONNECTED,
       CLKOUT1 => clk_25m_clk_wiz_0,
       CLKOUT1B => NLW_mmcm_adv_inst_CLKOUT1B_UNCONNECTED,
-      CLKOUT2 => clk_25m_120d_clk_wiz_0,
+      CLKOUT2 => clk_200m_clk_wiz_0,
       CLKOUT2B => NLW_mmcm_adv_inst_CLKOUT2B_UNCONNECTED,
       CLKOUT3 => NLW_mmcm_adv_inst_CLKOUT3_UNCONNECTED,
       CLKOUT3B => NLW_mmcm_adv_inst_CLKOUT3B_UNCONNECTED,
@@ -183,7 +183,7 @@ entity clk_wiz_0 is
   port (
     clk_50m : out STD_LOGIC;
     clk_25m : out STD_LOGIC;
-    clk_25m_120d : out STD_LOGIC;
+    clk_200m : out STD_LOGIC;
     locked : out STD_LOGIC;
     clk_in1 : in STD_LOGIC
   );
@@ -195,8 +195,8 @@ architecture STRUCTURE of clk_wiz_0 is
 begin
 inst: entity work.clk_wiz_0_clk_wiz
      port map (
+      clk_200m => clk_200m,
       clk_25m => clk_25m,
-      clk_25m_120d => clk_25m_120d,
       clk_50m => clk_50m,
       clk_in1 => clk_in1,
       locked => locked
