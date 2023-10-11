@@ -96,13 +96,16 @@ module tb_acquisition_top_uart ();
     #150000 uart_rx_data <= 8'h04;  // packet type
     uart_rx_done <= 1'b1;
     #20 uart_rx_done <= 1'b0;
-    #150000 uart_rx_data <= 8'd1;  // data length
+    #150000 uart_rx_data <= 8'd2;  // data length
     uart_rx_done <= 1'b1;
     #20 uart_rx_done <= 1'b0;
-    #150000 uart_rx_data <= 8'd2;  // data
+    #150000 uart_rx_data <= 8'd1;  // data
     uart_rx_done <= 1'b1;
     #20 uart_rx_done <= 1'b0;
-    #150000 uart_rx_data <= 8'd92;  // checksum
+    #150000 uart_rx_data <= 8'd1;  // data
+    uart_rx_done <= 1'b1;
+    #20 uart_rx_done <= 1'b0;
+    #150000 uart_rx_data <= 8'd93;  // checksum
     uart_rx_done <= 1'b1;
     #20 uart_rx_done <= 1'b0;
     // trigger channel control
@@ -153,7 +156,23 @@ module tb_acquisition_top_uart ();
     #150000 uart_rx_data <= 8'd94;  // checksum
     uart_rx_done <= 1'b1;
     #20 uart_rx_done <= 1'b0;
-    // acquisition enable control
+    // packet corrupted
+    #5150000 uart_rx_data <= 8'h55;  // header
+    uart_rx_done <= 1'b1;
+    #20 uart_rx_done <= 1'b0;
+    #150000 uart_rx_data <= 8'h08;  // packet type
+    uart_rx_done <= 1'b1;
+    #20 uart_rx_done <= 1'b0;
+    #150000 uart_rx_data <= 8'd1;  // data length
+    uart_rx_done <= 1'b1;
+    #20 uart_rx_done <= 1'b0;
+    #150000 uart_rx_data <= 8'd1;  // data
+    uart_rx_done <= 1'b1;
+    #20 uart_rx_done <= 1'b0;
+    #150000 uart_rx_data <= 8'd95;  // checksum
+    uart_rx_done <= 1'b1;
+    #20 uart_rx_done <= 1'b0;
+    // ack
     #5150000 uart_rx_data <= 8'h55;  // header
     uart_rx_done <= 1'b1;
     #20 uart_rx_done <= 1'b0;
@@ -170,7 +189,23 @@ module tb_acquisition_top_uart ();
     uart_rx_done <= 1'b1;
     #20 uart_rx_done <= 1'b0;
     // acquisition enable control
-    #5150000 uart_rx_data <= 8'h55;  // header
+    #150000 uart_rx_data <= 8'h55;  // header
+    uart_rx_done <= 1'b1;
+    #20 uart_rx_done <= 1'b0;
+    #150000 uart_rx_data <= 8'h07;  // packet type
+    uart_rx_done <= 1'b1;
+    #20 uart_rx_done <= 1'b0;
+    #150000 uart_rx_data <= 8'd1;  // data length
+    uart_rx_done <= 1'b1;
+    #20 uart_rx_done <= 1'b0;
+    #150000 uart_rx_data <= 8'd1;  // data
+    uart_rx_done <= 1'b1;
+    #20 uart_rx_done <= 1'b0;
+    #150000 uart_rx_data <= 8'd94;  // checksum
+    uart_rx_done <= 1'b1;
+    #20 uart_rx_done <= 1'b0;
+    // ack
+    #3150000 uart_rx_data <= 8'h55;  // header
     uart_rx_done <= 1'b1;
     #20 uart_rx_done <= 1'b0;
     #150000 uart_rx_data <= 8'h07;  // packet type
@@ -231,7 +266,7 @@ module tb_acquisition_top_uart ();
   // uart transmission module
   uart_tx #(
       .SYS_CLK_FREQ(SYS_CLK_FREQ),
-      .BAUD_RATE(1000000)
+      .BAUD_RATE(2000000)
   ) uart_tx_tbau0 (
       .sys_clk     (clk_50m),
       .sys_rst_n   (rst_n),
