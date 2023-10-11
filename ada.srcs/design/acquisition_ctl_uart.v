@@ -33,7 +33,7 @@ module acquisition_ctl_uart (
     output reg       trigger_channel,
     output reg [3:0] acquisition_pulse_sel,
     output reg       acquisition_en,
-    // input
+    output reg        packet_corrupted,
     input            acquisition_busy,
     // parse info
     output reg       parse_completed,
@@ -49,6 +49,7 @@ module acquisition_ctl_uart (
   parameter TRG_CH = 8'h05;
   parameter ACQ_PULSE = 8'h06;
   parameter ACQ_EN = 8'h07;
+  parameter BAD_PKG = 8'h08;
 
   parameter ERR_HEADER = 8'hE0;
   parameter ERR_CMD = 8'hE1;
@@ -74,7 +75,8 @@ module acquisition_ctl_uart (
   reg [7:0] checksum;
   reg       jmp;
 
-  reg       acquisition_busy_delay0;
+  reg       acquisition_en_delay0;
+  reg       packet_corrupted_delay0;
 
   // main code
 
@@ -179,7 +181,8 @@ module acquisition_ctl_uart (
                 uart_rx_data == TRG_POS ||
                 uart_rx_data == TRG_CH ||
                 uart_rx_data == ACQ_PULSE ||
-                uart_rx_data == ACQ_EN) begin
+                uart_rx_data == ACQ_EN ||
+                uart_rx_data == BAD_PKG ) begin
               jmp <= 1'b1;
               parse_cmd <= uart_rx_data;
               checksum <= checksum + uart_rx_data;
@@ -254,6 +257,7 @@ module acquisition_ctl_uart (
       trigger_channel <= 1'b0;  // channel 1
       acquisition_pulse_sel <= 4'd0;  // 25MHz (1us/div)
       acquisition_en <= 1'b0;  // acquisition disabled
+      packet_corrupted <= 1'b0;  // packet not corrupted
     end else begin
       // cmd handling
       if ((parse_result == NO_ERR) && (parse_completed == 1'b1)) begin
@@ -269,21 +273,28 @@ module acquisition_ctl_uart (
           acquisition_pulse_sel <= rx_data[3:0];
         end else if ((parse_cmd == ACQ_EN) && (data_len == 8'd1)) begin
           acquisition_en <= rx_data[0];
+        end else if ((parse_cmd == BAD_PKG) && (data_len == 8'd1)) begin
+          packet_corrupted <= rx_data[0];
         end
       end
       // generate a pulse instead of a level signal
-      if (acquisition_busy & ~acquisition_busy_delay0) begin
+      if (acquisition_en_delay0) begin
         acquisition_en <= 1'b0;
+      end
+      if (packet_corrupted_delay0) begin
+        packet_corrupted <= 1'b0;
       end
     end
   end
 
-  // acquisition_busy_delay0
+  // delay
   always @(posedge clk_50m or negedge sys_rst_n) begin
     if (!sys_rst_n) begin
-      acquisition_busy_delay0 <= 1'b0;
+      acquisition_en_delay0   <= 1'b0;
+      packet_corrupted_delay0 <= 1'b0;
     end else begin
-      acquisition_busy_delay0 <= acquisition_busy;
+      acquisition_en_delay0   <= acquisition_en;
+      packet_corrupted_delay0 <= packet_corrupted;
     end
   end
 

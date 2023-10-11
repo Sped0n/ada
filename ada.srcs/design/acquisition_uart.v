@@ -36,6 +36,8 @@ module acquisition_uart (
     input            trigger_channel,
     // acquisition pulse config
     input      [3:0] acquisition_pulse_sel,
+    // packet corrupted
+    input             packet_corrupted,
     // uart
     output           uart_tx_en,
     output     [7:0] uart_tx_data,
@@ -278,6 +280,7 @@ module acquisition_uart (
       .uart_tx_data     (uart_tx_data),
       .uart_tx_busy     (uart_tx_busy),
       .send_busy        (send_busy)
+      .packet_corrupted      (packet_corrupted),
   );
 
   // trigger

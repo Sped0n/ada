@@ -48,6 +48,7 @@ module acquisition_top_uart (
   wire       trigger_channel;
   wire [3:0] acquisition_pulse_sel;
   wire       acquisition_en;
+  wire        packet_corrupted;
 
   // main code
 
@@ -64,6 +65,7 @@ module acquisition_top_uart (
       .trigger_position       (trigger_position),
       .trigger_channel        (trigger_channel),
       .acquisition_pulse_sel  (acquisition_pulse_sel),
+      .packet_corrupted       (packet_corrupted),
       .uart_tx_en             (uart_tx_en),
       .uart_tx_data           (uart_tx_data),
       .uart_tx_busy           (uart_tx_busy),
@@ -85,7 +87,7 @@ module acquisition_top_uart (
       .trigger_channel        (trigger_channel),
       .acquisition_pulse_sel  (acquisition_pulse_sel),
       .acquisition_en         (acquisition_en),
-      .acquisition_busy       (acquisition_busy),
+      .packet_corrupted       (packet_corrupted),
       .parse_completed        (),
       .parse_result           (),
       .parse_cmd              ()
