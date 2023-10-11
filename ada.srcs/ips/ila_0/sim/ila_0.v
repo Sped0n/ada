@@ -56,7 +56,7 @@ probe0
 input clk;
 
 
-input [7 : 0] probe0;
+input [15 : 0] probe0;
 
 
 endmodule
