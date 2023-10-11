@@ -21,22 +21,22 @@
 
 
 module acquisition_sync_cache_rd (
-    input            rd_clk,
-    input            rst_n,
+    input             rd_clk,
+    input             rst_n,
     // en flag
-    input            push_en,
+    input             push_en,
     // address to start reading
-    input      [7:0] start_addr,
+    input      [13:0] start_addr,
     // dual port ram
-    output reg       rd_en,
-    output reg [7:0] rd_addr,
+    output reg        rd_en,
+    output reg [13:0] rd_addr,
     // push status
-    output           push_started,
-    output           pushing_last_data,
-    output           push_completed
+    output            push_started,
+    output            pushing_last_data,
+    output            push_completed
 );
   // parameter define
-  parameter BRAM_DEPTH = 8'd250;
+  parameter BRAM_DEPTH = 1250;
 
   parameter IDLE = 2'b01;
   parameter READING = 2'b10;
@@ -62,11 +62,11 @@ module acquisition_sync_cache_rd (
   // rd_addr and rd_cnt control
   always @(posedge rd_clk or negedge rst_n) begin
     if (!rst_n) begin
-      rd_addr <= 8'd0;
+      rd_addr <= 14'd0;
     end else begin
       if (rd_en) begin  // write enable
-        if (rd_addr == (BRAM_DEPTH - 8'd1)) begin  // reach the end of ram
-          rd_addr <= 8'd0;
+        if (rd_addr == (BRAM_DEPTH - 1'b1)) begin  // reach the end of ram
+          rd_addr <= 14'd0;
         end else begin
           rd_addr <= rd_addr + 1'b1;
         end

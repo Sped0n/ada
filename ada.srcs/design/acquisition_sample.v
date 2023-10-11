@@ -47,12 +47,12 @@ module acquisition_sample (
 );
 
   // wire define
-  wire       rd_en;
-  wire [7:0] rd_addr;
-  wire [7:0] wr_addr;
-  wire       wr_we;
-  wire       wr_en;
-  wire [7:0] wr_data;
+  wire        rd_en;
+  wire [13:0] rd_addr;
+  wire [13:0] wr_addr;
+  wire        wr_we;
+  wire        wr_en;
+  wire [ 7:0] wr_data;
 
   // main code
 

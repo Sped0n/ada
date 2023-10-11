@@ -21,29 +21,29 @@
 
 
 module acquisition_sync_cache_wr (
-    input            wr_clk,             // 25MHz
-    input            rst_n,
+    input             wr_clk,             // 25MHz
+    input             rst_n,
     // config
-    input      [7:0] ad_data,
-    input            en,
-    input      [2:0] trigger_position,
+    input      [ 7:0] ad_data,
+    input             en,
+    input      [ 2:0] trigger_position,
     // trigger signal
-    input            triggered,
+    input             triggered,
     // ready flag
-    output reg       push_ready,
-    input            push_started,
+    output reg        push_ready,
+    input             push_started,
     // dual port ram
-    output           wr_we,              // ram write enable
-    output reg       wr_en,              // ram write port enable (same as ram_wr_we)
-    output reg [7:0] wr_addr,            // ram write address (0-254)
-    output     [7:0] wr_data,            // ram write data
+    output            wr_we,              // ram write enable
+    output reg        wr_en,              // ram write port enable (same as ram_wr_we)
+    output reg [13:0] wr_addr,            // ram write address (0-254)
+    output     [ 7:0] wr_data,            // ram write data
     // acquisiton pulse
-    input            acquisition_pulse,
+    input             acquisition_pulse,
     // debug
-    output     [4:0] cache_wr_state
+    output     [ 4:0] cache_wr_state
 );
   // parameter define
-  parameter BRAM_DEPTH = 8'd250;
+  parameter BRAM_DEPTH = 1250;
 
   parameter IDLE = 5'b00001;
   parameter CACHING = 5'b00010;
@@ -184,8 +184,8 @@ module acquisition_sync_cache_wr (
     end else begin
       // wr_addr control
       if (wr_en) begin  // write enable
-        if (wr_addr == (BRAM_DEPTH - 8'd1)) begin  // reach the end of ram
-          wr_addr <= 8'd0;
+        if (wr_addr == (BRAM_DEPTH - 1'b1)) begin  // reach the end of ram
+          wr_addr <= 14'd0;
         end else begin
           wr_addr <= wr_addr + 1'b1;
         end

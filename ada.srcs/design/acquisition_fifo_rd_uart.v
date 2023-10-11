@@ -38,7 +38,7 @@ module acquisition_fifo_rd_uart (
     output reg       rd_busy
 );
   // parameter define
-  parameter READ_CNT = 16'd500;
+  parameter READ_CNT = 2500;
 
   parameter IDLE = 4'b0001;
   parameter FETCH = 4'b0010;
@@ -175,9 +175,9 @@ module acquisition_fifo_rd_uart (
           end else if (send_cnt == 16'd1) begin
             uart_tx_data <= 8'h01;  // packet type
           end else if (send_cnt == 16'd2) begin
-            uart_tx_data <= 8'd1;  // packet data length (upper byte of 510)
+            uart_tx_data <= READ_CNT[15:8];  // packet data length (upper byte)
           end else if (send_cnt == 16'd3) begin
-            uart_tx_data <= 8'd244;  // packet data length (lower byte of 510)
+            uart_tx_data <= READ_CNT[7:0];  // packet data length (lower byte)
           end else if ((send_cnt > 16'd3) && (send_cnt < (READ_CNT + 16'd4))) begin
             uart_tx_data <= rd_data;
           end else if (send_cnt == (READ_CNT + 16'd4)) begin
