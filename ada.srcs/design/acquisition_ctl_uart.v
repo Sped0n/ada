@@ -21,24 +21,23 @@
 
 
 module acquisition_ctl_uart (
-    input            clk_50m,
-    input            sys_rst_n,
+    input             clk_50m,
+    input             sys_rst_n,
     // uart rx
-    input            uart_rx_done,
-    input      [7:0] uart_rx_data,
+    input             uart_rx_done,
+    input      [ 7:0] uart_rx_data,
     // output
-    output reg [7:0] trigger_threshold,
-    output reg       trigger_is_rising_slope,
-    output reg [2:0] trigger_position,
-    output reg       trigger_channel,
-    output reg [3:0] acquisition_pulse_sel,
-    output reg       acquisition_en,
+    output reg [ 7:0] trigger_threshold,
+    output reg        trigger_is_rising_slope,
+    output reg [15:0] trigger_position,
+    output reg        trigger_channel,
+    output reg [ 3:0] acquisition_pulse_sel,
+    output reg        acquisition_en,
     output reg        packet_corrupted,
-    input            acquisition_busy,
     // parse info
-    output reg       parse_completed,
-    output reg [7:0] parse_result,
-    output reg [7:0] parse_cmd
+    output reg        parse_completed,
+    output reg [ 7:0] parse_result,
+    output reg [ 7:0] parse_cmd
 );
   // parameter define
   parameter PACKET_HEADER = 8'h55;
@@ -253,7 +252,7 @@ module acquisition_ctl_uart (
     if (!sys_rst_n) begin
       trigger_threshold <= 8'd128;  // trigger threshold is 128
       trigger_is_rising_slope <= 1'b1;  // rising slope
-      trigger_position <= 3'd5;  // trigger disabled
+      trigger_position <= 16'hffff;  // trigger disabled
       trigger_channel <= 1'b0;  // channel 1
       acquisition_pulse_sel <= 4'd0;  // 25MHz (1us/div)
       acquisition_en <= 1'b0;  // acquisition disabled
@@ -265,8 +264,8 @@ module acquisition_ctl_uart (
           trigger_threshold <= rx_data;
         end else if ((parse_cmd == TRG_SLOPE) && (data_len == 8'd1)) begin
           trigger_is_rising_slope <= rx_data[0];
-        end else if ((parse_cmd == TRG_POS) && (data_len == 8'd1)) begin
-          trigger_position <= rx_data[2:0];
+        end else if ((parse_cmd == TRG_POS) && (data_len == 8'd2)) begin
+          trigger_position <= {rx_data_delay0, rx_data};
         end else if ((parse_cmd == TRG_CH) && (data_len == 8'd1)) begin
           trigger_channel <= rx_data[0];
         end else if ((parse_cmd == ACQ_PULSE) && (data_len == 8'd1)) begin

@@ -21,29 +21,29 @@
 
 
 module acquisition_sample (
-    input        clk_50m,
-    input        clk_25m,
-    input        sys_rst_n,          // active low
+    input         clk_50m,
+    input         clk_25m,
+    input         sys_rst_n,          // active low
     // enable signal
-    input        acquisition_en,
+    input         acquisition_en,
     // ad data
-    input  [7:0] ad_data,
+    input  [ 7:0] ad_data,
     // data to fifo
-    output [7:0] sample_data,
+    output [ 7:0] sample_data,
     // triggered and acquisition pulse
-    input        triggered,
-    input  [2:0] trigger_position,
-    input        acquisition_pulse,
+    input         triggered,
+    input  [15:0] trigger_position,
+    input         acquisition_pulse,
     // push
-    input        push_en,
-    output       push_ready,
-    output       push_started,
-    output       pushing_last_data,
-    output       push_completed,
+    input         push_en,
+    output        push_ready,
+    output        push_started,
+    output        pushing_last_data,
+    output        push_completed,
     // cache read enable signal for multich glue
-    output       cache_rd_en,
+    output        cache_rd_en,
     // debug
-    output [4:0] cache_wr_state
+    output [ 4:0] cache_wr_state
 );
 
   // wire define
@@ -86,7 +86,7 @@ module acquisition_sample (
       .wr_addr          (wr_addr),
       .wr_data          (wr_data),
       .acquisition_pulse(acquisition_pulse),
-      .cache_wr_state   (cache_wr_state)
+      .cache_wr_state   (cache_wr_state),
   );
 
   // dual port ram

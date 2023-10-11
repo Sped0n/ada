@@ -42,12 +42,12 @@ module acquisition_top_uart (
     output [4:0] ch2_cache_wr_state
 );
   // wire define
-  wire [7:0] trigger_threhold;
-  wire       trigger_is_rising_slope;
-  wire [2:0] trigger_position;
-  wire       trigger_channel;
-  wire [3:0] acquisition_pulse_sel;
-  wire       acquisition_en;
+  wire [ 7:0] trigger_threhold;
+  wire        trigger_is_rising_slope;
+  wire [15:0] trigger_position;
+  wire        trigger_channel;
+  wire [ 3:0] acquisition_pulse_sel;
+  wire        acquisition_en;
   wire        packet_corrupted;
 
   // main code

@@ -26,7 +26,7 @@ module acquisition_sync_cache_wr (
     // config
     input      [ 7:0] ad_data,
     input             en,
-    input      [ 2:0] trigger_position,
+    input      [15:0] trigger_position,
     // trigger signal
     input             triggered,
     // ready flag
@@ -50,12 +50,6 @@ module acquisition_sync_cache_wr (
   parameter WFT = 5'b00100;  // wait for trigger
   parameter WFRD = 5'b01000;  // wait for rest data
   parameter HANDSHAKE = 5'b10000;
-
-  parameter WFRD_CNT_MAX_0 = 250;
-  parameter WFRD_CNT_MAX_25 = 188;
-  parameter WFRD_CNT_MAX_50 = 125;
-  parameter WFRD_CNT_MAX_75 = 63;
-  parameter WFRD_CNT_MAX_100 = 0;
 
   // just incase state machine won't be stucked if we don't meet the trigger condition in WFT state
   parameter WFT_CNT_MAX = 2500;
@@ -83,33 +77,17 @@ module acquisition_sync_cache_wr (
   // trigger_positon control
   always @(*) begin
     case (trigger_position)
-      3'd0: begin
-        wfrd_cnt_max   = WFRD_CNT_MAX_0;
-        trigger_enable = 1'b1;
-      end
-      3'd1: begin
-        wfrd_cnt_max   = WFRD_CNT_MAX_25;
-        trigger_enable = 1'b1;
-      end
-      3'd2: begin
-        wfrd_cnt_max   = WFRD_CNT_MAX_50;
-        trigger_enable = 1'b1;
-      end
-      3'd3: begin
-        wfrd_cnt_max   = WFRD_CNT_MAX_75;
-        trigger_enable = 1'b1;
-      end
-      3'd4: begin
-        wfrd_cnt_max   = WFRD_CNT_MAX_100;
-        trigger_enable = 1'b1;
-      end
-      3'd5: begin
-        wfrd_cnt_max   = WFRD_CNT_MAX_0;
+      16'hffff: begin
         trigger_enable = 1'b0;
+        wfrd_cnt_max   = 16'd0;
       end
       default: begin
-        wfrd_cnt_max   = WFRD_CNT_MAX_0;
-        trigger_enable = 1'b0;
+        trigger_enable = 1'b1;
+        if (trigger_position > BRAM_DEPTH) begin
+          wfrd_cnt_max = 16'd0;
+        end else begin
+          wfrd_cnt_max = BRAM_DEPTH - trigger_position;
+        end
       end
     endcase
   end
