@@ -24,10 +24,11 @@ module acquisition_fifo_rd_uart (
     // clock, use system clock here (50MHz)
     input            rd_clk,
     input            rst_n,
+    // start sending signal
+    input            fifo_wr_completed,
     // fifo interface
     input            wr_rst_busy,
     input      [7:0] rd_data,
-    input            full,
     output           rd_en,
     // uart interface
     output reg       uart_tx_en,
@@ -37,7 +38,7 @@ module acquisition_fifo_rd_uart (
     output reg       rd_busy
 );
   // parameter define
-  parameter FIFO_DEPTH = 16'd511;
+  parameter READ_CNT = 16'd500;
 
   parameter IDLE = 4'b0001;
   parameter FETCH = 4'b0010;
@@ -66,27 +67,21 @@ module acquisition_fifo_rd_uart (
 
   assign rd_en = rd_en_tmp & (~rd_en_tmp_delay0);
 
-  // full and wr_rst_busy is from write clock domain
+  // wr_rst_busy is from write clock domain
   // rd_en_tmp_delay and rd_en_delay
   always @(posedge rd_clk or negedge rst_n) begin
     if (!rst_n) begin
-      // full
-      full_delay0 <= 1'b0;
-      full_delay1 <= 1'b0;
       // wr_rst_busy
       wr_rst_busy_delay0 <= 1'b0;
       wr_rst_busy_delay1 <= 1'b0;
       // rd_en_tmp
-      rd_en_tmp_delay0 <= 1'b0;
+      rd_en_tmp_delay0   <= 1'b0;
     end else begin
-      // full
-      full_delay0 <= full;
-      full_delay1 <= full_delay0;
       // wr_rst_busy
       wr_rst_busy_delay0 <= wr_rst_busy;
       wr_rst_busy_delay1 <= wr_rst_busy_delay0;
       // rd_en_tmp
-      rd_en_tmp_delay0 <= rd_en_tmp;
+      rd_en_tmp_delay0   <= rd_en_tmp;
     end
   end
 
@@ -105,14 +100,14 @@ module acquisition_fifo_rd_uart (
   always @(*) begin
     case (state)
       IDLE: begin
-        if ((full_delay1 == 1'b1) && (wr_rst_busy_delay1 == 1'b0)) begin  // fifo is full and not reset busy, start reading data
+        if ((fifo_wr_completed == 1'b1) && (wr_rst_busy_delay1 == 1'b0)) begin  // fifo receive start signal and not reset busy, start reading data
           next_state = FETCH;
         end else begin
           next_state = IDLE;
         end
       end
       FETCH: begin  // fetch data
-        if (send_cnt == (FIFO_DEPTH + 16'd5)) begin
+        if (send_cnt == (READ_CNT + 16'd5)) begin
           next_state = IDLE;
         end else if (fetched) begin
           next_state = SEND_ENABLE;
@@ -164,7 +159,7 @@ module acquisition_fifo_rd_uart (
           stat_refreshed <= 1'b0;
         end
         FETCH: begin
-          if ((send_cnt > 16'd3) && (send_cnt < (FIFO_DEPTH + 16'd4))) begin
+          if ((send_cnt > 16'd3) && (send_cnt < (READ_CNT + 16'd4))) begin
             rd_en_tmp <= 1'b1;
           end else begin
             rd_en_tmp <= 1'b0;
@@ -180,12 +175,12 @@ module acquisition_fifo_rd_uart (
           end else if (send_cnt == 16'd1) begin
             uart_tx_data <= 8'h01;  // packet type
           end else if (send_cnt == 16'd2) begin
-            uart_tx_data <= 8'd1;  // packet data length (upper byte of 511)
+            uart_tx_data <= 8'd1;  // packet data length (upper byte of 510)
           end else if (send_cnt == 16'd3) begin
-            uart_tx_data <= 8'd255;  // packet data length (lower byte of 511)
-          end else if ((send_cnt > 16'd3) && (send_cnt < (FIFO_DEPTH + 16'd4))) begin
+            uart_tx_data <= 8'd244;  // packet data length (lower byte of 510)
+          end else if ((send_cnt > 16'd3) && (send_cnt < (READ_CNT + 16'd4))) begin
             uart_tx_data <= rd_data;
-          end else if (send_cnt == (FIFO_DEPTH + 16'd4)) begin
+          end else if (send_cnt == (READ_CNT + 16'd4)) begin
             uart_tx_data <= checksum;
           end else begin
             uart_tx_data <= 8'h00;

@@ -54,6 +54,7 @@ module acquisition_uart (
   parameter SENDING = 4'b1000;
 
   // wire define
+  wire       ch1_cache_rd_en;
   wire [7:0] ch1_sample_data;
   wire       ch1_push_en;
   wire       ch1_push_ready;
@@ -61,6 +62,7 @@ module acquisition_uart (
   wire       ch1_pushing_last_data;
   wire       ch1_push_completed;
 
+  wire       ch2_cache_rd_en;
   wire [7:0] ch2_sample_data;
   wire       ch2_push_en;
   wire       ch2_push_ready;
@@ -68,8 +70,9 @@ module acquisition_uart (
   wire       ch2_pushing_last_data;
   wire       ch2_push_completed;
 
-  wire       sample_completed;
+  wire       fifo_wr_en;
   wire [7:0] sample_data;
+  wire       fifo_wr_completed;
 
   wire       send_busy;
   wire       triggered;
@@ -213,6 +216,7 @@ module acquisition_uart (
       .push_started     (ch1_push_started),
       .pushing_last_data(ch1_pushing_last_data),
       .push_completed   (ch1_push_completed),
+      .cache_rd_en      (ch1_cache_rd_en),
       .cache_wr_state   (ch1_cache_wr_state)
   );
 
@@ -232,6 +236,7 @@ module acquisition_uart (
       .push_started     (ch2_push_started),
       .pushing_last_data(ch2_pushing_last_data),
       .push_completed   (ch2_push_completed),
+      .cache_rd_en      (ch2_cache_rd_en),
       .cache_wr_state   (ch2_cache_wr_state)
   );
 
@@ -240,6 +245,7 @@ module acquisition_uart (
       .clk_25m              (clk_25m),
       .rst_n                (sys_rst_n),
       // channel 1
+      .ch1_cache_rd_en      (ch1_cache_rd_en),
       .ch1_sample_data      (ch1_sample_data),
       .ch1_push_ready       (ch1_push_ready),
       .ch1_push_started     (ch1_push_started),
@@ -247,6 +253,7 @@ module acquisition_uart (
       .ch1_push_completed   (ch1_push_completed),
       .ch1_push_en          (ch1_push_en),
       // channel 2
+      .ch2_cache_rd_en      (ch2_cache_rd_en),
       .ch2_sample_data      (ch2_sample_data),
       .ch2_push_ready       (ch2_push_ready),
       .ch2_push_started     (ch2_push_started),
@@ -254,21 +261,23 @@ module acquisition_uart (
       .ch2_push_completed   (ch2_push_completed),
       .ch2_push_en          (ch2_push_en),
       // signal to fifo
-      .sample_completed     (sample_completed),
-      .sample_data          (sample_data)
+      .fifo_wr_en           (fifo_wr_en),
+      .sample_data          (sample_data),
+      .fifo_wr_completed    (fifo_wr_completed)
   );
 
   // aqcquisition_send_uart
   acquisition_send_uart acquisition_send_uart_0 (
-      .clk_50m         (clk_50m),
-      .clk_25m         (clk_25m),
-      .sys_rst_n       (sys_rst_n),
-      .sample_completed(sample_completed),
-      .sample_data     (sample_data),
-      .uart_tx_en      (uart_tx_en),
-      .uart_tx_data    (uart_tx_data),
-      .uart_tx_busy    (uart_tx_busy),
-      .send_busy       (send_busy)
+      .clk_50m          (clk_50m),
+      .clk_25m          (clk_25m),
+      .sys_rst_n        (sys_rst_n),
+      .fifo_wr_en       (fifo_wr_en),
+      .sample_data      (sample_data),
+      .fifo_wr_completed(fifo_wr_completed),
+      .uart_tx_en       (uart_tx_en),
+      .uart_tx_data     (uart_tx_data),
+      .uart_tx_busy     (uart_tx_busy),
+      .send_busy        (send_busy)
   );
 
   // trigger

@@ -28,7 +28,7 @@ module acquisition_sync_cache_rd (
     // address to start reading
     input      [7:0] start_addr,
     // dual port ram
-    output           rd_en,
+    output reg       rd_en,
     output reg [7:0] rd_addr,
     // push status
     output           push_started,
@@ -36,19 +36,19 @@ module acquisition_sync_cache_rd (
     output           push_completed
 );
   // parameter define
-  parameter BRAM_DEPTH = 8'd255;
+  parameter BRAM_DEPTH = 8'd250;
 
   parameter IDLE = 2'b01;
   parameter READING = 2'b10;
 
   // reg define
-  reg [1:0] state;
-  reg [1:0] next_state;
+  reg [ 1:0] state;
+  reg [ 1:0] next_state;
 
-  reg [7:0] rd_cnt;
-  reg       rd_en_delay0;
-  reg       push_en_delay0;
-  reg       pushing_last_data_delay0;
+  reg [15:0] rd_cnt;
+  reg        rd_en_delay0;
+  reg        push_en_delay0;
+  reg        pushing_last_data_delay0;
 
   // main code
 
@@ -63,10 +63,8 @@ module acquisition_sync_cache_rd (
   always @(posedge rd_clk or negedge rst_n) begin
     if (!rst_n) begin
       rd_addr <= 8'd0;
-      rd_cnt  <= 8'd0;
     end else begin
       if (rd_en) begin  // write enable
-        rd_cnt <= rd_cnt + 1'b1;
         if (rd_addr == (BRAM_DEPTH - 8'd1)) begin  // reach the end of ram
           rd_addr <= 8'd0;
         end else begin
@@ -113,7 +111,7 @@ module acquisition_sync_cache_rd (
         end
       end
       READING: begin
-        if (rd_cnt == BRAM_DEPTH) begin
+        if (rd_cnt == BRAM_DEPTH - 1'b1) begin
           next_state = IDLE;
         end else begin
           next_state = READING;
@@ -126,6 +124,28 @@ module acquisition_sync_cache_rd (
   end
 
   // state machine output logic
-  assign rd_en = (next_state == READING);
+  always @(posedge rd_clk or negedge rst_n) begin
+    if (!rst_n) begin
+      rd_cnt <= 16'd0;
+      rd_en  <= 1'b0;
+    end else begin
+      case (next_state)
+        IDLE: begin
+          rd_cnt <= 16'd0;
+          rd_en  <= 1'b0;
+        end
+        READING: begin
+          if (rd_en) begin
+            rd_cnt <= rd_cnt + 1'b1;
+          end
+          rd_en <= 1'b1;
+        end
+        default: begin
+          rd_cnt <= 16'd0;
+          rd_en  <= 1'b0;
+        end
+      endcase
+    end
+  end
 
 endmodule

@@ -25,8 +25,9 @@ module acquisition_send_uart (
     input            clk_25m,
     input            sys_rst_n,
     // acquisition sample
-    input            sample_completed,
+    input            fifo_wr_en,
     input      [7:0] sample_data,
+    input            fifo_wr_completed,
     // uart interface
     output           uart_tx_en,
     output     [7:0] uart_tx_data,
@@ -46,13 +47,10 @@ module acquisition_send_uart (
   // wire define
   // fifo interface
   wire       wr_rst_busy;
-  wire       rd_rst_busy;
   wire       wr_en;
   wire       rd_en;
   wire [7:0] wr_data;
   wire [7:0] rd_data;
-  wire       almost_full;
-  wire       full;
   // others
   wire       rd_busy;
 
@@ -73,7 +71,7 @@ module acquisition_send_uart (
   always @(*) begin
     case (state)
       IDLE: begin
-        if (sample_completed) begin  // enable flag is high, start writing
+        if (fifo_wr_en) begin  // enable flag is high, start writing
           next_state = WRITING;
         end else begin
           next_state = IDLE;
@@ -126,41 +124,30 @@ module acquisition_send_uart (
       .rst         (~sys_rst_n),
       .wr_clk      (clk_25m),
       .rd_clk      (clk_50m),
-      .wr_en       (wr_en),
+      .wr_en       (fifo_wr_en),
       .rd_en       (rd_en),
       .din         (sample_data),
       .dout        (rd_data),
-      .almost_full (almost_full),
+      .almost_full (),
       .almost_empty(),
-      .full        (full),
+      .full        (),
       .empty       (),
       .wr_rst_busy (wr_rst_busy),
-      .rd_rst_busy (rd_rst_busy)
-  );
-
-  // fifo write
-  acquisition_fifo_wr acquisition_fifo_wr_0 (
-      .wr_clk     (clk_25m),
-      .rst_n      (sys_rst_n),
-      .wr_rst_busy(wr_rst_busy),
-      .en         (sample_completed),
-      .almost_full(almost_full),
-      .wr_en      (wr_en),
-      .wr_busy    ()
+      .rd_rst_busy ()
   );
 
   // fifo read
   acquisition_fifo_rd_uart acquisition_fifo_rd_uart_0 (
-      .rd_clk      (clk_50m),
-      .rst_n       (sys_rst_n),
-      .wr_rst_busy (wr_rst_busy),
-      .rd_data     (rd_data),
-      .full        (full),
-      .rd_en       (rd_en),
-      .uart_tx_en  (uart_tx_en),
-      .uart_tx_data(uart_tx_data),
-      .uart_tx_busy(uart_tx_busy),
-      .rd_busy     (rd_busy)
+      .rd_clk           (clk_50m),
+      .rst_n            (sys_rst_n),
+      .fifo_wr_completed(fifo_wr_completed),
+      .wr_rst_busy      (wr_rst_busy),
+      .rd_data          (rd_data),
+      .rd_en            (rd_en),
+      .uart_tx_en       (uart_tx_en),
+      .uart_tx_data     (uart_tx_data),
+      .uart_tx_busy     (uart_tx_busy),
+      .rd_busy          (rd_busy)
   );
 
 endmodule

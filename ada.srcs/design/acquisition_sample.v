@@ -40,6 +40,8 @@ module acquisition_sample (
     output       push_started,
     output       pushing_last_data,
     output       push_completed,
+    // cache read enable signal for multich glue
+    output       cache_rd_en,
     // debug
     output [4:0] cache_wr_state
 );
@@ -53,6 +55,8 @@ module acquisition_sample (
   wire [7:0] wr_data;
 
   // main code
+
+  assign cache_rd_en = rd_en;
 
   // dual port ram read
   acquisition_sync_cache_rd acquisition_sync_cache_rd_0 (
