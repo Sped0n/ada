@@ -1,0 +1,6 @@
+verilog xil_defaultlib  \
+"../../../../ada.srcs/ips/async_trans_ram/sim/async_trans_ram.v" \
+
+verilog xil_defaultlib "glbl.v"
+
+nosort

@@ -1,0 +1,1 @@
+--incr --debug typical --relax --mt auto  -L blk_mem_gen_v8_4_5 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot async_trans_ram xil_defaultlib.async_trans_ram xil_defaultlib.glbl -log elaborate.log
