@@ -39,11 +39,11 @@ module acquisition_send_uart (
     output reg       send_busy
 );
   // parameter define
-  parameter IDLE = 5'b00001;
-  parameter WRITING = 5'b00010;
-  parameter SEND_ENABLE = 5'b00100;
-  parameter READING = 5'b01000;
-  parameter WAITING_ACK = 5'b10000;
+  localparam IDLE = 5'b00001;
+  localparam WRITING = 5'b00010;
+  localparam SEND_ENABLE = 5'b00100;
+  localparam READING = 5'b01000;
+  localparam WAITING_ACK = 5'b10000;
 
   // reg define
   reg  [ 4:0] state;

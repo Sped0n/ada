@@ -50,10 +50,10 @@ module acquisition_uart (
     output     [ 4:0] ch2_cache_wr_state
 );
   // parameter define
-  parameter IDLE = 4'b0001;
-  parameter SETPARAM = 4'b0010;
-  parameter SAMPLING = 4'b0100;
-  parameter SENDING = 4'b1000;
+  localparam IDLE = 4'b0001;
+  localparam SETPARAM = 4'b0010;
+  localparam SAMPLING = 4'b0100;
+  localparam SENDING = 4'b1000;
 
   // wire define
   wire        ch1_cache_rd_en;

@@ -45,14 +45,14 @@ module acquisition_sync_cache_wr (
   // parameter define
   parameter BRAM_DEPTH = 1250;
 
-  parameter IDLE = 5'b00001;
-  parameter CACHING = 5'b00010;
-  parameter WFT = 5'b00100;  // wait for trigger
-  parameter WFRD = 5'b01000;  // wait for rest data
-  parameter HANDSHAKE = 5'b10000;
+  localparam IDLE = 5'b00001;
+  localparam CACHING = 5'b00010;
+  localparam WFT = 5'b00100;  // wait for trigger
+  localparam WFRD = 5'b01000;  // wait for rest data
+  localparam HANDSHAKE = 5'b10000;
 
   // just incase state machine won't be stucked if we don't meet the trigger condition in WFT state
-  parameter WFT_CNT_MAX = 2500;
+  parameter WFT_CNT_MAX = 10000;
 
   // reg define
   reg [4:0] state;

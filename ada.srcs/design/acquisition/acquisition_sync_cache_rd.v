@@ -38,8 +38,8 @@ module acquisition_sync_cache_rd (
   // parameter define
   parameter BRAM_DEPTH = 1250;
 
-  parameter IDLE = 2'b01;
-  parameter READING = 2'b10;
+  localparam IDLE = 2'b01;
+  localparam READING = 2'b10;
 
   // reg define
   reg [ 1:0] state;

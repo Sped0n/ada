@@ -56,12 +56,12 @@ module acquisition_ctl_uart (
   parameter ERR_CHECKSUM = 8'hE3;
   parameter NO_ERR = 8'h00;
 
-  parameter CAP_HEADER = 6'b000001;
-  parameter CAP_CMD = 6'b000010;
-  parameter CAP_DATALEN = 6'b000100;
-  parameter CAP_DATA = 6'b001000;
-  parameter CAP_CHECKSUM = 6'b010000;
-  parameter RX_COMPLETE = 6'b100000;
+  localparam CAP_HEADER = 6'b000001;
+  localparam CAP_CMD = 6'b000010;
+  localparam CAP_DATALEN = 6'b000100;
+  localparam CAP_DATA = 6'b001000;
+  localparam CAP_CHECKSUM = 6'b010000;
+  localparam RX_COMPLETE = 6'b100000;
 
   // reg define
   reg [5:0] state;

@@ -45,10 +45,10 @@ module acquisition_multich_glue (
     output reg [7:0] sample_data
 );
   // parameter define
-  parameter IDLE = 4'b0001;
-  parameter PUSH_CH1 = 4'b0010;
-  parameter PUSH_CH2 = 4'b0100;
-  parameter INFORM = 4'b1000;
+  localparam IDLE = 4'b0001;
+  localparam PUSH_CH1 = 4'b0010;
+  localparam PUSH_CH2 = 4'b0100;
+  localparam INFORM = 4'b1000;
 
   // reg define
   reg [3:0] state;

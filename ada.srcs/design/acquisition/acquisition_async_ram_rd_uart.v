@@ -39,10 +39,10 @@ module acquisition_async_ram_rd_uart (
   // parameter define
   parameter READ_CNT = 2500;
 
-  parameter IDLE = 4'b0001;
-  parameter FETCH = 4'b0010;
-  parameter SEND_ENABLE = 4'b0100;
-  parameter SENDING = 4'b1000;
+  localparam IDLE = 4'b0001;
+  localparam FETCH = 4'b0010;
+  localparam SEND_ENABLE = 4'b0100;
+  localparam SENDING = 4'b1000;
 
   // reg define
   reg [3:0] state;
