@@ -34,6 +34,8 @@ module acquisition_top_uart (
     // uart rx
     input        uart_rx_done,
     input  [7:0] uart_rx_data,
+    // tpad
+    input        tpad,
     // acquisition busy
     output       acquisition_busy,
     // debug
@@ -50,14 +52,18 @@ module acquisition_top_uart (
   wire        acquisition_en;
   wire        packet_corrupted;
 
+  wire        aq_en;
+
   // main code
+
+  assign aq_en = acquisition_en | tpad;
 
   // acquisition_uart
   acquisition_uart acquisition_uart_0 (
       .clk_50m                (clk_50m),
       .clk_25m                (clk_25m),
       .sys_rst_n              (sys_rst_n),
-      .acquisition_en         (acquisition_en),
+      .acquisition_en         (aq_en),
       .ch1_ad_data            (ch1_ad_data),
       .ch2_ad_data            (ch2_ad_data),
       .trigger_threshold      (trigger_threhold),

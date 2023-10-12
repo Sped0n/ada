@@ -34,6 +34,8 @@ module ada_top (
     output       buzzer,     // buzzer (beep when adc data is over range)
     // keys
     input  [3:0] keys,       // keys
+    // tpad
+    input        tpad,       // touch pad
     // 7-segment display
     output [5:0] seg_sel,    // segment select
     output [7:0] seg_disp,   // segment display data
@@ -123,6 +125,14 @@ module ada_top (
       .keys     (filtered_keys)
   );
 
+  // touch
+  touch touch_0 (
+      .clk(clk_50m),
+      .rst_n(rst_n),
+      .tpad(tpad),
+      .filtered_tpad(filtered_tpad)
+  );
+
   // 7-segment display
   seg seg_0 (
       .sys_clk  (clk_50m),
@@ -146,6 +156,7 @@ module ada_top (
       .uart_tx_busy      (uart_tx_busy),
       .uart_rx_done      (uart_rx_done),
       .uart_rx_data      (uart_rx_data),
+      .tpad              (tpad),
       .acquisition_busy  (),
       .acquisition_state (acquisition_state),
       .ch1_cache_wr_state(),
