@@ -22,7 +22,7 @@
 
 module acquisition_async_ram_rd_uart (
     // clock, use system clock here (50MHz)
-    input            rd_clk,
+    input            clk_50m,
     input            rst_n,
     // start sending signal
     input            send_en,
@@ -63,7 +63,7 @@ module acquisition_async_ram_rd_uart (
   assign rd_en = rd_en_tmp & (~rd_en_tmp_delay0);
 
   // rd_en_tmp_delay
-  always @(posedge rd_clk or negedge rst_n) begin
+  always @(posedge clk_50m or negedge rst_n) begin
     if (!rst_n) begin
       // rd_en_tmp
       rd_en_tmp_delay0 <= 1'b0;
@@ -76,7 +76,7 @@ module acquisition_async_ram_rd_uart (
   // state machine
 
   // state transition
-  always @(posedge rd_clk or negedge rst_n) begin
+  always @(posedge clk_50m or negedge rst_n) begin
     if (!rst_n) begin
       state <= IDLE;
     end else begin
@@ -124,7 +124,7 @@ module acquisition_async_ram_rd_uart (
   end
 
   // state machine output logic
-  always @(posedge rd_clk or negedge rst_n) begin
+  always @(posedge clk_50m or negedge rst_n) begin
     if (!rst_n) begin
       rd_en_tmp  <= 1'b0;
       uart_tx_en <= 1'b0;

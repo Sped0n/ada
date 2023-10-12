@@ -191,7 +191,7 @@ module acquisition_send_uart (
 
   // fifo read
   acquisition_async_ram_rd_uart acquisition_async_ram_rd_uart_0 (
-      .rd_clk      (clk_50m),
+      .clk_50m     (clk_50m),
       .rst_n       (sys_rst_n),
       .send_en     (send_en),
       .rd_data     (rd_data),
