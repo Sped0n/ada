@@ -82,11 +82,11 @@ module ada_top (
 
   // pll
   clk_wiz_0 pll_ad_da (
-      .clk_50m     (clk_50m),  // 50MHz clock
-      .clk_25m     (clk_25m),  // 25MHz clock
-      .clk_25m_120d(),         // 25MHz clock 120 degree phase shift
-      .locked      (locked),   // pll lock signal
-      .clk_in1     (sys_clk)   // input clock
+      .clk_50m (clk_50m),  // 50MHz clock
+      .clk_25m (clk_25m),  // 25MHz clock
+      .clk_200m(),
+      .locked  (locked),   // pll lock signal
+      .clk_in1 (sys_clk)   // input clock
   );
 
   // da_ctl

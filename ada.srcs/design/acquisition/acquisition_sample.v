@@ -21,7 +21,6 @@
 
 
 module acquisition_sample (
-    input         clk_50m,
     input         clk_25m,
     input         sys_rst_n,          // active low
     // enable signal
@@ -86,7 +85,7 @@ module acquisition_sample (
       .wr_addr          (wr_addr),
       .wr_data          (wr_data),
       .acquisition_pulse(acquisition_pulse),
-      .cache_wr_state   (cache_wr_state),
+      .cache_wr_state   (cache_wr_state)
   );
 
   // dual port ram

@@ -204,7 +204,6 @@ module acquisition_uart (
 
   // channel 1 sample
   acquisition_sample ch1 (
-      .clk_50m          (clk_50m),
       .clk_25m          (clk_25m),
       .sys_rst_n        (sys_rst_n),
       .acquisition_en   (acquisition_en_reg),
@@ -224,7 +223,6 @@ module acquisition_uart (
 
   // channel 2 sample
   acquisition_sample ch2 (
-      .clk_50m          (clk_50m),
       .clk_25m          (clk_25m),
       .sys_rst_n        (sys_rst_n),
       .acquisition_en   (acquisition_en_reg),
