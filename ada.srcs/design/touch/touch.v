@@ -21,10 +21,10 @@
 
 
 module touch (
-    input  sys_clk,
-    input  sys_rst_n,
-    input  raw_tpad,
-    output tpad
+    input  clk,
+    input  rst_n,
+    input  tpad,
+    output filtered_tpad
 );
   // reg define
   reg raw_tpad_delay0;
@@ -32,6 +32,16 @@ module touch (
 
   // main code
 
-  assign tpad = (~raw_tpad_delay1) & raw_tpad_delay0;
+  assign filtered_tpad = (~raw_tpad_delay1) & raw_tpad_delay0;
+
+  always @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
+      raw_tpad_delay0 <= 1'b0;
+      raw_tpad_delay1 <= 1'b0;
+    end else begin
+      raw_tpad_delay0 <= tpad;
+      raw_tpad_delay1 <= raw_tpad_delay0;
+    end
+  end
 
 endmodule
