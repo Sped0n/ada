@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="tb_acquisition_ctl_usb_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="tb_acquisition_ctl_usb" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="3,923.915 ns"></ZoomStartTime>
+      <ZoomEndTime time="4,786.416 ns"></ZoomEndTime>
+      <Cursor1Time time="3,224.000 ns"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="223"></NameColumnWidth>
+      <ValueColumnWidth column_width="102"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="37" />
+   <wvobject fp_name="/tb_acquisition_ctl_usb/sys_clk" type="logic">
+      <obj_property name="ElementShortName">sys_clk</obj_property>
+      <obj_property name="ObjectShortName">sys_clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_usb/usb_clk" type="logic">
+      <obj_property name="ElementShortName">usb_clk</obj_property>
+      <obj_property name="ObjectShortName">usb_clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_usb/sys_rst_n" type="logic">
+      <obj_property name="ElementShortName">sys_rst_n</obj_property>
+      <obj_property name="ObjectShortName">sys_rst_n</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_usb/usb_rx_en" type="logic">
+      <obj_property name="ElementShortName">usb_rx_en</obj_property>
+      <obj_property name="ObjectShortName">usb_rx_en</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_usb/usb_rx_data" type="array">
+      <obj_property name="ElementShortName">usb_rx_data[7:0]</obj_property>
+      <obj_property name="ObjectShortName">usb_rx_data[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_usb/clk_50m" type="logic">
+      <obj_property name="ElementShortName">clk_50m</obj_property>
+      <obj_property name="ObjectShortName">clk_50m</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_usb/locked" type="logic">
+      <obj_property name="ElementShortName">locked</obj_property>
+      <obj_property name="ObjectShortName">locked</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_usb/rst_n" type="logic">
+      <obj_property name="ElementShortName">rst_n</obj_property>
+      <obj_property name="ObjectShortName">rst_n</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_usb/CLK_PERIOD" type="array">
+      <obj_property name="ElementShortName">CLK_PERIOD[31:0]</obj_property>
+      <obj_property name="ObjectShortName">CLK_PERIOD[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_usb/USB_CLK_PERIOD" type="array">
+      <obj_property name="ElementShortName">USB_CLK_PERIOD[31:0]</obj_property>
+      <obj_property name="ObjectShortName">USB_CLK_PERIOD[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_usb/SYS_CLK_FREQ" type="array">
+      <obj_property name="ElementShortName">SYS_CLK_FREQ[31:0]</obj_property>
+      <obj_property name="ObjectShortName">SYS_CLK_FREQ[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_usb/BAUD_RATE" type="array">
+      <obj_property name="ElementShortName">BAUD_RATE[31:0]</obj_property>
+      <obj_property name="ObjectShortName">BAUD_RATE[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_usb/acquisition_ctl_usb_tb0/usb_clk" type="logic">
+      <obj_property name="ElementShortName">usb_clk</obj_property>
+      <obj_property name="ObjectShortName">usb_clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_usb/acquisition_ctl_usb_tb0/clk_50m" type="logic">
+      <obj_property name="ElementShortName">clk_50m</obj_property>
+      <obj_property name="ObjectShortName">clk_50m</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_usb/acquisition_ctl_usb_tb0/sys_rst_n" type="logic">
+      <obj_property name="ElementShortName">sys_rst_n</obj_property>
+      <obj_property name="ObjectShortName">sys_rst_n</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_usb/acquisition_ctl_usb_tb0/usb_rx_en" type="logic">
+      <obj_property name="ElementShortName">usb_rx_en</obj_property>
+      <obj_property name="ObjectShortName">usb_rx_en</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_usb/acquisition_ctl_usb_tb0/usb_rx_data" type="array">
+      <obj_property name="ElementShortName">usb_rx_data[7:0]</obj_property>
+      <obj_property name="ObjectShortName">usb_rx_data[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_usb/acquisition_ctl_usb_tb0/trigger_threshold" type="array">
+      <obj_property name="ElementShortName">trigger_threshold[7:0]</obj_property>
+      <obj_property name="ObjectShortName">trigger_threshold[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_usb/acquisition_ctl_usb_tb0/trigger_is_rising_slope" type="logic">
+      <obj_property name="ElementShortName">trigger_is_rising_slope</obj_property>
+      <obj_property name="ObjectShortName">trigger_is_rising_slope</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_usb/acquisition_ctl_usb_tb0/trigger_position" type="array">
+      <obj_property name="ElementShortName">trigger_position[15:0]</obj_property>
+      <obj_property name="ObjectShortName">trigger_position[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_usb/acquisition_ctl_usb_tb0/trigger_channel" type="logic">
+      <obj_property name="ElementShortName">trigger_channel</obj_property>
+      <obj_property name="ObjectShortName">trigger_channel</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_usb/acquisition_ctl_usb_tb0/acquisition_pulse_sel" type="array">
+      <obj_property name="ElementShortName">acquisition_pulse_sel[3:0]</obj_property>
+      <obj_property name="ObjectShortName">acquisition_pulse_sel[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_usb/acquisition_ctl_usb_tb0/acquisition_en" type="logic">
+      <obj_property name="ElementShortName">acquisition_en</obj_property>
+      <obj_property name="ObjectShortName">acquisition_en</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_usb/acquisition_ctl_usb_tb0/packet_corrupted" type="logic">
+      <obj_property name="ElementShortName">packet_corrupted</obj_property>
+      <obj_property name="ObjectShortName">packet_corrupted</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_usb/acquisition_ctl_usb_tb0/parse_completed" type="logic">
+      <obj_property name="ElementShortName">parse_completed</obj_property>
+      <obj_property name="ObjectShortName">parse_completed</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_usb/acquisition_ctl_usb_tb0/parse_result" type="array">
+      <obj_property name="ElementShortName">parse_result[7:0]</obj_property>
+      <obj_property name="ObjectShortName">parse_result[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_usb/acquisition_ctl_usb_tb0/parse_cmd" type="array">
+      <obj_property name="ElementShortName">parse_cmd[7:0]</obj_property>
+      <obj_property name="ObjectShortName">parse_cmd[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_usb/acquisition_ctl_usb_tb0/state" type="array">
+      <obj_property name="ElementShortName">state[5:0]</obj_property>
+      <obj_property name="ObjectShortName">state[5:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_usb/acquisition_ctl_usb_tb0/next_state" type="array">
+      <obj_property name="ElementShortName">next_state[5:0]</obj_property>
+      <obj_property name="ObjectShortName">next_state[5:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_usb/acquisition_ctl_usb_tb0/data_cnt" type="array">
+      <obj_property name="ElementShortName">data_cnt[2:0]</obj_property>
+      <obj_property name="ObjectShortName">data_cnt[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_usb/acquisition_ctl_usb_tb0/data_len" type="array">
+      <obj_property name="ElementShortName">data_len[7:0]</obj_property>
+      <obj_property name="ObjectShortName">data_len[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_usb/acquisition_ctl_usb_tb0/rx_data" type="array">
+      <obj_property name="ElementShortName">rx_data[7:0]</obj_property>
+      <obj_property name="ObjectShortName">rx_data[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_usb/acquisition_ctl_usb_tb0/rx_data_delay0" type="array">
+      <obj_property name="ElementShortName">rx_data_delay0[7:0]</obj_property>
+      <obj_property name="ObjectShortName">rx_data_delay0[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_usb/acquisition_ctl_usb_tb0/checksum" type="array">
+      <obj_property name="ElementShortName">checksum[7:0]</obj_property>
+      <obj_property name="ObjectShortName">checksum[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_usb/acquisition_ctl_usb_tb0/jmp" type="logic">
+      <obj_property name="ElementShortName">jmp</obj_property>
+      <obj_property name="ObjectShortName">jmp</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_usb/acquisition_ctl_usb_tb0/acquisition_en_delay0" type="logic">
+      <obj_property name="ElementShortName">acquisition_en_delay0</obj_property>
+      <obj_property name="ObjectShortName">acquisition_en_delay0</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_ctl_usb/acquisition_ctl_usb_tb0/packet_corrupted_delay0" type="logic">
+      <obj_property name="ElementShortName">packet_corrupted_delay0</obj_property>
+      <obj_property name="ObjectShortName">packet_corrupted_delay0</obj_property>
+   </wvobject>
+</wave_config>
