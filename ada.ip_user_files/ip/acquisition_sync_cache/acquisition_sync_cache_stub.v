@@ -1,7 +1,7 @@
 // Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2022.2 (win64) Build 3671981 Fri Oct 14 05:00:03 MDT 2022
-// Date        : Wed Oct 11 09:12:05 2023
+// Date        : Tue Oct 17 13:01:41 2023
 // Host        : Zen running 64-bit major release  (build 9200)
 // Command     : write_verilog -force -mode synth_stub
 //               c:/Users/spedon/Documents/eeworks/FPGA/ada/ada.srcs/ips/acquisition_sync_cache/acquisition_sync_cache_stub.v
@@ -15,14 +15,14 @@
 // Please paste the declaration into a Verilog source file or add the file as an additional source.
 (* x_core_info = "blk_mem_gen_v8_4_5,Vivado 2022.2" *)
 module acquisition_sync_cache(clka, ena, wea, addra, dina, clkb, enb, addrb, doutb)
-/* synthesis syn_black_box black_box_pad_pin="clka,ena,wea[0:0],addra[13:0],dina[7:0],clkb,enb,addrb[13:0],doutb[7:0]" */;
+/* synthesis syn_black_box black_box_pad_pin="clka,ena,wea[0:0],addra[14:0],dina[7:0],clkb,enb,addrb[14:0],doutb[7:0]" */;
   input clka;
   input ena;
   input [0:0]wea;
-  input [13:0]addra;
+  input [14:0]addra;
   input [7:0]dina;
   input clkb;
   input enb;
-  input [13:0]addrb;
+  input [14:0]addrb;
   output [7:0]doutb;
 endmodule
