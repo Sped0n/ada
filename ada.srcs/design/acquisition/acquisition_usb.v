@@ -39,6 +39,8 @@ module acquisition_usb (
     input      [ 3:0] acquisition_pulse_sel,
     // packet corrupted
     input             packet_corrupted,
+    // depack
+    input             depack,
     // usb
     output            usb_tx_en,
     output     [ 7:0] usb_tx_data,
@@ -280,6 +282,7 @@ module acquisition_usb (
       .usb_busy              (usb_busy),
       .acquisition_en        (acquisition_en),
       .packet_corrupted      (packet_corrupted),
+      .depack                (depack),
       .send_busy             (send_busy)
   );
 

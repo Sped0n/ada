@@ -51,6 +51,7 @@ module acquisition_top_usb (
   wire [ 3:0] acquisition_pulse_sel;
   wire        acquisition_en;
   wire        packet_corrupted;
+  wire        depack;
 
   wire        aq_en;
 
@@ -73,6 +74,7 @@ module acquisition_top_usb (
       .trigger_channel        (trigger_channel),
       .acquisition_pulse_sel  (acquisition_pulse_sel),
       .packet_corrupted       (packet_corrupted),
+      .depack                 (depack),
       .usb_tx_en              (usb_tx_en),
       .usb_tx_data            (usb_tx_data),
       .usb_busy               (usb_busy),
@@ -96,6 +98,7 @@ module acquisition_top_usb (
       .acquisition_pulse_sel  (acquisition_pulse_sel),
       .acquisition_en         (acquisition_en),
       .packet_corrupted       (packet_corrupted),
+      .depack                 (depack),
       .parse_completed        (),
       .parse_result           (),
       .parse_cmd              ()

@@ -25,6 +25,12 @@ module acquisition_async_ram_rd_usb (
     input            rst_n,
     // start sending signal
     input            send_en,
+    // acquisition enable signal
+    input            acquisition_en,
+    // depack signal
+    input            depack,
+    // packet corrupted signal
+    input            packet_corrupted,
     // async ram interface
     input      [7:0] rd_data,
     output reg       rd_en,
@@ -36,7 +42,9 @@ module acquisition_async_ram_rd_usb (
     output reg       rd_busy
 );
   // parameter define
-  parameter DEPTH = 2500;
+  parameter DEPTH = 25000;
+
+  parameter DEPACK = 500;
 
   localparam IDLE = 5'b00001;
   localparam HOLD = 5'b00010;
@@ -49,9 +57,14 @@ module acquisition_async_ram_rd_usb (
   reg [4:0] next_state;
 
   reg [15:0] send_cnt;
+  reg [15:0] total_send_cnt;
   reg [7:0] checksum;
 
   reg jmp;
+
+  reg to_idle;
+
+  reg [7:0] header_cnt;
 
   // main code
 
@@ -72,6 +85,7 @@ module acquisition_async_ram_rd_usb (
       end
       HOLD: begin
         if (jmp) next_state = HEADER;
+        else if (to_idle) next_state = IDLE;
         else next_state = HOLD;
       end
       HEADER: begin
@@ -83,7 +97,7 @@ module acquisition_async_ram_rd_usb (
         else next_state = DATA;
       end
       CHECKSUM: begin
-        if (jmp) next_state = IDLE;
+        if (jmp) next_state = HOLD;
         else next_state = CHECKSUM;
       end
     endcase
@@ -98,6 +112,8 @@ module acquisition_async_ram_rd_usb (
       rd_busy <= 1'b0;
       // send_cnt
       send_cnt <= 16'd0;
+      // total_send_cnt
+      total_send_cnt <= 16'd0;
       // checksum
       checksum <= 8'd0;
       // rd_en
@@ -105,23 +121,43 @@ module acquisition_async_ram_rd_usb (
       // usb
       usb_tx_en <= 1'b0;
       usb_tx_data <= 8'h00;
+      // total_send_cnt
+      total_send_cnt <= 16'd0;
+      // to_idle
+      to_idle <= 1'b0;
+      // header_cnt
+      header_cnt <= 8'd0;
     end else begin
       jmp <= 1'b0;
+      to_idle <= 1'b0;
       case (next_state)
         IDLE: begin
           // reset
-          usb_tx_en <= 1'b0;
-          rd_busy   <= 1'b0;
-          send_cnt  <= 16'd0;
-          checksum  <= 8'd0;
+          usb_tx_en      <= 1'b0;
+          rd_busy        <= 1'b0;
+          send_cnt       <= 16'd0;
+          checksum       <= 8'd0;
+          total_send_cnt <= 16'd0;
+          rd_en          <= 1'b0;
+          to_idle        <= 1'b0;
+          header_cnt     <= 8'd0;
           if (send_en) begin
             jmp <= 1'b1;
           end
         end
         HOLD: begin
-          rd_busy <= 1'b1;
-          if (!usb_busy) begin
-            jmp <= 1'b1;
+          rd_busy  <= 1'b1;
+          checksum <= 8'd0;
+          if ((total_send_cnt > DEPTH - 1'b1) || (packet_corrupted)) begin
+            to_idle <= 1'b1;
+          end else if (!usb_busy) begin
+            if (total_send_cnt == 16'd0) begin
+              jmp <= 1'b1;
+            end else if (depack) begin
+              jmp <= 1'b1;
+            end else begin
+              jmp <= 1'b0;
+            end
           end
         end
         HEADER: begin
@@ -133,17 +169,18 @@ module acquisition_async_ram_rd_usb (
               checksum <= checksum + 8'h55;
             end
             16'd1: begin
-              usb_tx_data <= 8'h01;
-              checksum <= checksum + 8'h01;
+              usb_tx_data <= header_cnt;
+              checksum <= checksum + header_cnt;
             end
             16'd2: begin
-              usb_tx_data <= DEPTH[15:8];
-              checksum <= checksum + DEPTH[15:8];
+              usb_tx_data <= DEPACK[15:8];
+              checksum <= checksum + DEPACK[15:8];
               rd_en <= 1'b1;
             end
             16'd3: begin
-              usb_tx_data <= DEPTH[7:0];
-              checksum <= checksum + DEPTH[7:0];
+              usb_tx_data <= DEPACK[7:0];
+              checksum <= checksum + DEPACK[7:0];
+              header_cnt <= header_cnt + 1'b1;
               jmp <= 1'b1;
             end
           endcase
@@ -154,23 +191,25 @@ module acquisition_async_ram_rd_usb (
           usb_tx_en <= 1'b1;
           usb_tx_data <= rd_data;
           checksum <= checksum + rd_data;
-          if (send_cnt == (DEPTH + 16'd2)) begin
+          if (send_cnt == (DEPACK + 16'd2)) begin
             rd_en <= 1'b0;
-          end else if (send_cnt == (DEPTH + 16'd3)) begin
+          end else if (send_cnt == (DEPACK + 16'd3)) begin
             jmp <= 1'b1;
           end
           send_cnt <= send_cnt + 1'b1;
+          total_send_cnt <= total_send_cnt + 1'b1;
         end
         CHECKSUM: begin
           rd_busy <= 1'b1;
           rd_en   <= 1'b0;
-          if (send_cnt == (DEPTH + 16'd4)) begin
+          if (send_cnt == (DEPACK + 16'd4)) begin
             usb_tx_en <= 1'b1;
             usb_tx_data <= checksum;
             send_cnt <= send_cnt + 1'b1;
-          end else if (send_cnt == (DEPTH + 16'd5)) begin
+          end else if (send_cnt == (DEPACK + 16'd5)) begin
             usb_tx_en <= 1'b0;
             usb_tx_data <= 8'h00;
+            checksum <= 8'd0;
             send_cnt <= 16'd0;
             jmp <= 1'b1;
           end

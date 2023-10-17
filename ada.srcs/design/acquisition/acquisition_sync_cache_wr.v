@@ -35,7 +35,7 @@ module acquisition_sync_cache_wr (
     // dual port ram
     output            wr_we,              // ram write enable
     output reg        wr_en,              // ram write port enable (same as ram_wr_we)
-    output reg [13:0] wr_addr,            // ram write address (0-254)
+    output reg [14:0] wr_addr,            // ram write address (0-254)
     output     [ 7:0] wr_data,            // ram write data
     // acquisiton pulse
     input             acquisition_pulse,
@@ -43,7 +43,7 @@ module acquisition_sync_cache_wr (
     output     [ 4:0] cache_wr_state
 );
   // parameter define
-  parameter BRAM_DEPTH = 1250;
+  parameter BRAM_DEPTH = 12500;
 
   localparam IDLE = 5'b00001;
   localparam CACHING = 5'b00010;
@@ -163,7 +163,7 @@ module acquisition_sync_cache_wr (
       // wr_addr control
       if (wr_en) begin  // write enable
         if (wr_addr == (BRAM_DEPTH - 1'b1)) begin  // reach the end of ram
-          wr_addr <= 14'd0;
+          wr_addr <= 15'd0;
         end else begin
           wr_addr <= wr_addr + 1'b1;
         end
@@ -178,7 +178,7 @@ module acquisition_sync_cache_wr (
           wfrd_cnt <= 16'd0;
           wft_cnt <= 16'd0;
           wr_en <= 1'b0;
-          wr_addr <= 8'd0;
+          wr_addr <= 15'd0;
         end
         CACHING: begin
           push_ready <= 1'b0;

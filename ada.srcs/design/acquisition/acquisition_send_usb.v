@@ -35,15 +35,15 @@ module acquisition_send_usb (
     // ack
     input            acquisition_en,
     input            packet_corrupted,
+    input            depack,
     // busy signal
     output reg       send_busy
 );
   // parameter define
-  localparam IDLE = 5'b00001;
-  localparam WRITING = 5'b00010;
-  localparam SEND_ENABLE = 5'b00100;
-  localparam READING = 5'b01000;
-  localparam WAITING_ACK = 5'b10000;
+  localparam IDLE = 4'b00001;
+  localparam WRITING = 4'b00010;
+  localparam SEND_ENABLE = 4'b00100;
+  localparam READING = 4'b01000;
 
   // reg define
   reg  [ 4:0] state;
@@ -96,18 +96,9 @@ module acquisition_send_usb (
       end
       READING: begin
         if (!rd_busy) begin  // read completed
-          next_state = WAITING_ACK;
+          next_state = IDLE;
         end else begin
           next_state = READING;
-        end
-      end
-      WAITING_ACK: begin
-        if (acquisition_en) begin  // ack received
-          next_state = IDLE;
-        end else if (packet_corrupted) begin
-          next_state = SEND_ENABLE;
-        end else begin
-          next_state = WAITING_ACK;
         end
       end
       default: begin
@@ -145,11 +136,6 @@ module acquisition_send_usb (
         end
         READING: begin
           send_busy <= 1'b1;
-          send_en   <= 1'b0;
-        end
-        WAITING_ACK: begin
-          send_busy <= 1'b1;
-          rd_addr   <= 15'd0;
           send_en   <= 1'b0;
         end
         default: begin
@@ -190,15 +176,18 @@ module acquisition_send_usb (
 
   // fifo read
   acquisition_async_ram_rd_usb acquisition_async_ram_rd_usb_0 (
-      .usb_clk    (usb_clk),
-      .rst_n      (sys_rst_n),
-      .send_en    (send_en),
-      .rd_data    (rd_data),
-      .rd_en      (rd_en),
-      .usb_tx_en  (usb_tx_en),
-      .usb_tx_data(usb_tx_data),
-      .usb_busy   (usb_busy),
-      .rd_busy    (rd_busy)
+      .usb_clk         (usb_clk),
+      .rst_n           (sys_rst_n),
+      .send_en         (send_en),
+      .acquisition_en  (acquisition_en),
+      .depack          (depack),
+      .packet_corrupted(packet_corrupted),
+      .rd_data         (rd_data),
+      .rd_en           (rd_en),
+      .usb_tx_en       (usb_tx_en),
+      .usb_tx_data     (usb_tx_data),
+      .usb_busy        (usb_busy),
+      .rd_busy         (rd_busy)
   );
 
 endmodule

@@ -35,6 +35,7 @@ module acquisition_ctl_usb (
     output reg [ 3:0] acquisition_pulse_sel,
     output reg        acquisition_en,
     output reg        packet_corrupted,
+    output reg        depack,
     // parse info
     output reg        parse_completed,
     output reg [ 7:0] parse_result,
@@ -50,6 +51,7 @@ module acquisition_ctl_usb (
   parameter ACQ_PULSE = 8'h06;
   parameter ACQ_EN = 8'h07;
   parameter BAD_PKG = 8'h08;
+  parameter DEPACK = 8'h09;
 
   parameter ERR_HEADER = 8'hE0;
   parameter ERR_CMD = 8'hE1;
@@ -75,8 +77,13 @@ module acquisition_ctl_usb (
   reg [7:0] checksum;
   reg       jmp;
 
+  reg       acquisition_en_tmp;
+  reg       packet_corrupted_tmp;
+  reg       depack_tmp;
+
   reg       acquisition_en_delay0;
   reg       packet_corrupted_delay0;
+  reg       depack_delay0;
 
   // main code
 
@@ -182,7 +189,8 @@ module acquisition_ctl_usb (
                 usb_rx_data == TRG_CH ||
                 usb_rx_data == ACQ_PULSE ||
                 usb_rx_data == ACQ_EN ||
-                usb_rx_data == BAD_PKG ) begin
+                usb_rx_data == BAD_PKG ||
+                usb_rx_data == DEPACK ) begin
               jmp <= 1'b1;
               parse_cmd <= usb_rx_data;
               checksum <= checksum + usb_rx_data;
@@ -256,8 +264,9 @@ module acquisition_ctl_usb (
       trigger_position <= 16'hffff;  // trigger disabled
       trigger_channel <= 1'b0;  // channel 1
       acquisition_pulse_sel <= 4'd0;  // 25MHz (1us/div)
-      acquisition_en <= 1'b0;  // acquisition disabled
-      packet_corrupted <= 1'b0;  // packet not corrupted
+      acquisition_en_tmp <= 1'b0;  // acquisition disabled
+      packet_corrupted_tmp <= 1'b0;  // packet not corrupted
+      depack_tmp <= 1'b0;  // depack disabled
     end else begin
       // cmd handling
       if ((parse_result == NO_ERR) && (parse_completed == 1'b1)) begin
@@ -272,17 +281,22 @@ module acquisition_ctl_usb (
         end else if ((parse_cmd == ACQ_PULSE) && (data_len == 8'd1)) begin
           acquisition_pulse_sel <= rx_data[3:0];
         end else if ((parse_cmd == ACQ_EN) && (data_len == 8'd1)) begin
-          acquisition_en <= rx_data[0];
+          acquisition_en_tmp <= rx_data[0];
         end else if ((parse_cmd == BAD_PKG) && (data_len == 8'd1)) begin
-          packet_corrupted <= rx_data[0];
+          packet_corrupted_tmp <= rx_data[0];
+        end else if ((parse_cmd == DEPACK) && (data_len == 8'd1)) begin
+          depack_tmp <= rx_data[0];
         end
       end
       // generate a pulse instead of a level signal
-      if (acquisition_en_delay0) begin
-        acquisition_en <= 1'b0;
+      if (acquisition_en) begin
+        acquisition_en_tmp <= 1'b0;
       end
-      if (packet_corrupted_delay0) begin
-        packet_corrupted <= 1'b0;
+      if (packet_corrupted) begin
+        packet_corrupted_tmp <= 1'b0;
+      end
+      if (depack) begin
+        depack_tmp <= 1'b0;
       end
     end
   end
@@ -292,9 +306,17 @@ module acquisition_ctl_usb (
     if (!sys_rst_n) begin
       acquisition_en_delay0   <= 1'b0;
       packet_corrupted_delay0 <= 1'b0;
+      depack_delay0           <= 1'b0;
+      acquisition_en          <= 1'b0;
+      packet_corrupted        <= 1'b0;
+      depack                  <= 1'b0;
     end else begin
-      acquisition_en_delay0   <= acquisition_en;
-      packet_corrupted_delay0 <= packet_corrupted;
+      acquisition_en_delay0   <= acquisition_en_tmp;
+      packet_corrupted_delay0 <= packet_corrupted_tmp;
+      depack_delay0           <= depack_tmp;
+      acquisition_en          <= acquisition_en_delay0;
+      packet_corrupted        <= packet_corrupted_delay0;
+      depack                  <= depack_delay0;
     end
   end
 
