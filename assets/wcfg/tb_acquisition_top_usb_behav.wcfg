@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="4,853,904.200 ns"></ZoomStartTime>
-      <ZoomEndTime time="4,854,249.201 ns"></ZoomEndTime>
-      <Cursor1Time time="4,854,024.000 ns"></Cursor1Time>
+      <ZoomStartTime time="22,844.600 ns"></ZoomStartTime>
+      <ZoomEndTime time="23,710.601 ns"></ZoomEndTime>
+      <Cursor1Time time="23,430.100 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="223"></NameColumnWidth>
+      <NameColumnWidth column_width="216"></NameColumnWidth>
       <ValueColumnWidth column_width="102"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="32" />
+   <WVObjectSize size="34" />
    <wvobject fp_name="/tb_acquisition_top_usb/sys_clk" type="logic">
       <obj_property name="ElementShortName">sys_clk</obj_property>
       <obj_property name="ObjectShortName">sys_clk</obj_property>
@@ -32,25 +32,9 @@
       <obj_property name="ElementShortName">ad_data[7:0]</obj_property>
       <obj_property name="ObjectShortName">ad_data[7:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_acquisition_top_usb/uart_rx_done" type="logic">
-      <obj_property name="ElementShortName">uart_rx_done</obj_property>
-      <obj_property name="ObjectShortName">uart_rx_done</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_acquisition_top_usb/uart_rx_data" type="array">
-      <obj_property name="ElementShortName">uart_rx_data[7:0]</obj_property>
-      <obj_property name="ObjectShortName">uart_rx_data[7:0]</obj_property>
-   </wvobject>
    <wvobject fp_name="/tb_acquisition_top_usb/acquisition_top_usb_tb0/acquisition_usb_0/acquisition_send_usb_0/acquisition_en" type="logic">
       <obj_property name="ElementShortName">acquisition_en</obj_property>
       <obj_property name="ObjectShortName">acquisition_en</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_acquisition_top_usb/usb_txe_n" type="logic">
-      <obj_property name="ElementShortName">usb_txe_n</obj_property>
-      <obj_property name="ObjectShortName">usb_txe_n</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_acquisition_top_usb/usb_rxf_n" type="logic">
-      <obj_property name="ElementShortName">usb_rxf_n</obj_property>
-      <obj_property name="ObjectShortName">usb_rxf_n</obj_property>
    </wvobject>
    <wvobject fp_name="/tb_acquisition_top_usb/clk_50m" type="logic">
       <obj_property name="ElementShortName">clk_50m</obj_property>
@@ -71,19 +55,6 @@
    <wvobject fp_name="/tb_acquisition_top_usb/rst_n" type="logic">
       <obj_property name="ElementShortName">rst_n</obj_property>
       <obj_property name="ObjectShortName">rst_n</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_acquisition_top_usb/usb_tx_en" type="logic">
-      <obj_property name="ElementShortName">usb_tx_en</obj_property>
-      <obj_property name="ObjectShortName">usb_tx_en</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_acquisition_top_usb/usb_tx_data" type="array">
-      <obj_property name="ElementShortName">usb_tx_data[7:0]</obj_property>
-      <obj_property name="ObjectShortName">usb_tx_data[7:0]</obj_property>
-      <obj_property name="Radix">HEXRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_acquisition_top_usb/usb_busy" type="logic">
-      <obj_property name="ElementShortName">usb_busy</obj_property>
-      <obj_property name="ObjectShortName">usb_busy</obj_property>
    </wvobject>
    <wvobject fp_name="/tb_acquisition_top_usb/mock_ad_data" type="array">
       <obj_property name="ElementShortName">mock_ad_data[7:0]</obj_property>
@@ -112,6 +83,7 @@
    <wvobject fp_name="/tb_acquisition_top_usb/acquisition_top_usb_tb0/acquisition_usb_0/acquisition_send_usb_0/async_trans_ram_0/dina" type="array">
       <obj_property name="ElementShortName">dina[7:0]</obj_property>
       <obj_property name="ObjectShortName">dina[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/tb_acquisition_top_usb/acquisition_top_usb_tb0/acquisition_usb_0/acquisition_send_usb_0/async_trans_ram_0/addra" type="array">
       <obj_property name="ElementShortName">addra[14:0]</obj_property>
@@ -152,5 +124,44 @@
    <wvobject fp_name="/tb_acquisition_top_usb/acquisition_top_usb_tb0/acquisition_usb_0/acquisition_send_usb_0/acquisition_async_ram_rd_usb_0/jmp" type="logic">
       <obj_property name="ElementShortName">jmp</obj_property>
       <obj_property name="ObjectShortName">jmp</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_top_usb/acquisition_top_usb_tb0/acquisition_usb_0/ch1/acquisition_sync_cache_0/clka" type="logic">
+      <obj_property name="ElementShortName">clka</obj_property>
+      <obj_property name="ObjectShortName">clka</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_top_usb/acquisition_top_usb_tb0/acquisition_usb_0/ch1/acquisition_sync_cache_0/ena" type="logic">
+      <obj_property name="ElementShortName">ena</obj_property>
+      <obj_property name="ObjectShortName">ena</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_top_usb/acquisition_top_usb_tb0/acquisition_usb_0/ch1/acquisition_sync_cache_0/wea" type="array">
+      <obj_property name="ElementShortName">wea[0:0]</obj_property>
+      <obj_property name="ObjectShortName">wea[0:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_top_usb/acquisition_top_usb_tb0/acquisition_usb_0/ch1/acquisition_sync_cache_0/addra" type="array">
+      <obj_property name="ElementShortName">addra[13:0]</obj_property>
+      <obj_property name="ObjectShortName">addra[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_top_usb/acquisition_top_usb_tb0/acquisition_usb_0/ch1/acquisition_sync_cache_0/dina" type="array">
+      <obj_property name="ElementShortName">dina[7:0]</obj_property>
+      <obj_property name="ObjectShortName">dina[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_top_usb/acquisition_top_usb_tb0/acquisition_usb_0/ch1/acquisition_sync_cache_0/clkb" type="logic">
+      <obj_property name="ElementShortName">clkb</obj_property>
+      <obj_property name="ObjectShortName">clkb</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_top_usb/acquisition_top_usb_tb0/acquisition_usb_0/ch1/acquisition_sync_cache_0/enb" type="logic">
+      <obj_property name="ElementShortName">enb</obj_property>
+      <obj_property name="ObjectShortName">enb</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_top_usb/acquisition_top_usb_tb0/acquisition_usb_0/ch1/acquisition_sync_cache_0/addrb" type="array">
+      <obj_property name="ElementShortName">addrb[13:0]</obj_property>
+      <obj_property name="ObjectShortName">addrb[13:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_acquisition_top_usb/acquisition_top_usb_tb0/acquisition_usb_0/ch1/acquisition_sync_cache_0/doutb" type="array">
+      <obj_property name="ElementShortName">doutb[7:0]</obj_property>
+      <obj_property name="ObjectShortName">doutb[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
 </wave_config>
