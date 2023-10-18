@@ -21,29 +21,29 @@
 
 
 module acquisition_async_ram_rd_usb (
-    input            usb_clk,
-    input            rst_n,
+    input             usb_clk,
+    input             rst_n,
+    // depth
+    input      [15:0] depth,
     // start sending signal
-    input            send_en,
+    input             send_en,
     // acquisition enable signal
-    input            acquisition_en,
+    input             acquisition_en,
     // depack signal
-    input            depack,
+    input             depack,
     // packet corrupted signal
-    input            packet_corrupted,
+    input             packet_corrupted,
     // async ram interface
-    input      [7:0] rd_data,
-    output reg       rd_en,
+    input      [ 7:0] rd_data,
+    output reg        rd_en,
     // uart interface
-    output reg       usb_tx_en,
-    output reg [7:0] usb_tx_data,
-    input            usb_busy,
+    output reg        usb_tx_en,
+    output reg [ 7:0] usb_tx_data,
+    input             usb_busy,
     // busy signal
-    output reg       rd_busy
+    output reg        rd_busy
 );
   // parameter define
-  parameter DEPTH = 25000;
-
   parameter DEPACK = 500;
 
   localparam IDLE = 5'b00001;
@@ -148,7 +148,7 @@ module acquisition_async_ram_rd_usb (
         HOLD: begin
           rd_busy  <= 1'b1;
           checksum <= 8'd0;
-          if ((total_send_cnt > DEPTH - 1'b1) || (packet_corrupted)) begin
+          if ((total_send_cnt > depth - 1'b1) || (packet_corrupted)) begin
             to_idle <= 1'b1;
           end else if (!usb_busy) begin
             if (total_send_cnt == 16'd0) begin

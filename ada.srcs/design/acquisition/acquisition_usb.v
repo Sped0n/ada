@@ -41,6 +41,8 @@ module acquisition_usb (
     input             packet_corrupted,
     // depack
     input             depack,
+    // depth select
+    input      [ 1:0] depth_sel,
     // usb
     output            usb_tx_en,
     output     [ 7:0] usb_tx_data,
@@ -97,6 +99,9 @@ module acquisition_usb (
   reg         trigger_channel_reg;
 
   reg         param_set;
+
+  reg  [15:0] sample_depth;
+  reg  [15:0] send_depth;
 
   // main code
 
@@ -164,6 +169,8 @@ module acquisition_usb (
       trigger_channel_reg <= 1'b0;
       acquisition_pulse_sel_reg <= 4'd0;
       acquisition_en_reg <= 1'b0;
+      sample_depth <= 16'd1250;
+      send_depth <= 16'd2500;
     end else begin
       case (state)
         IDLE: begin
@@ -180,6 +187,24 @@ module acquisition_usb (
           acquisition_pulse_sel_reg <= acquisition_pulse_sel;
           trigger_channel_reg <= trigger_channel;
           acquisition_en_reg <= 1'b1;
+          case (depth_sel)
+            2'd0: begin
+              sample_depth <= 16'd1250;
+              send_depth   <= 16'd2500;
+            end
+            2'd1: begin
+              sample_depth <= 16'd2500;
+              send_depth   <= 16'd5000;
+            end
+            2'd2: begin
+              sample_depth <= 16'd5000;
+              send_depth   <= 16'd10000;
+            end
+            2'd3: begin
+              sample_depth <= 16'd12500;
+              send_depth   <= 16'd25000;
+            end
+          endcase
         end
         SAMPLING: begin
           acquisition_en_reg <= 1'b0;
@@ -215,6 +240,7 @@ module acquisition_usb (
       .triggered        (triggered),
       .trigger_position (trigger_position_reg),
       .acquisition_pulse(acquisition_pulse),
+      .depth            (sample_depth),
       .push_en          (ch1_push_en),
       .push_ready       (ch1_push_ready),
       .push_started     (ch1_push_started),
@@ -234,6 +260,7 @@ module acquisition_usb (
       .triggered        (triggered),
       .trigger_position (trigger_position_reg),
       .acquisition_pulse(acquisition_pulse),
+      .depth            (sample_depth),
       .push_en          (ch2_push_en),
       .push_ready       (ch2_push_ready),
       .push_started     (ch2_push_started),
@@ -274,6 +301,7 @@ module acquisition_usb (
       .usb_clk               (usb_clk),
       .clk_25m               (clk_25m),
       .sys_rst_n             (sys_rst_n),
+      .depth                 (send_depth),
       .async_ram_wr_en       (async_ram_wr_en),
       .sample_data           (sample_data),
       .async_ram_wr_completed(async_ram_wr_completed),

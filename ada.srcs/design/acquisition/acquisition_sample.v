@@ -33,6 +33,8 @@ module acquisition_sample (
     input         triggered,
     input  [15:0] trigger_position,
     input         acquisition_pulse,
+    // depth
+    input  [15:0] depth,
     // push
     input         push_en,
     output        push_ready,
@@ -61,6 +63,7 @@ module acquisition_sample (
   acquisition_sync_cache_rd acquisition_sync_cache_rd_0 (
       .rd_clk           (clk_25m),
       .rst_n            (sys_rst_n),
+      .depth            (depth),
       .push_en          (push_en),
       .start_addr       (wr_addr),
       .rd_en            (rd_en),
@@ -74,6 +77,7 @@ module acquisition_sample (
   acquisition_sync_cache_wr acquisition_sync_cache_wr_0 (
       .wr_clk           (clk_25m),
       .rst_n            (sys_rst_n),
+      .depth            (depth),
       .ad_data          (ad_data),
       .en               (acquisition_en),
       .trigger_position (trigger_position),

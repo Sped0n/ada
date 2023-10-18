@@ -23,6 +23,8 @@
 module acquisition_sync_cache_wr (
     input             wr_clk,             // 25MHz
     input             rst_n,
+    // depth
+    input      [15:0] depth,
     // config
     input      [ 7:0] ad_data,
     input             en,
@@ -43,8 +45,6 @@ module acquisition_sync_cache_wr (
     output     [ 4:0] cache_wr_state
 );
   // parameter define
-  parameter BRAM_DEPTH = 12500;
-
   localparam IDLE = 5'b00001;
   localparam CACHING = 5'b00010;
   localparam WFT = 5'b00100;  // wait for trigger
@@ -52,7 +52,7 @@ module acquisition_sync_cache_wr (
   localparam HANDSHAKE = 5'b10000;
 
   // just incase state machine won't be stucked if we don't meet the trigger condition in WFT state
-  parameter WFT_CNT_MAX = 10000;
+  parameter WFT_CNT_MAX = 20000;
 
   // reg define
   reg [4:0] state;
@@ -83,10 +83,10 @@ module acquisition_sync_cache_wr (
       end
       default: begin
         trigger_enable = 1'b1;
-        if (trigger_position > BRAM_DEPTH) begin
+        if (trigger_position > depth) begin
           wfrd_cnt_max = 16'd0;
         end else begin
-          wfrd_cnt_max = BRAM_DEPTH - trigger_position;
+          wfrd_cnt_max = depth - trigger_position;
         end
       end
     endcase
@@ -114,7 +114,7 @@ module acquisition_sync_cache_wr (
         end
       end
       CACHING: begin
-        if (cache_cnt == BRAM_DEPTH) begin
+        if (cache_cnt == depth) begin
           if (trigger_enable) begin
             next_state = WFT;
           end else begin
@@ -162,7 +162,7 @@ module acquisition_sync_cache_wr (
     end else begin
       // wr_addr control
       if (wr_en) begin  // write enable
-        if (wr_addr == (BRAM_DEPTH - 1'b1)) begin  // reach the end of ram
+        if (wr_addr == (depth[14:0] - 1'b1)) begin  // reach the end of ram
           wr_addr <= 15'd0;
         end else begin
           wr_addr <= wr_addr + 1'b1;

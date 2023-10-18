@@ -21,23 +21,25 @@
 
 
 module acquisition_send_usb (
-    input            usb_clk,
-    input            clk_25m,
-    input            sys_rst_n,
+    input             usb_clk,
+    input             clk_25m,
+    input             sys_rst_n,
+    // depth
+    input      [15:0] depth,
     // acquisition sample
-    input            async_ram_wr_en,
-    input      [7:0] sample_data,
-    input            async_ram_wr_completed,
+    input             async_ram_wr_en,
+    input      [ 7:0] sample_data,
+    input             async_ram_wr_completed,
     // usb interface
-    output           usb_tx_en,
-    output     [7:0] usb_tx_data,
-    input            usb_busy,
+    output            usb_tx_en,
+    output     [ 7:0] usb_tx_data,
+    input             usb_busy,
     // ack
-    input            acquisition_en,
-    input            packet_corrupted,
-    input            depack,
+    input             acquisition_en,
+    input             packet_corrupted,
+    input             depack,
     // busy signal
-    output reg       send_busy
+    output reg        send_busy
 );
   // parameter define
   localparam IDLE = 4'b00001;
@@ -178,6 +180,7 @@ module acquisition_send_usb (
   acquisition_async_ram_rd_usb acquisition_async_ram_rd_usb_0 (
       .usb_clk         (usb_clk),
       .rst_n           (sys_rst_n),
+      .depth           (depth),
       .send_en         (send_en),
       .acquisition_en  (acquisition_en),
       .depack          (depack),
