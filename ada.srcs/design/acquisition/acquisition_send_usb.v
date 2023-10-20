@@ -42,14 +42,14 @@ module acquisition_send_usb (
     output reg        send_busy
 );
   // parameter define
-  localparam IDLE = 4'b00001;
-  localparam WRITING = 4'b00010;
-  localparam SEND_ENABLE = 4'b00100;
-  localparam READING = 4'b01000;
+  localparam IDLE = 4'b0001;
+  localparam WRITING = 4'b0010;
+  localparam SEND_ENABLE = 4'b0100;
+  localparam READING = 4'b1000;
 
   // reg define
-  reg  [ 4:0] state;
-  reg  [ 4:0] next_state;
+  reg  [ 3:0] state;
+  reg  [ 3:0] next_state;
 
   reg  [14:0] wr_addr;
   reg  [14:0] rd_addr;
